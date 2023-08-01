@@ -21,14 +21,17 @@ namespace dae
 		void RemoveCollisionBox(CollisionBoxComponent* box);
 		void RemoveDirtBox(CollisionBoxComponent* box);
 		void RemoveEmeraldBox(CollisionBoxComponent* box);
+		void RemoveGoldBox(CollisionBoxComponent* box);
 
 		std::vector<CollisionBoxComponent*> GetAllWallColliders();
 		std::vector<CollisionBoxComponent*> GetAllDirtColliders();
 		std::vector<CollisionBoxComponent*> GetAllEmeraldColliders();
+		std::vector<CollisionBoxComponent*> GetAllGoldColliders();
 
-		bool CheckForCollision(CollisionBoxComponent* box);
-		CollisionBoxComponent* CheckForCollisionComponent(CollisionBoxComponent* box);
-		bool CheckForOverlapDirt(dae::CollisionBoxComponent* box);
+		bool CheckForCollision(const CollisionBoxComponent* box) const;
+		CollisionBoxComponent* CheckForCollisionComponent(const CollisionBoxComponent* box) const;
+		bool CheckForOverlapDirt(const dae::CollisionBoxComponent* box) const;
+		bool CheckForOverlapBrokenGold(const dae::CollisionBoxComponent* box) const;
 
 		bool Raycast(glm::vec2 startpos, glm::vec2 direction, dae::CollisionBoxComponent* collisionbox, bool checkDirt);
 
@@ -37,6 +40,7 @@ namespace dae
 		std::vector<CollisionBoxComponent*> m_pWallBoxes;
 		std::vector<CollisionBoxComponent*> m_pDirtBoxes;
 		std::vector<CollisionBoxComponent*> m_pEmeraldBoxes;
+		std::vector<CollisionBoxComponent*> m_pGoldBoxes;
 		std::vector<dae::GameObject*> m_pOwners;
 		bool m_GetAllCollisions = false;
 	};

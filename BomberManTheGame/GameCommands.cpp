@@ -1,6 +1,7 @@
 #include "GameCommands.h"
 
 #include "CollisionBoxManager.h"
+#include "GoldState.h"
 #include "InputManager.h"
 #include "ServiceLocator.h"
 
@@ -26,19 +27,29 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
     if (m_Digger) //Single/Coop -> Digger
     {
         auto OverlappedBox = dae::CollisionBoxManager::GetInstance().CheckForCollisionComponent(m_pGameObject->GetComponent<dae::CollisionBoxComponent>());
-    
-        if (OverlappedBox != nullptr && OverlappedBox->GetOwner()->GetTag() == "Break")
-        {
-            dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
-            dae::CollisionBoxManager::GetInstance().RemoveDirtBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
-            OverlappedBox->GetOwner()->MarkTrueForDeleting();
-        }
 
-        if (OverlappedBox != nullptr && OverlappedBox->GetOwner()->GetTag() == "Emerald")
+        if (OverlappedBox != nullptr)
         {
-            dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
-            dae::CollisionBoxManager::GetInstance().RemoveEmeraldBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
-            OverlappedBox->GetOwner()->MarkTrueForDeleting();
+            if (OverlappedBox->GetOwner()->GetTag() == "Break")
+            {
+                dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                dae::CollisionBoxManager::GetInstance().RemoveDirtBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                OverlappedBox->GetOwner()->MarkTrueForDeleting();
+            }
+
+            if (OverlappedBox->GetOwner()->GetTag() == "Emerald")
+            {
+                dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                dae::CollisionBoxManager::GetInstance().RemoveEmeraldBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                OverlappedBox->GetOwner()->MarkTrueForDeleting();
+            }
+
+            if (OverlappedBox->GetOwner()->GetTag() == "Gold" && OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState())
+            {
+                dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                dae::CollisionBoxManager::GetInstance().RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                OverlappedBox->GetOwner()->MarkTrueForDeleting();
+            }
         }
 
         if (!dae::CollisionBoxManager::GetInstance().Raycast(m_pGameObject->GetRelativePosition(), m_Dir, m_pCollision, false))

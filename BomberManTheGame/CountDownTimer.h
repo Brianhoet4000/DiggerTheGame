@@ -9,7 +9,7 @@ namespace dae
 	public:
 		CountDownTimer(dae::GameObject* owner, float StartCountDownNumber);
 
-		~CountDownTimer() = default;
+		virtual ~CountDownTimer() override = default;
 		CountDownTimer(const CountDownTimer& other) = delete;
 		CountDownTimer(CountDownTimer&& other) = delete;
 		CountDownTimer& operator=(const CountDownTimer& other) = delete;

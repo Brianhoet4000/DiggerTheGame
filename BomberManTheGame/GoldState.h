@@ -11,22 +11,24 @@ namespace dae
 	public:
 		GoldState(dae::GameObject* owner);
 
-		~GoldState() = default;
+		virtual ~GoldState() override = default;
 		GoldState(const GoldState& other) = delete;
 		GoldState(GoldState&& other) = delete;
 		GoldState& operator=(const GoldState& other) = delete;
 		GoldState& operator=(GoldState&& other) = delete;
 
 		void Update(float deltaTime) override;
+		bool GetPickupState() const { return m_Pickup; }
 
 	private:
 		glm::vec2 m_Direction{ 0,5 };
 		dae::CountDownTimer* m_pTimer;
-		const float m_Speed{ 24.f };
+		const float m_Speed{ 35.f };
 		glm::vec2 m_EstimatedPos;
 
 		bool m_ResetEstimatedPos = false;
 		bool m_Broke = false;
+		bool m_Pickup = false;
 	};
 
 }

@@ -26,6 +26,7 @@ void dae::GoldState::Update(float deltaTime)
 			const auto texture = m_pOwner->GetComponent<dae::TextureComponent>();
 			texture->SetTexture("Sprites/Bullet.png");
 			m_Broke = true;
+			m_Pickup = true;
 			return;
 		}
 		else

@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		BalloonMovementComponent(dae::GameObject* owner, const dae::LevelPrefab& level,glm::vec2 ,const float speed);
-		~BalloonMovementComponent() = default;
+		virtual ~BalloonMovementComponent() override = default;
 		BalloonMovementComponent(const BalloonMovementComponent& other) = delete;
 		BalloonMovementComponent(BalloonMovementComponent&& other) = delete;
 		BalloonMovementComponent& operator=(const BalloonMovementComponent& other) = delete;

@@ -1,6 +1,12 @@
 #include "CollisionBoxManager.h"
 
 #include "GameObject.h"
+#include "../BomberManTheGame/GoldState.h"
+
+namespace dae
+{
+	class GoldState;
+}
 
 void dae::CollisionBoxManager::AddCollisionBox(dae::GameObject* owner, CollisionBoxComponent* box)
 {
@@ -21,6 +27,11 @@ void dae::CollisionBoxManager::RemoveDirtBox(CollisionBoxComponent* box)
 void dae::CollisionBoxManager::RemoveEmeraldBox(CollisionBoxComponent* box)
 {
     m_pEmeraldBoxes.erase(std::remove(m_pEmeraldBoxes.begin(), m_pEmeraldBoxes.end(), box), m_pEmeraldBoxes.end());
+}
+
+void dae::CollisionBoxManager::RemoveGoldBox(CollisionBoxComponent* box)
+{
+    m_pGoldBoxes.erase(std::remove(m_pGoldBoxes.begin(), m_pGoldBoxes.end(), box), m_pGoldBoxes.end());
 }
 
 std::vector<dae::CollisionBoxComponent*> dae::CollisionBoxManager::GetAllWallColliders()
@@ -67,7 +78,20 @@ std::vector<dae::CollisionBoxComponent*> dae::CollisionBoxManager::GetAllEmerald
     return m_pEmeraldBoxes;
 }
 
-bool dae::CollisionBoxManager::CheckForCollision(CollisionBoxComponent* box)
+std::vector<dae::CollisionBoxComponent*> dae::CollisionBoxManager::GetAllGoldColliders()
+{
+    for (size_t i = 0; i < m_pOwners.size(); ++i)
+    {
+        if (m_pOwners[i]->GetTag() == "Gold")
+        {
+            m_pEmeraldBoxes.push_back(m_pCollisonBoxes[i]);
+        }
+    }
+
+    return m_pGoldBoxes;
+}
+
+bool dae::CollisionBoxManager::CheckForCollision(const CollisionBoxComponent* box) const
 {
     for (const auto& otherBox : m_pCollisonBoxes)
     {
@@ -88,7 +112,7 @@ bool dae::CollisionBoxManager::CheckForCollision(CollisionBoxComponent* box)
 
 }
 
-dae::CollisionBoxComponent* dae::CollisionBoxManager::CheckForCollisionComponent(CollisionBoxComponent* box)
+dae::CollisionBoxComponent* dae::CollisionBoxManager::CheckForCollisionComponent(const CollisionBoxComponent* box) const
 {
     for (const auto& otherBox : m_pCollisonBoxes)
     {
@@ -106,7 +130,7 @@ dae::CollisionBoxComponent* dae::CollisionBoxManager::CheckForCollisionComponent
     return nullptr;
 }
 
-bool dae::CollisionBoxManager::CheckForOverlapDirt(dae::CollisionBoxComponent* box)
+bool dae::CollisionBoxManager::CheckForOverlapDirt(const dae::CollisionBoxComponent* box) const
 {
     for (const auto& Owners : m_pOwners)
     {
@@ -127,6 +151,24 @@ bool dae::CollisionBoxManager::CheckForOverlapDirt(dae::CollisionBoxComponent* b
     return false;
 }
 
+bool dae::CollisionBoxManager::CheckForOverlapBrokenGold(const dae::CollisionBoxComponent* box) const
+{
+    for (const auto& otherbox : m_pGoldBoxes)
+    {
+        if (otherbox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState())
+        {
+            if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
+                box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
+                box->GetCollisionRect().y < otherbox->GetCollisionRect().y + otherbox->GetCollisionRect().h &&
+                box->GetCollisionRect().y + box->GetCollisionRect().h > otherbox->GetCollisionRect().y)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool dae::CollisionBoxManager::Raycast(glm::vec2 startpos, glm::vec2 direction, dae::CollisionBoxComponent* collisionbox, bool checkDirt)
 {
     if (!m_GetAllCollisions)
@@ -134,6 +176,7 @@ bool dae::CollisionBoxManager::Raycast(glm::vec2 startpos, glm::vec2 direction, 
         GetAllWallColliders();
         GetAllDirtColliders();
         GetAllEmeraldColliders();
+        GetAllGoldColliders();
         m_GetAllCollisions = true;
     }
 

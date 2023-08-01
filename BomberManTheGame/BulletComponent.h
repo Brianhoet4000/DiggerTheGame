@@ -12,7 +12,7 @@ namespace dae
 	public:
 
 		BulletComponent(dae::GameObject* owner, glm::vec2 vel);
-		~BulletComponent() = default;
+		virtual ~BulletComponent() override = default;
 		BulletComponent(const BulletComponent& other) = delete;
 		BulletComponent(BulletComponent&& other) = delete;
 		BulletComponent& operator=(const BulletComponent& other) = delete;
