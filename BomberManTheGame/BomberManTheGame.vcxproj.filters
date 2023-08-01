@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Prefab">
+      <UniqueIdentifier>{a590457b-fae6-4ce5-8250-46a4212d6b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{82877251-46bf-4bcb-92f1-0c6ba83f24cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{f6e6be23-5011-44fb-86d0-5558c55f44bb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PlayerOne.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="DiggerTheGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDownTimer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelPrefab.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="BalloonMovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCommands.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTwo.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Emerald.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="Gold.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldState.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PlayerOne.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="CountDownTimer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelPrefab.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="BalloonMovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTwo.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Emerald.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="Gold.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldState.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
