@@ -1,10 +1,6 @@
 #pragma once
 #include <SDL_rect.h>
-#include "SDL.h"
-
 #include "BaseComponent.h"
-#include "TextureComponent.h"
-#include "Transform.h"
 
 
 namespace dae

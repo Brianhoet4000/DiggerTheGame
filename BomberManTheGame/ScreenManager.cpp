@@ -1,5 +1,6 @@
 #include "ScreenManager.h"
 
+#include <SDL_scancode.h>
 #include <glm/vec2.hpp>
 
 #include "GameCommands.h"

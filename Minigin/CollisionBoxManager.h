@@ -3,7 +3,7 @@
 
 #include "CollisionBoxComponent.h"
 #include "Singleton.h"
-#include <SDL_rect.h>
+#include <glm/vec2.hpp>
 
 namespace dae
 {

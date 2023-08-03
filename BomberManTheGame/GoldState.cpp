@@ -1,6 +1,7 @@
 #include "GoldState.h"
 #include "CollisionBoxManager.h"
 #include "GameObject.h"
+#include "TextureComponent.h"
 
 dae::GoldState::GoldState(dae::GameObject* owner)
 {

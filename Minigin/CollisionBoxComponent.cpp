@@ -1,8 +1,8 @@
 #include "CollisionBoxComponent.h"
-
 #include "CollisionBoxManager.h"
 #include "GameObject.h"
 #include "Renderer.h"
+#include "TextureComponent.h"
 
 dae::CollisionBoxComponent::CollisionBoxComponent(dae::GameObject* owner)
 {
