@@ -182,10 +182,11 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
   <ItemGroup>
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="Emerald.cpp" />
+    <ClCompile Include="GameCollisionComponent.cpp" />
+    <ClCompile Include="GameCollisionMngr.cpp" />
     <ClCompile Include="Gold.cpp" />
     <ClCompile Include="GoldState.cpp" />
     <ClCompile Include="PlayerTwo.cpp" />
-    <ClCompile Include="BalloonMovementComponent.cpp" />
     <ClCompile Include="DiggerTheGame.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="CountDownTimer.cpp" />
@@ -196,10 +197,11 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
   <ItemGroup>
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="Emerald.h" />
+    <ClInclude Include="GameCollisionComponent.h" />
+    <ClInclude Include="GameCollisionMngr.h" />
     <ClInclude Include="Gold.h" />
     <ClInclude Include="GoldState.h" />
     <ClInclude Include="PlayerTwo.h" />
-    <ClInclude Include="BalloonMovementComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="CountDownTimer.h" />
     <ClInclude Include="LevelPrefab.h" />

@@ -25,10 +25,10 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 
 
 	//Collision
-	auto Collider = std::make_shared<dae::CollisionBoxComponent>(PlayerOne.get());
+	auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerOne.get());
 	PlayerOne->AddComponent(Collider);
-	Collider->SetCollisionRect(5.f);
-	Collider->SetRenderCollisionBox(true);
+	Collider->SetCollisionRectOffset(5.f);
+	Collider->SetRenderCollisionBox(false);
 	
 
 	//Movement

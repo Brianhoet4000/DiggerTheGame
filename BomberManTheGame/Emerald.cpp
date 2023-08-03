@@ -1,6 +1,7 @@
 #include "Emerald.h"
 
 #include "CollisionBoxComponent.h"
+#include "GameCollisionComponent.h"
 #include "TextureComponent.h"
 
 dae::Emerald::Emerald(dae::GameObject*, glm::vec2 pos)
@@ -13,8 +14,8 @@ dae::Emerald::Emerald(dae::GameObject*, glm::vec2 pos)
 	pEmeraldTexture->SetTexture("Sprites/Emerald.png");
 
 	//Collision
-	auto pPickUpCollider = std::make_shared<dae::CollisionBoxComponent>(m_pEmerald.get());
-	pPickUpCollider->SetRenderCollisionBox(true);
+	auto pPickUpCollider = std::make_shared<dae::GameCollisionComponent>(m_pEmerald.get());
+	pPickUpCollider->SetRenderCollisionBox(false);
 	m_pEmerald->AddComponent(pPickUpCollider);
 
 	

@@ -1,7 +1,7 @@
 #pragma once
-#include "CollisionBoxComponent.h"
 #include "Commands.h"
 #include "CountDownTimer.h"
+#include "GameCollisionComponent.h"
 #include "LevelPrefab.h"
 #include "ScreenManager.h"
 #include "ScreenManager.h"
@@ -13,10 +13,10 @@ namespace GameCommands
 	{
 	private:
 		glm::vec2 m_Dir{};
-		dae::CollisionBoxComponent* m_pCollision;
+		dae::GameCollisionComponent* m_pCollision;
 		bool m_Digger;
 		bool DoOnce = false;
-		std::vector<dae::CollisionBoxComponent*> m_pWallcollision;
+		std::vector<dae::GameCollisionComponent*> m_pWallcollision;
 	public:
 		DiggerMovement(dae::GameObject* owner, const glm::vec2& dir, bool digger);
 		virtual void Execute(float deltaTime) override;

@@ -34,7 +34,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		PlayerTwo->AddComponent(TexturePlayerTwo);
 
 		//Collision
-		auto Collider = std::make_shared<dae::CollisionBoxComponent>(PlayerTwo.get());
+		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get());
 		PlayerTwo->AddComponent(Collider);
 
 		//Movement
@@ -51,8 +51,8 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		PlayerTwo->AddComponent(TexturePlayerTwo);
 
 		//Collision
-		auto Collider = std::make_shared<dae::CollisionBoxComponent>(PlayerTwo.get());
-		Collider->SetRenderCollisionBox(true);
+		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get());
+		Collider->SetRenderCollisionBox(false);
 		PlayerTwo->AddComponent(Collider);
 
 		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), up, false);

@@ -1,11 +1,10 @@
 #include "LevelPrefab.h"
 
-#include "CollisionBoxComponent.h"
 #include "ResourceManager.h"
 #include "TextureComponent.h"
 #include <random>
-
 #include "Emerald.h"
+#include "GameCollisionComponent.h"
 #include "Gold.h"
 
 std::vector<glm::vec2> dae::LevelPrefab::GetSpawnPosition() const
@@ -39,7 +38,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 
 		pTexture->SetTexture("Path.png");
 
-		auto Collider = std::make_shared<CollisionBoxComponent>(pBlock.get());
+		auto Collider = std::make_shared<GameCollisionComponent>(pBlock.get());
 
 		scene.Add(pBlock);
 		m_pBlocks.push_back(pBlock);
@@ -114,7 +113,7 @@ void dae::LevelPrefab::AddBreakAbleBlocks(dae::Scene& scene)
 		pBreakTexture->SetTexture("BreakableWall.png");
 	
 		//Collision
-		auto pBreakCollider = std::make_shared<dae::CollisionBoxComponent>(pBreakBlock.get());
+		auto pBreakCollider = std::make_shared<dae::GameCollisionComponent>(pBreakBlock.get());
 		pBreakBlock->AddComponent(pBreakCollider);
 	
 		//Pos

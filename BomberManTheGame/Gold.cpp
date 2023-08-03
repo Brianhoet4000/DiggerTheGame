@@ -1,7 +1,7 @@
 #include "Gold.h"
 
-#include "CollisionBoxComponent.h"
 #include "CountDownTimer.h"
+#include "GameCollisionComponent.h"
 #include "GoldState.h"
 #include "TextureComponent.h"
 
@@ -15,7 +15,7 @@ dae::Gold::Gold(dae::GameObject* , glm::vec2 pos)
 	pEmeraldTexture->SetTexture("Sprites/GoldBag.png");
 
 	//Collision
-	auto pPickUpCollider = std::make_shared<CollisionBoxComponent>(m_pGold.get());
+	auto pPickUpCollider = std::make_shared<GameCollisionComponent>(m_pGold.get());
 	pPickUpCollider->SetRenderCollisionBox(true);
 	m_pGold->AddComponent(pPickUpCollider);
 

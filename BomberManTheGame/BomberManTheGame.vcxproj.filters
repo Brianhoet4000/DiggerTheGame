@@ -32,9 +32,6 @@
     <ClCompile Include="LevelPrefab.cpp">
       <Filter>Prefab</Filter>
     </ClCompile>
-    <ClCompile Include="BalloonMovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameCommands.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
@@ -56,6 +53,12 @@
     <ClCompile Include="GoldState.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameCollisionComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCollisionMngr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
@@ -66,9 +69,6 @@
     </ClInclude>
     <ClInclude Include="LevelPrefab.h">
       <Filter>Prefab</Filter>
-    </ClInclude>
-    <ClInclude Include="BalloonMovementComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GameCommands.h">
       <Filter>Commands</Filter>
@@ -90,6 +90,12 @@
     </ClInclude>
     <ClInclude Include="GoldState.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCollisionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCollisionMngr.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
