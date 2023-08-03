@@ -30,6 +30,8 @@ namespace dae
 
 		bool CheckForCollision(const CollisionBoxComponent* box) const;
 		CollisionBoxComponent* CheckForCollisionComponent(const CollisionBoxComponent* box) const;
+		CollisionBoxComponent* CheckForGoldCollisionComponent(const CollisionBoxComponent* box);
+		CollisionBoxComponent* CheckForDirtCollisionComponent(const CollisionBoxComponent* box);
 		bool CheckForOverlapDirt(const dae::CollisionBoxComponent* box) const;
 		bool CheckForOverlapBrokenGold(const dae::CollisionBoxComponent* box) const;
 

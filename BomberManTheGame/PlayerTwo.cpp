@@ -52,6 +52,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 
 		//Collision
 		auto Collider = std::make_shared<dae::CollisionBoxComponent>(PlayerTwo.get());
+		Collider->SetRenderCollisionBox(true);
 		PlayerTwo->AddComponent(Collider);
 
 		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), up, false);
@@ -59,6 +60,8 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), left, false);
 		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), right, false);
 	}
+
+	
 
 	int controller1Index{ 0 };
 	dae::InputManager::GetInstance().AddController(controller1Index);

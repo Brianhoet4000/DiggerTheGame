@@ -30,6 +30,7 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
 
         if (OverlappedBox != nullptr)
         {
+            //Dirt block delete
             if (OverlappedBox->GetOwner()->GetTag() == "Break")
             {
                 dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
@@ -37,6 +38,7 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
                 OverlappedBox->GetOwner()->MarkTrueForDeleting();
             }
 
+            //Overlap with emerald pick up
             if (OverlappedBox->GetOwner()->GetTag() == "Emerald")
             {
                 dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
@@ -44,11 +46,30 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
                 OverlappedBox->GetOwner()->MarkTrueForDeleting();
             }
 
-            if (OverlappedBox->GetOwner()->GetTag() == "Gold" && OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState())
+            //Gold Related
             {
-                dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
-                dae::CollisionBoxManager::GetInstance().RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
-                OverlappedBox->GetOwner()->MarkTrueForDeleting();
+                //Push Gold Left
+                if (OverlappedBox->GetOwner()->GetTag() == "Gold" &&
+                    !OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState() && m_Dir.x > 0)
+                {
+                    glm::vec2 newPos = { OverlappedBox->GetOwner()->GetRelativePosition().x + 24, OverlappedBox->GetOwner()->GetRelativePosition().y };
+                    OverlappedBox->GetOwner()->SetRelativePosition(newPos);
+                }
+                //Push Gold Right
+                else if (OverlappedBox->GetOwner()->GetTag() == "Gold" &&
+                    !OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState() && m_Dir.x < 0)
+                {
+                    glm::vec2 newPos = { OverlappedBox->GetOwner()->GetRelativePosition().x - 24, OverlappedBox->GetOwner()->GetRelativePosition().y };
+                    OverlappedBox->GetOwner()->SetRelativePosition(newPos);
+                }
+
+                //If Gold Broken and overlap pick up
+                if (OverlappedBox->GetOwner()->GetTag() == "Gold" && OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState())
+                {
+                    dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                    dae::CollisionBoxManager::GetInstance().RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                    OverlappedBox->GetOwner()->MarkTrueForDeleting();
+                }
             }
         }
 
@@ -57,8 +78,50 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
     }
     else //Verus -> Nobbin
     {
-        if (!dae::CollisionBoxManager::GetInstance().Raycast(m_pGameObject->GetRelativePosition(), m_Dir, m_pCollision, true))
+        auto OverlappedBox = dae::CollisionBoxManager::GetInstance().CheckForGoldCollisionComponent(m_pGameObject->GetComponent<dae::CollisionBoxComponent>());
+        auto OtherOverLappedBox = dae::CollisionBoxManager::GetInstance().CheckForDirtCollisionComponent(m_pGameObject->GetComponent<dae::CollisionBoxComponent>());
+        //Gold Nobbin
+        if (OverlappedBox != nullptr)
+        {
+            {
+                if (OtherOverLappedBox != nullptr)
+                {
+                    //Push Gold Left
+                    if (OverlappedBox->GetOwner()->GetTag() == "Gold" && OtherOverLappedBox->GetOwner()->GetTag() == "Break" &&
+                        !OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState() && m_Dir.x > 0)
+                    {
+                        OtherOverLappedBox->GetOwner()->MarkTrueForDeleting();
+                        dae::CollisionBoxManager::GetInstance().RemoveDirtBox(OtherOverLappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+
+
+                        glm::vec2 newPos = { OverlappedBox->GetOwner()->GetRelativePosition().x + 24, OverlappedBox->GetOwner()->GetRelativePosition().y };
+                        OverlappedBox->GetOwner()->SetRelativePosition(newPos);
+                    }
+                    //Push Gold Right
+                    else if (OverlappedBox->GetOwner()->GetTag() == "Gold" && OtherOverLappedBox->GetOwner()->GetTag() == "Break" &&
+                        !OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState() && m_Dir.x < 0)
+                    {
+                        OtherOverLappedBox->GetOwner()->MarkTrueForDeleting();
+                        dae::CollisionBoxManager::GetInstance().RemoveDirtBox(OtherOverLappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+
+                        glm::vec2 newPos = { OverlappedBox->GetOwner()->GetRelativePosition().x - 24, OverlappedBox->GetOwner()->GetRelativePosition().y };
+                        OverlappedBox->GetOwner()->SetRelativePosition(newPos);
+                    }
+                }
+
+                //If Gold Broken and overlap pick up
+                if (OverlappedBox->GetOwner()->GetTag() == "Gold" && OverlappedBox->GetOwner()->GetComponent<dae::GoldState>()->GetPickupState())
+                {
+                    dae::CollisionBoxManager::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                    dae::CollisionBoxManager::GetInstance().RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::CollisionBoxComponent>());
+                    OverlappedBox->GetOwner()->MarkTrueForDeleting();
+                }
+            }
+        }
+
+    	if (!dae::CollisionBoxManager::GetInstance().Raycast(m_pGameObject->GetRelativePosition(), m_Dir, m_pCollision, true))
             return;
+       
     }
 
     pos.x += m_Dir.x * deltaTime;

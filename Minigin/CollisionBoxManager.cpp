@@ -84,7 +84,7 @@ std::vector<dae::CollisionBoxComponent*> dae::CollisionBoxManager::GetAllGoldCol
     {
         if (m_pOwners[i]->GetTag() == "Gold")
         {
-            m_pEmeraldBoxes.push_back(m_pCollisonBoxes[i]);
+            m_pGoldBoxes.push_back(m_pCollisonBoxes[i]);
         }
     }
 
@@ -115,6 +115,52 @@ bool dae::CollisionBoxManager::CheckForCollision(const CollisionBoxComponent* bo
 dae::CollisionBoxComponent* dae::CollisionBoxManager::CheckForCollisionComponent(const CollisionBoxComponent* box) const
 {
     for (const auto& otherBox : m_pCollisonBoxes)
+    {
+        if (otherBox == box)
+            continue;
+
+        if (box->GetCollisionRect().x < otherBox->GetCollisionRect().x + otherBox->GetCollisionRect().w &&
+            box->GetCollisionRect().x + box->GetCollisionRect().w > otherBox->GetCollisionRect().x &&
+            box->GetCollisionRect().y < otherBox->GetCollisionRect().y + otherBox->GetCollisionRect().h &&
+            box->GetCollisionRect().y + box->GetCollisionRect().h > otherBox->GetCollisionRect().y)
+        {
+            return otherBox;
+        }
+    }
+    return nullptr;
+}
+
+dae::CollisionBoxComponent* dae::CollisionBoxManager::CheckForGoldCollisionComponent(const CollisionBoxComponent* box)
+{
+    if(m_pGoldBoxes.size() <= 0)
+    {
+        GetAllGoldColliders();
+    }
+
+    for (const auto& otherBox : m_pGoldBoxes)
+    {
+        if (otherBox == box)
+            continue;
+
+        if (box->GetCollisionRect().x < otherBox->GetCollisionRect().x + otherBox->GetCollisionRect().w &&
+            box->GetCollisionRect().x + box->GetCollisionRect().w > otherBox->GetCollisionRect().x &&
+            box->GetCollisionRect().y < otherBox->GetCollisionRect().y + otherBox->GetCollisionRect().h &&
+            box->GetCollisionRect().y + box->GetCollisionRect().h > otherBox->GetCollisionRect().y)
+        {
+            return otherBox;
+        }
+    }
+    return nullptr;
+}
+
+dae::CollisionBoxComponent* dae::CollisionBoxManager::CheckForDirtCollisionComponent(const CollisionBoxComponent* box)
+{
+    if (m_pDirtBoxes.size() <= 0)
+    {
+        GetAllDirtColliders();
+    }
+
+    for (const auto& otherBox : m_pDirtBoxes)
     {
         if (otherBox == box)
             continue;
