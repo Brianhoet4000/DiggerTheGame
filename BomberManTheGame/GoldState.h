@@ -9,6 +9,13 @@ namespace dae
 	class GoldState : public dae::BaseComponent
 	{
 	public:
+		enum MoneyBagState
+		{
+			Full,
+			Coins,
+			Falling
+		};
+
 		GoldState(dae::GameObject* owner);
 
 		virtual ~GoldState() override = default;
@@ -18,7 +25,9 @@ namespace dae
 		GoldState& operator=(GoldState&& other) = delete;
 
 		void Update(float deltaTime) override;
-		bool GetPickupState() const { return m_Pickup; }
+		bool GetCoinsBool() const { return m_Broke; }
+
+		MoneyBagState GetMoneyBagState() const { return m_MoneyState; }
 
 	private:
 		glm::vec2 m_Direction{ 0,5 };
@@ -28,7 +37,8 @@ namespace dae
 
 		bool m_ResetEstimatedPos = false;
 		bool m_Broke = false;
-		bool m_Pickup = false;
+
+		MoneyBagState m_MoneyState{ Full };
 	};
 
 }

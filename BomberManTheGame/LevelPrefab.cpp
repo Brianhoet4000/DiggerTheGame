@@ -37,7 +37,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 		pBlock->SetRelativePosition({ pos.x, pos.y });
 
 		pTexture->SetTexture("Path.png");
-
+		pBlock->SetTag("Wall");
 		auto Collider = std::make_shared<GameCollisionComponent>(pBlock.get());
 
 		scene.Add(pBlock);

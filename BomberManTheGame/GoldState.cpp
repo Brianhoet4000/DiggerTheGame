@@ -25,20 +25,25 @@ void dae::GoldState::Update(float deltaTime)
 	{
 		if (m_pOwner->GetRelativePosition().y >= m_EstimatedPos.y - 2.f && !m_Broke)
 		{
+			//Here Coins
 			const auto texture = m_pOwner->GetComponent<dae::TextureComponent>();
-			texture->SetTexture("Sprites/Bullet.png");
+			texture->SetTexture("Sprites/Gold.png");
 			m_Broke = true;
-			m_Pickup = true;
+			m_MoneyState = Coins;
 			return;
 		}
 		else
 		{
+			//Still MoneyBag
 			m_ResetEstimatedPos = false;
+			m_MoneyState = Full;
 			return;
 		}
 	}
 
+	//Falling
 	const glm::vec2 newPos = m_pOwner->GetRelativePosition();
+	m_MoneyState = Falling;
 	m_pOwner->SetRelativePosition(newPos.x, newPos.y + m_Speed * deltaTime);
 	
 }

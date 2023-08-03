@@ -31,12 +31,15 @@ namespace dae
 
 		bool CheckForCollision(const GameCollisionComponent* box) const;
 		GameCollisionComponent* CheckForCollisionComponent(const GameCollisionComponent* box) const;
-		GameCollisionComponent* CheckForGoldCollisionComponent(const GameCollisionComponent* box);
-		GameCollisionComponent* CheckForDirtCollisionComponent(const GameCollisionComponent* box);
+		GameCollisionComponent* CheckForGoldCollisionComponent(const GameCollisionComponent* box) const;
+		GameCollisionComponent* CheckForDirtCollisionComponent(const GameCollisionComponent* box) const;
 		bool CheckForOverlapDirt(const dae::GameCollisionComponent* box) const;
 		bool CheckForOverlapBrokenGold(const dae::GameCollisionComponent* box) const;
 
-		bool Raycast(glm::vec2 startpos, glm::vec2 direction, dae::GameCollisionComponent* collisionbox, bool checkDirt);
+		void PlayerLogicBox(const dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
+		void NobbinLogicBox(const dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
+
+		bool Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* collisionbox, bool checkDirt) const;
 
 	private:
 		std::vector<GameCollisionComponent*> m_pCollisonBoxes;
@@ -44,8 +47,7 @@ namespace dae
 		std::vector<GameCollisionComponent*> m_pDirtBoxes;
 		std::vector<GameCollisionComponent*> m_pEmeraldBoxes;
 		std::vector<GameCollisionComponent*> m_pGoldBoxes;
-		std::vector<dae::GameObject*> m_pOwners;
-		bool m_GetAllCollisions = false;
+		const float m_Dim = 24.f;
 	};
 
 }
