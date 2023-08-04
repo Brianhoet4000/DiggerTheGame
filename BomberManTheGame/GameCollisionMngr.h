@@ -36,8 +36,8 @@ namespace dae
 		bool CheckForOverlapDirt(const dae::GameCollisionComponent* box) const;
 		bool CheckForOverlapBrokenGold(const dae::GameCollisionComponent* box) const;
 
-		void PlayerLogicBox(const dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
-		void NobbinLogicBox(const dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
+		void PlayerLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
+		void NobbinLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
 
 		bool Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* collisionbox, bool checkDirt) const;
 
@@ -48,6 +48,8 @@ namespace dae
 		std::vector<GameCollisionComponent*> m_pEmeraldBoxes;
 		std::vector<GameCollisionComponent*> m_pGoldBoxes;
 		const float m_Dim = 24.f;
+
+		GameCollisionComponent* m_pGoldBag;
 	};
 
 }

@@ -14,6 +14,7 @@
 
 #include "GameObject.h"
 #include "Commands.h"
+#include "GameCollisionMngr.h"
 #include "ScreenManager.h"
 #include "ServiceLocator.h"
 #include "SoundSystem.h"
@@ -25,7 +26,7 @@ void load()
 	std::cout << "Space to shoot\n";
 	std::cout << "Dpad to move secondPlayer\n";
 	std::cout << "A to shoot\n";
-
+	
 	auto Screenmanager = std::make_unique<dae::ScreenManager>();
 	Screenmanager->CreateMenuScreen();
 }
