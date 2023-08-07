@@ -3,7 +3,7 @@
 
 namespace dae
 {
-    class GoldState;
+    class GoldStateComponent;
 
     void dae::CollisionBoxManager::AddCollisionBox(dae::GameObject* owner, CollisionBoxComponent* box)
     {

@@ -21,7 +21,6 @@ namespace dae
 		void Update(float deltaTime) override;
 
 	private:
-		std::shared_ptr<dae::GameObject> m_pBullet;
 		glm::vec2 m_vel;
 	};
 

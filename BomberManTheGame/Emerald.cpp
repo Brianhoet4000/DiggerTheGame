@@ -4,7 +4,7 @@
 #include "GameCollisionComponent.h"
 #include "TextureComponent.h"
 
-dae::Emerald::Emerald(dae::GameObject*, glm::vec2 pos)
+dae::Emerald::Emerald(glm::vec2 pos)
 {
 	m_pEmerald = std::make_shared<dae::GameObject>("Emerald");
 

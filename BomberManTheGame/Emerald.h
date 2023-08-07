@@ -8,7 +8,7 @@ namespace dae
 	class Emerald
 	{
 	public:
-		Emerald(dae::GameObject* owner, glm::vec2 pos);
+		Emerald(glm::vec2 pos);
 		std::shared_ptr<dae::GameObject> ReturnEmerald() { return m_pEmerald; }
 
 		~Emerald() = default;

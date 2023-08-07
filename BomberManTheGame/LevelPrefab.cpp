@@ -24,7 +24,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 
 	glm::vec2 startPos{ (width / 2) - ((float(grid.first) / 2.f) * 24), (height / 2) - ((float(grid.second)/ 2.f) * 24) };
 	glm::vec2 pos{ startPos.x, startPos.y };
-
+ 
 	for (size_t i = 0; i < mapVector.size(); ++i)
 	{
 		auto pBlock = std::make_shared<dae::GameObject>();
@@ -127,7 +127,7 @@ void dae::LevelPrefab::AddEmeralds(dae::Scene& scene)
 {
 	for (size_t i = 0; i < m_EmeraldPositions.size(); ++i)
 	{
-		auto newEmerald = std::make_shared<dae::Emerald>(m_pLevelObj.get(), m_EmeraldPositions[i]);
+		auto newEmerald = std::make_shared<dae::Emerald>(m_EmeraldPositions[i]);
 		scene.Add(newEmerald->ReturnEmerald());
 	}
 }
@@ -137,7 +137,7 @@ void dae::LevelPrefab::AddGold(dae::Scene& scene)
 	for (size_t i = 0; i < m_GoldPositions.size(); ++i)
 	{
 		m_GoldPositions[i].y = m_GoldPositions[i].y + 3.0f;
-		auto newGold = std::make_shared<dae::Gold>(m_pLevelObj.get(), m_GoldPositions[i]);
+		auto newGold = std::make_shared<dae::Gold>(m_GoldPositions[i]);
 		scene.Add(newGold->ReturnGold());
 	}
 }

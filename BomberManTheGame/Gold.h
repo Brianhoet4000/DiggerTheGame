@@ -7,7 +7,7 @@ namespace dae
 	class Gold
 	{
 	public:
-		Gold(dae::GameObject* owner, glm::vec2 pos);
+		Gold(glm::vec2 pos);
 		std::shared_ptr<dae::GameObject> ReturnGold() { return m_pGold; }
 
 		~Gold() = default;

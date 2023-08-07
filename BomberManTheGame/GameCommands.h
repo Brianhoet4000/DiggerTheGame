@@ -4,7 +4,6 @@
 #include "GameCollisionComponent.h"
 #include "LevelPrefab.h"
 #include "ScreenManager.h"
-#include "ScreenManager.h"
 
 namespace GameCommands
 {
@@ -15,10 +14,19 @@ namespace GameCommands
 		glm::vec2 m_Dir{};
 		dae::GameCollisionComponent* m_pCollision;
 		bool m_Digger;
-		bool DoOnce = false;
-		std::vector<dae::GameCollisionComponent*> m_pWallcollision;
+		bool m_DoOnce = false;
 	public:
 		DiggerMovement(dae::GameObject* owner, const glm::vec2& dir, bool digger);
+		virtual void Execute(float deltaTime) override;
+	};
+
+	class ShootingBullet : public dae::Command
+	{
+	private:
+		glm::vec2 m_Dir{};
+		dae::Scene* m_Scene;
+	public:
+		ShootingBullet(dae::GameObject* owner,dae::Scene* scene);
 		virtual void Execute(float deltaTime) override;
 	};
 

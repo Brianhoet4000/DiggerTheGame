@@ -1,10 +1,12 @@
 #include "GameCommands.h"
 
+#include "Bullet.h"
 #include "CollisionBoxManager.h"
 #include "GameCollisionMngr.h"
-#include "GoldState.h"
+#include "GoldStateComponent.h"
 #include "InputManager.h"
 #include "ServiceLocator.h"
+#include "ShootingDirComponent.h"
 
 GameCommands::DiggerMovement::DiggerMovement(dae::GameObject* owner, const glm::vec2& dir, bool digger)
 {
@@ -19,14 +21,36 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
     if (m_pGameObject->ReturnDeleting()) return;
 
     glm::vec2 pos = m_pGameObject->GetRelativePosition();
-
-    glm::vec2 upMiddel = { m_pGameObject->GetRelativePosition().x / 2 , m_pGameObject->GetRelativePosition().y };
-    glm::vec2 downMiddel = { m_pGameObject->GetRelativePosition().x , m_pGameObject->GetRelativePosition().y + 24 };
-    glm::vec2 Leftmiddel = { m_pGameObject->GetRelativePosition().x , m_pGameObject->GetRelativePosition().y + 12 };
-    glm::vec2 Rightmiddel = { m_pGameObject->GetRelativePosition().x + 24 , m_pGameObject->GetRelativePosition().y + 12 };
+   
+    //glm::vec2 upMiddel = { m_pGameObject->GetRelativePosition().x / 2 , m_pGameObject->GetRelativePosition().y };
+    //glm::vec2 downMiddel = { m_pGameObject->GetRelativePosition().x , m_pGameObject->GetRelativePosition().y + 24 };
+    //glm::vec2 Leftmiddel = { m_pGameObject->GetRelativePosition().x , m_pGameObject->GetRelativePosition().y + 12 };
+    //glm::vec2 Rightmiddel = { m_pGameObject->GetRelativePosition().x + 24 , m_pGameObject->GetRelativePosition().y + 12 };
 
     if (m_Digger) //Single/Coop -> Digger
     {
+        //ShootingDir
+        {
+            auto shootingstate = m_pGameObject->GetComponent<dae::ShootingDirComponent>();
+
+            if (m_Dir.x > 0)
+            {
+                shootingstate->SetFaceState(dae::ShootingDirComponent::Right);
+            }
+            if (m_Dir.x < 0)
+            {
+                shootingstate->SetFaceState(dae::ShootingDirComponent::Left);
+            }
+            if (m_Dir.y < 0)
+            {
+                shootingstate->SetFaceState(dae::ShootingDirComponent::Up);
+            }
+            if (m_Dir.y > 0)
+            {
+                shootingstate->SetFaceState(dae::ShootingDirComponent::Down);
+            }
+        }
+
         dae::GameCollisionMngr::GetInstance().PlayerLogicBox(m_pGameObject->GetComponent<dae::GameCollisionComponent>(), m_Dir);
 
         if (!dae::GameCollisionMngr::GetInstance().Raycast(m_pGameObject->GetRelativePosition(), m_Dir, m_pCollision, false))
@@ -47,6 +71,41 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
     m_pGameObject->SetRelativePosition(pos);
 }
 
+GameCommands::ShootingBullet::ShootingBullet(dae::GameObject* owner,dae::Scene* scene)
+{
+    m_pGameObject = owner;
+    m_Scene = scene;
+}
+
+void GameCommands::ShootingBullet::Execute(float)
+{
+    if(GetKeyPressed()) return;
+
+    auto shootingState = m_pGameObject->GetComponent<dae::ShootingDirComponent>();
+
+    if(shootingState->returnFaceState() == dae::ShootingDirComponent::Right)
+    {
+        m_Dir = { 1,0 };
+    }
+    if (shootingState->returnFaceState() == dae::ShootingDirComponent::Left)
+    {
+        m_Dir = { -1,0 };
+    }
+    if (shootingState->returnFaceState() == dae::ShootingDirComponent::Up)
+    {
+        m_Dir = { 0,-1 };
+    }
+    if (shootingState->returnFaceState() == dae::ShootingDirComponent::Down)
+    {
+        m_Dir = { 0,1 };
+    }
+
+    auto bullet = std::make_shared<dae::Bullet>(m_pGameObject->GetRelativePosition(), m_Dir);
+    m_Scene->Add(bullet->ReturnBullet());
+
+    SetKeyPressed(true);
+}
+
 
 GameCommands::SwitchGameMode::SwitchGameMode(std::shared_ptr<dae::GameObject> owner, dae::GameObject* text, const int& currentScreen, dae::ScreenManager* screen)
 	:m_pScreen{owner},
@@ -60,11 +119,7 @@ void GameCommands::SwitchGameMode::Execute(float)
 {
     if (GetKeyPressed()) return;
 
-    std::cout << "Still goes\n";
-
     auto text = m_pTextMode->GetComponent<dae::TextComponent>();
-    //m_pScreenManager->SwitchScreens();
-    std::cout << m_CurrentScreen << '\n';
 
     switch (m_CurrentScreen)
     {
@@ -97,7 +152,6 @@ GameCommands::AcceptGameMode::AcceptGameMode(std::shared_ptr<dae::GameObject> ow
 
 void GameCommands::AcceptGameMode::Execute(float)
 {
-    //if (m_Pressed) return;
     if (GetKeyPressed()) return;
 
 
@@ -118,15 +172,6 @@ GameCommands::SkipLevel::SkipLevel(dae::GameObject* owner, dae::Scene* scene, da
 void GameCommands::SkipLevel::Execute(float)
 {
     m_pScene->Remove(m_pLevel->returnLevelObj());
-
-    //for (auto element : m_pScene->GetGameObjects())
-    //{
-    //    m_pScene->Remove(element);
-    //}
-
-    //dae::SceneManager::GetInstance().
-
-    //dae::InputManager::GetInstance().UnBindAllKeys();
 }
 
 void GameCommands::MuteMusic::Execute(float)

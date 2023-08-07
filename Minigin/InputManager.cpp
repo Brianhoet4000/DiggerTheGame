@@ -72,6 +72,10 @@ void dae::InputManager::ProcessControllerInput(float deltaTime)
             {
                 command.second->Execute(deltaTime);
             }
+            else
+            {
+                command.second->SetKeyPressed(false);
+            }
         }
     }
 }

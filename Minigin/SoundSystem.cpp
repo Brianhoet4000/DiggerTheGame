@@ -23,6 +23,8 @@ namespace dae
 
 		void playSound(const sound_id id, const int volume)
 		{
+			if (m_Muted) return;
+
 			auto playchunk = m_Sound.at(id);
 
 			if (playchunk == nullptr)
@@ -33,6 +35,7 @@ namespace dae
 		}
 		void playMusic(const sound_id id, const int volume)
 		{
+
 			auto playchunk = m_Sound.at(id);
 
 			if (playchunk == nullptr)

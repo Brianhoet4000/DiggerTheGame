@@ -1,10 +1,11 @@
 #include "GameCollisionMngr.h"
 #include "GameObject.h"
-#include "GoldState.h"
+#include "GoldStateComponent.h"
+#include "ServiceLocator.h"
 
 namespace dae
 {
-    class GoldState;
+    class GoldStateComponent;
 
     void dae::GameCollisionMngr::AddCollisionBox(dae::GameObject* owner, GameCollisionComponent* box)
     {
@@ -28,6 +29,10 @@ namespace dae
             {
                 m_pWallBoxes.push_back(box);
             }
+            else if(owner->GetTag() == "Bullet")
+            {
+                m_pBulletBoxes.push_back(box);
+            }
         }
     }
 
@@ -37,15 +42,23 @@ namespace dae
     }
     void dae::GameCollisionMngr::RemoveDirtBox(GameCollisionComponent* box)
     {
+        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
         m_pDirtBoxes.erase(std::remove(m_pDirtBoxes.begin(), m_pDirtBoxes.end(), box), m_pDirtBoxes.end());
     }
     void dae::GameCollisionMngr::RemoveEmeraldBox(GameCollisionComponent* box)
     {
+        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
         m_pEmeraldBoxes.erase(std::remove(m_pEmeraldBoxes.begin(), m_pEmeraldBoxes.end(), box), m_pEmeraldBoxes.end());
     }
     void dae::GameCollisionMngr::RemoveGoldBox(GameCollisionComponent* box)
     {
+        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
         m_pGoldBoxes.erase(std::remove(m_pGoldBoxes.begin(), m_pGoldBoxes.end(), box), m_pGoldBoxes.end());
+    }
+    void GameCollisionMngr::RemoveBulletBox(GameCollisionComponent* box)
+    {
+        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
+        m_pBulletBoxes.erase(std::remove(m_pBulletBoxes.begin(), m_pBulletBoxes.end(), box), m_pBulletBoxes.end());
     }
 
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllWallColliders()
@@ -150,11 +163,50 @@ namespace dae
         return nullptr;
     }
 
+    GameCollisionComponent* GameCollisionMngr::CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const
+    {
+        for (const auto& otherbox : m_pCollisonBoxes)
+        {
+            if (otherbox->GetOwner()->GetTag() == "Player_02" && otherbox->GetIsVersus())
+            {
+                if (otherbox == box)
+                    continue;
+
+                if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
+                    box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
+                    box->GetCollisionRect().y < otherbox->GetCollisionRect().y + otherbox->GetCollisionRect().h &&
+                    box->GetCollisionRect().y + box->GetCollisionRect().h > otherbox->GetCollisionRect().y)
+                {
+                    return otherbox;
+                }
+            }
+		}
+		return nullptr;
+    }
+
     bool dae::GameCollisionMngr::CheckForOverlapDirt(const dae::GameCollisionComponent* box) const
     {
         if (!m_pDirtBoxes.empty())
         {
             for (const auto& otherbox : m_pDirtBoxes)
+            {
+                if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
+                    box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
+                    box->GetCollisionRect().y < otherbox->GetCollisionRect().y + otherbox->GetCollisionRect().h &&
+                    box->GetCollisionRect().y + box->GetCollisionRect().h > otherbox->GetCollisionRect().y)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool GameCollisionMngr::CheckForOverlapWall(const dae::GameCollisionComponent* box) const
+    {
+        if (!m_pWallBoxes.empty())
+        {
+            for (const auto& otherbox : m_pWallBoxes)
             {
                 if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
                     box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
@@ -174,7 +226,7 @@ namespace dae
         {
             for (const auto& otherbox : m_pGoldBoxes)
             {
-                if (otherbox->GetOwner()->GetComponent<dae::GoldState>()->GetCoinsBool())
+                if (otherbox->GetOwner()->GetComponent<dae::GoldStateComponent>()->GetCoinsBool())
                 {
                     if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
                         box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
@@ -198,34 +250,32 @@ namespace dae
             //Dirt block delete
             if (OverlappedBox->GetOwner()->GetTag() == "Break")
             {
-                dae::GameCollisionMngr::GetInstance().RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
-                dae::GameCollisionMngr::GetInstance().RemoveDirtBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
+                RemoveDirtBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                 OverlappedBox->GetOwner()->MarkTrueForDeleting();
             }
 
             //Overlap with emerald pick up
             if (OverlappedBox->GetOwner()->GetTag() == "Emerald")
             {
-                RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                 RemoveEmeraldBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                 OverlappedBox->GetOwner()->MarkTrueForDeleting();
-                
+                dae::servicelocator::get_sound_system().playSound(1, m_Volume);
             }
 
             //Gold Related
             if (OverlappedBox->GetOwner()->GetTag() == "Gold")
             {
-                auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldState>();
+                auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldStateComponent>();
 
                 //If Gold not Broken and falls die
-                if(!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldState::Falling)
+                if(!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldStateComponent::Falling)
                 {
                     ownerBox->GetOwner()->MarkTrueForDeleting();
                     RemoveCollisionBox(ownerBox);
                 }
 
                 //Push Gold Left
-                if (goldState->GetMoneyBagState() != dae::GoldState::Falling
+                if (goldState->GetMoneyBagState() != dae::GoldStateComponent::Falling
                     && dir.x > 0)
                 {
                     glm::vec2 newPos = { OverlappedBox->GetOwner()->GetRelativePosition().x + m_Dim, OverlappedBox->GetOwner()->GetRelativePosition().y };
@@ -233,7 +283,7 @@ namespace dae
                     
                 }
                 //Push Gold Right
-                else if (goldState->GetMoneyBagState() != dae::GoldState::Falling
+                else if (goldState->GetMoneyBagState() != dae::GoldStateComponent::Falling
                     && dir.x < 0)
                 {
                     glm::vec2 newPos = { OverlappedBox->GetOwner()->GetRelativePosition().x - m_Dim * 2, OverlappedBox->GetOwner()->GetRelativePosition().y };
@@ -243,9 +293,9 @@ namespace dae
                 //If Gold Broken and overlap pick up
                 if (goldState->GetCoinsBool())
                 {
-                    RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                     RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                     OverlappedBox->GetOwner()->MarkTrueForDeleting();
+                    dae::servicelocator::get_sound_system().playSound(1, m_Volume);
                 }
             }
         }
@@ -260,12 +310,12 @@ namespace dae
         {
             if(OverlappedBox->GetOwner()->GetTag() == "Gold")
             {
-                auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldState>();
+                auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldStateComponent>();
 
                 if(OtherOverLappedBox != nullptr)
                 {
                     //If Gold not Broken and falls die
-                    if (!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldState::Falling)
+                    if (!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldStateComponent::Falling)
                     {
                         ownerBox->GetOwner()->MarkTrueForDeleting();
                         RemoveCollisionBox(ownerBox);
@@ -274,7 +324,7 @@ namespace dae
                     if(OtherOverLappedBox->GetOwner()->GetTag() == "Break")
                     {
                         //Push Gold Left
-                        if(goldState->GetMoneyBagState() != dae::GoldState::Falling && dir.x > 0)
+                        if(goldState->GetMoneyBagState() != dae::GoldStateComponent::Falling && dir.x > 0)
                         {
                             OtherOverLappedBox->GetOwner()->MarkTrueForDeleting();
                             RemoveDirtBox(OtherOverLappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
@@ -284,7 +334,7 @@ namespace dae
 
                         }
                         //Push Gold Right
-                        else if(goldState->GetMoneyBagState() != dae::GoldState::Falling && dir.x < 0)
+                        else if(goldState->GetMoneyBagState() != dae::GoldStateComponent::Falling && dir.x < 0)
                         {
                             OtherOverLappedBox->GetOwner()->MarkTrueForDeleting();
                             RemoveDirtBox(OtherOverLappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
@@ -298,9 +348,9 @@ namespace dae
                 //If Gold Broken and overlap pick up
                 if (goldState->GetCoinsBool())
                 {
-                    RemoveCollisionBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                     RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                     OverlappedBox->GetOwner()->MarkTrueForDeleting();
+                    dae::servicelocator::get_sound_system().playSound(1, m_Volume);
                 }
             }
         }

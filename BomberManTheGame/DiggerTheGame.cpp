@@ -18,9 +18,14 @@
 #include "ScreenManager.h"
 #include "ServiceLocator.h"
 #include "SoundSystem.h"
+#include <Renderer.h>
 
 void load()
 {
+	std::cout << "--Tab to switch gamemode--\n";
+	std::cout << "--E To Accept--\n";
+	std::cout << "--F2 To pause and resume music--\n";
+
 	std::cout << "--How To Play--\n";
 	std::cout << "WASD to move character\n";
 	std::cout << "Space to shoot\n";
@@ -29,6 +34,8 @@ void load()
 	
 	auto Screenmanager = std::make_unique<dae::ScreenManager>();
 	Screenmanager->CreateMenuScreen();
+	//const float scale{ 1.08f };
+	//SDL_RenderSetScale(dae::Renderer::GetInstance().GetSDLRenderer(), scale, scale);
 }
 
 int main(int, char* [])

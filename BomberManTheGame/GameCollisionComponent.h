@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 
-		GameCollisionComponent(GameObject* owner);
+		GameCollisionComponent(GameObject* owner, bool IsVersus = false);
 		virtual ~GameCollisionComponent() = default;
 		GameCollisionComponent(const GameCollisionComponent& other) = delete;
 		GameCollisionComponent(GameCollisionComponent&& other) = delete;
@@ -28,10 +28,13 @@ namespace dae
 		bool GetRenderCollisionBox() const { return m_RenderCollisionBox; }
 		void SetRenderCollisionBox(bool RenderCollisionBox) { m_RenderCollisionBox = RenderCollisionBox; }
 
+		bool GetIsVersus() const { return m_IsVersus; }
+
 	private:
 		SDL_FRect m_CollisionBox;
 		bool m_RenderCollisionBox = false;
 		float m_Offset = 0;
+		bool m_IsVersus;
 	};
 
 }

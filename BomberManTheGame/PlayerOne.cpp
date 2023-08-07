@@ -11,6 +11,7 @@
 #include "GameCommands.h"
 #include "Observer.h"
 #include "ResourceManager.h"
+#include "ShootingDirComponent.h"
 #include "UIComponent.h"
 
 dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shared_ptr<GameObject> background, LevelPrefab* level, bool ControllerEnabled)
@@ -23,12 +24,15 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	PlayerOneTex->SetTexture("Sprites/Player.png");
 	PlayerOne->AddComponent(PlayerOneTex);
 
-
 	//Collision
 	auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerOne.get());
 	PlayerOne->AddComponent(Collider);
 	Collider->SetCollisionRectOffset(5.f);
-	Collider->SetRenderCollisionBox(false);
+	Collider->SetRenderCollisionBox(true);
+
+	//ShootingDir
+	auto shootingDir = std::make_shared<ShootingDirComponent>();
+	PlayerOne->AddComponent(shootingDir);
 	
 
 	//Movement
@@ -36,12 +40,14 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(PlayerOne.get(), down, true);
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(PlayerOne.get(), left, true);
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(PlayerOne.get(), right, true);
+	std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(PlayerOne.get(),&scene);
 	std::shared_ptr<GameCommands::SkipLevel> SkipLevel = std::make_shared<GameCommands::SkipLevel>(PlayerOne.get(), &scene, level);
 
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_W, moveCommandUp);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_S, moveCommandDown);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_A, moveCommandLeft);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_D, moveCommandRight);
+	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_SPACE, ShootCommand);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_Q, SkipLevel);
 
 	if(ControllerEnabled)

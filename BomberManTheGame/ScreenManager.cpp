@@ -54,6 +54,8 @@ namespace dae
 
 		dae::servicelocator::register_sound_system(std::make_unique<dae::SoundSystem>());
 		dae::servicelocator::get_sound_system().Load(0, "GamePlaySound.wav");
+		dae::servicelocator::get_sound_system().Load(1, "PickupSound.wav");
+		dae::servicelocator::get_sound_system().Load(2, "MoneyBagBreaking.wav");
 		
 	}
 

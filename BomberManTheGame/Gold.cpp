@@ -2,10 +2,10 @@
 
 #include "CountDownTimer.h"
 #include "GameCollisionComponent.h"
-#include "GoldState.h"
+#include "GoldStateComponent.h"
 #include "TextureComponent.h"
 
-dae::Gold::Gold(dae::GameObject* , glm::vec2 pos)
+dae::Gold::Gold(glm::vec2 pos)
 {
 	m_pGold = std::make_shared<dae::GameObject>("Gold");
 
@@ -23,7 +23,7 @@ dae::Gold::Gold(dae::GameObject* , glm::vec2 pos)
 	m_pGold->AddComponent(pTimer);
 
 	//GoldLogic
-	auto pGoldStateCp = std::make_shared<GoldState>(m_pGold.get());
+	auto pGoldStateCp = std::make_shared<GoldStateComponent>(m_pGold.get());
 	m_pGold->AddComponent(pGoldStateCp);
 
 	//Pos

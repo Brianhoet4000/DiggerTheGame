@@ -12,6 +12,7 @@
 #include "GameCommands.h"
 #include "Observer.h"
 #include "ResourceManager.h"
+#include "ShootingDirComponent.h"
 #include "UIComponent.h"
 
 dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shared_ptr<GameObject> background, bool Coop)
@@ -19,12 +20,15 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	auto PlayerTwo = std::make_shared<dae::GameObject>("Player_02");
 	PlayerTwo->SetRelativePosition(PlayerStartPos);
 
-	
-
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandUp;
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandDown;
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandLeft;
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandRight;
+
+	int controller1Index{ 0 };
+	dae::InputManager::GetInstance().AddController(controller1Index);
+
+	dae::Controller::ControllerButton controllerButton{};
 
 	if (Coop)
 	{
@@ -35,13 +39,24 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 
 		//Collision
 		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get());
+		Collider->SetCollisionRectOffset(5.f);
 		PlayerTwo->AddComponent(Collider);
+
+		//ShootingDir
+		auto shootingDir = std::make_shared<ShootingDirComponent>();
+		PlayerTwo->AddComponent(shootingDir);
 
 		//Movement
 		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), up, true);
 		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), down, true);
 		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), left, true);
 		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), right, true);
+
+
+
+		std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(PlayerTwo.get(), &scene);
+		controllerButton = dae::Controller::ControllerButton::ButtonA;
+		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
 	}
 	else
 	{
@@ -51,7 +66,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		PlayerTwo->AddComponent(TexturePlayerTwo);
 
 		//Collision
-		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get());
+		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get(), true);
 		Collider->SetRenderCollisionBox(false);
 		PlayerTwo->AddComponent(Collider);
 
@@ -61,12 +76,6 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), right, false);
 	}
 
-	
-
-	int controller1Index{ 0 };
-	dae::InputManager::GetInstance().AddController(controller1Index);
-
-	dae::Controller::ControllerButton controllerButton{};
 
 	controllerButton = dae::Controller::ControllerButton::DpadUp;
 	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandUp);

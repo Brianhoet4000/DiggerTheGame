@@ -23,6 +23,7 @@ namespace dae
 		void RemoveDirtBox(GameCollisionComponent* box);
 		void RemoveEmeraldBox(GameCollisionComponent* box);
 		void RemoveGoldBox(GameCollisionComponent* box);
+		void RemoveBulletBox(GameCollisionComponent* box);
 
 		std::vector<GameCollisionComponent*> GetAllWallColliders();
 		std::vector<GameCollisionComponent*> GetAllDirtColliders();
@@ -33,7 +34,11 @@ namespace dae
 		GameCollisionComponent* CheckForCollisionComponent(const GameCollisionComponent* box) const;
 		GameCollisionComponent* CheckForGoldCollisionComponent(const GameCollisionComponent* box) const;
 		GameCollisionComponent* CheckForDirtCollisionComponent(const GameCollisionComponent* box) const;
+
+		GameCollisionComponent* CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const;
+
 		bool CheckForOverlapDirt(const dae::GameCollisionComponent* box) const;
+		bool CheckForOverlapWall(const dae::GameCollisionComponent* box) const;
 		bool CheckForOverlapBrokenGold(const dae::GameCollisionComponent* box) const;
 
 		void PlayerLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
@@ -47,9 +52,11 @@ namespace dae
 		std::vector<GameCollisionComponent*> m_pDirtBoxes;
 		std::vector<GameCollisionComponent*> m_pEmeraldBoxes;
 		std::vector<GameCollisionComponent*> m_pGoldBoxes;
+		std::vector<GameCollisionComponent*> m_pBulletBoxes;
 		const float m_Dim = 24.f;
 
-		GameCollisionComponent* m_pGoldBag;
+		//GameCollisionComponent* m_pGoldBag;
+		const int m_Volume{ 5 };
 	};
 
 }

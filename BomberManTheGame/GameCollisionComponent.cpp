@@ -5,7 +5,8 @@
 #include "Renderer.h"
 #include "TextureComponent.h"
 
-dae::GameCollisionComponent::GameCollisionComponent(dae::GameObject* owner)
+dae::GameCollisionComponent::GameCollisionComponent(dae::GameObject* owner, bool IsVersus)
+	:m_IsVersus{ IsVersus }
 {
 	m_pOwner = owner;
 	m_CollisionBox.w = m_pOwner->GetComponent<dae::TextureComponent>()->GetSize().x;
