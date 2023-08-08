@@ -187,6 +187,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClCompile Include="GameCollisionMngr.cpp" />
     <ClCompile Include="Gold.cpp" />
     <ClCompile Include="GoldStateComponent.cpp" />
+    <ClCompile Include="HobbinComponent.cpp" />
     <ClCompile Include="PlayerTwo.cpp" />
     <ClCompile Include="DiggerTheGame.cpp" />
     <ClCompile Include="GameCommands.cpp" />
@@ -203,6 +204,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClInclude Include="GameCollisionMngr.h" />
     <ClInclude Include="Gold.h" />
     <ClInclude Include="GoldStateComponent.h" />
+    <ClInclude Include="HobbinComponent.h" />
     <ClInclude Include="PlayerTwo.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="CountDownTimer.h" />

@@ -38,6 +38,11 @@ namespace dae
 		bool m_ResetEstimatedPos = false;
 		bool m_Broke = false;
 
+		bool m_StartTimer = false;
+		bool m_TimerDone = false;
+		float m_Startvalue = 3.f;
+		float m_Countdownvalue = 0.f;
+
 		MoneyBagState m_MoneyState{ Full };
 	};
 

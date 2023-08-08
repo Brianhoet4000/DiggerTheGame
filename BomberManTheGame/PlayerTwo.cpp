@@ -10,6 +10,7 @@
 #include "CollisionBoxComponent.h"
 #include "Counter.h"
 #include "GameCommands.h"
+#include "HobbinComponent.h"
 #include "Observer.h"
 #include "ResourceManager.h"
 #include "ShootingDirComponent.h"
@@ -69,6 +70,9 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get(), true);
 		Collider->SetRenderCollisionBox(false);
 		PlayerTwo->AddComponent(Collider);
+
+		auto Hobbin = std::make_shared<dae::HobbinComponent>(PlayerTwo.get());
+		PlayerTwo->AddComponent(Hobbin);
 
 		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), up, false);
 		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), down, false);
