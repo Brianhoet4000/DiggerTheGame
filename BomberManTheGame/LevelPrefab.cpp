@@ -7,11 +7,6 @@
 #include "GameCollisionComponent.h"
 #include "Gold.h"
 
-std::vector<glm::vec2> dae::LevelPrefab::GetSpawnPosition() const
-{
-	return m_SpawnPositions;
-}
-
 dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 {
 	auto pLevelObj = std::make_shared<dae::GameObject>();
@@ -80,6 +75,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 			break;
 		case 6:
 			//Enemies spawn
+			m_EnemySpawnPositions = pos;
 			break;
 			default:
 				//scene.Add(pBlock);

@@ -17,7 +17,8 @@ namespace dae
 		LevelPrefab& operator=(const LevelPrefab& other) = delete;
 		LevelPrefab& operator=(LevelPrefab&& other) = delete;
 
-		std::vector<glm::vec2> GetSpawnPosition() const;
+		std::vector<glm::vec2> GetSpawnPosition() const { return m_SpawnPositions; }
+		glm::vec2 GetEnemySpawnPosition() const { return m_EnemySpawnPositions; }
 		void AddBreakAbleBlocks(dae::Scene& scene);
 		void AddEmeralds(dae::Scene& scene);
 		void AddGold(dae::Scene& scene);
@@ -27,6 +28,7 @@ namespace dae
 
 	private:
 		std::vector<glm::vec2> m_SpawnPositions{};
+		glm::vec2 m_EnemySpawnPositions{};
 		std::vector<glm::vec2> m_BlockPositions{};
 		std::vector<glm::vec2> m_EmeraldPositions{};
 		std::vector<glm::vec2> m_GoldPositions{};

@@ -1,13 +1,8 @@
 #include "PlayerTwo.h"
-
 #include <algorithm>
-#include <SDL_scancode.h>
-
 #include "Commands.h"
 #include "InputManager.h"
 #include <TextureComponent.h>
-
-#include "CollisionBoxComponent.h"
 #include "Counter.h"
 #include "GameCommands.h"
 #include "HobbinComponent.h"
@@ -18,8 +13,8 @@
 
 dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shared_ptr<GameObject> background, bool Coop)
 {
-	auto PlayerTwo = std::make_shared<dae::GameObject>("Player_02");
-	PlayerTwo->SetRelativePosition(PlayerStartPos);
+	auto pPlayerTwo = std::make_shared<dae::GameObject>("Player_02");
+	pPlayerTwo->SetRelativePosition(PlayerStartPos);
 
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandUp;
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandDown;
@@ -34,50 +29,50 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	if (Coop)
 	{
 		//Texture Coop
-		auto TexturePlayerTwo = std::make_shared<dae::TextureComponent>(PlayerTwo.get());
-		TexturePlayerTwo->SetTexture("Sprites/Player1.png");
-		PlayerTwo->AddComponent(TexturePlayerTwo);
+		auto pTexture = std::make_shared<dae::TextureComponent>(pPlayerTwo.get());
+		pTexture->SetTexture("Sprites/Player1.png");
+		pPlayerTwo->AddComponent(pTexture);
 
 		//Collision
-		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get());
-		Collider->SetCollisionRectOffset(5.f);
-		PlayerTwo->AddComponent(Collider);
+		auto pCollider = std::make_shared<dae::GameCollisionComponent>(pPlayerTwo.get());
+		pCollider->SetCollisionRectOffset(5.f);
+		pPlayerTwo->AddComponent(pCollider);
 
 		//ShootingDir
-		auto shootingDir = std::make_shared<ShootingDirComponent>();
-		PlayerTwo->AddComponent(shootingDir);
+		auto pShootingDir = std::make_shared<ShootingDirComponent>();
+		pPlayerTwo->AddComponent(pShootingDir);
 
 		//Movement
-		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), up, true);
-		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), down, true);
-		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), left, true);
-		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), right, true);
+		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), up, true);
+		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), down, true);
+		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), left, true);
+		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), right, true);
 
 
 
-		std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(PlayerTwo.get(), &scene);
+		std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(pPlayerTwo.get(), &scene);
 		controllerButton = dae::Controller::ControllerButton::ButtonA;
 		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
 	}
 	else
 	{
 		//Texture Verus
-		auto TexturePlayerTwo = std::make_shared<dae::TextureComponent>(PlayerTwo.get());
-		TexturePlayerTwo->SetTexture("Sprites/Nobbin.png");
-		PlayerTwo->AddComponent(TexturePlayerTwo);
+		auto pTexture = std::make_shared<dae::TextureComponent>(pPlayerTwo.get());
+		pTexture->SetTexture("Sprites/Nobbin.png");
+		pPlayerTwo->AddComponent(pTexture);
 
 		//Collision
-		auto Collider = std::make_shared<dae::GameCollisionComponent>(PlayerTwo.get(), true);
-		Collider->SetRenderCollisionBox(false);
-		PlayerTwo->AddComponent(Collider);
+		auto pCollider = std::make_shared<dae::GameCollisionComponent>(pPlayerTwo.get(), true);
+		pCollider->SetRenderCollisionBox(false);
+		pPlayerTwo->AddComponent(pCollider);
 
-		auto Hobbin = std::make_shared<dae::HobbinComponent>(PlayerTwo.get());
-		PlayerTwo->AddComponent(Hobbin);
+		auto Hobbin = std::make_shared<dae::HobbinComponent>(pPlayerTwo.get());
+		pPlayerTwo->AddComponent(Hobbin);
 
-		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), up, false);
-		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), down, false);
-		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), left, false);
-		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(PlayerTwo.get(), right, false);
+		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), up, false);
+		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), down, false);
+		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), left, false);
+		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), right, false);
 	}
 
 
@@ -90,11 +85,11 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	controllerButton = dae::Controller::ControllerButton::DpadRight;
 	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandRight);
 
-	auto pHealth = std::make_shared<dae::HealthComponent>(PlayerTwo.get(), 4);
-	PlayerTwo->AddComponent(pHealth);
+	auto pHealth = std::make_shared<dae::HealthComponent>(pPlayerTwo.get(), 4);
+	pPlayerTwo->AddComponent(pHealth);
 
-	auto pPoints = std::make_shared<dae::PointsComponent>(PlayerTwo.get(), 0);
-	PlayerTwo->AddComponent(pPoints);
+	auto pPoints = std::make_shared<dae::PointsComponent>(pPlayerTwo.get(), 0);
+	pPlayerTwo->AddComponent(pPoints);
 
 	//HealthCommand* dieCommand = new HealthCommand{ GameObjBomberman.get() };
 	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_O, dieCommand);
@@ -102,7 +97,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_P, pointCommand);
 
 	auto pUIObserver = std::make_shared<UI>();
-	PlayerTwo->MakeObserver(pUIObserver);
+	pPlayerTwo->MakeObserver(pUIObserver);
 
 	//Lives Display
 	auto PlayerTwoLives = std::make_shared<dae::GameObject>("Player_02");
@@ -124,5 +119,5 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	scene.Add(PlayerTwoPoints);
 
 
-	scene.Add(PlayerTwo);
+	scene.Add(pPlayerTwo);
 }

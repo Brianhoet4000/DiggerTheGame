@@ -5,7 +5,7 @@
 namespace dae
 {
 
-	class Emerald
+	class Emerald final
 	{
 	public:
 		Emerald(glm::vec2 pos);

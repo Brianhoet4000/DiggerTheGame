@@ -34,6 +34,10 @@ namespace dae
             {
                 m_pBulletBoxes.push_back(box);
             }
+            else if(owner->GetTag() == "Enemy")
+            {
+                m_pEnemies.push_back(box);
+            }
         }
     }
 
@@ -416,6 +420,40 @@ namespace dae
             }
         }
         return true;
+    }
+
+    bool GameCollisionMngr::AIRaycast(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* collisionbox) const
+    {
+        glm::vec2 startPos = startpos;
+        startPos.x += collisionbox->GetCollisionRect().w / 2.0f;
+        startPos.y += collisionbox->GetCollisionRect().h / 2.0f;
+
+        float distance = collisionbox->GetCollisionRect().w / 2.f;
+        const float offset{ 2.f };
+        // Check for collision with obstacles
+        for (const auto& boxes : m_pWallBoxes)
+        {
+
+            if (startPos.x + (direction.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
+                startPos.x + direction.x * distance - offset >= boxes->GetCollisionRect().x &&
+                startPos.y + (direction.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&
+                startPos.y + direction.y * distance - offset >= boxes->GetCollisionRect().y)
+            {
+                return true;
+            }
+        }
+        for (const auto& boxes : m_pDirtBoxes)
+        {
+            if (startPos.x + (direction.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
+                startPos.x + direction.x * distance - offset >= boxes->GetCollisionRect().x &&
+                startPos.y + (direction.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&
+                startPos.y + direction.y * distance - offset >= boxes->GetCollisionRect().y)
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
 }

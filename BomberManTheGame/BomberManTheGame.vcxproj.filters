@@ -65,6 +65,12 @@
     <ClCompile Include="HobbinComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyPrefab.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="AIMovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
@@ -110,6 +116,12 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="HobbinComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPrefab.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="AIMovementComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

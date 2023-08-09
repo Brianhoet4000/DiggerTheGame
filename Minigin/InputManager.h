@@ -2,8 +2,7 @@
 #include "Singleton.h"
 #include "Controller.h"
 #include "Commands.h"
-#include <iostream>
-
+#include <SDL.h>
 #include <memory>
 #include <map>
 #include <vector>

@@ -46,6 +46,8 @@ namespace dae
 
 		bool Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* collisionbox, bool checkDirt) const;
 
+		bool AIRaycast(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* collisionbox) const;
+
 	private:
 		std::vector<GameCollisionComponent*> m_pCollisonBoxes;
 		std::vector<GameCollisionComponent*> m_pWallBoxes;
@@ -53,6 +55,7 @@ namespace dae
 		std::vector<GameCollisionComponent*> m_pEmeraldBoxes;
 		std::vector<GameCollisionComponent*> m_pGoldBoxes;
 		std::vector<GameCollisionComponent*> m_pBulletBoxes;
+		std::vector<GameCollisionComponent*> m_pEnemies;
 		const float m_Dim = 24.f;
 
 		//GameCollisionComponent* m_pGoldBag;

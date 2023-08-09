@@ -4,7 +4,7 @@
 namespace dae
 {
 
-	class Gold
+	class Gold final
 	{
 	public:
 		Gold(glm::vec2 pos);

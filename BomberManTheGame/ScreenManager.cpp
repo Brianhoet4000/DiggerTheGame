@@ -3,6 +3,7 @@
 #include <SDL_scancode.h>
 #include <glm/vec2.hpp>
 
+#include "EnemyPrefab.h"
 #include "GameCommands.h"
 #include "FPSCounterComponent.h"
 #include "InputManager.h"
@@ -100,7 +101,9 @@ namespace dae
 			//Level
 			auto Level = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
 
-			auto Player = std::make_shared<PlayerOne>(scene, Level->GetSpawnPosition()[0], GameObjBackGround, Level.get(), true);
+			auto player = std::make_shared<PlayerOne>(scene, Level->GetSpawnPosition()[0], GameObjBackGround, Level.get(), true);
+
+			auto enemy = std::make_shared<EnemyPrefab>(scene, Level->GetEnemySpawnPosition());
 		}
 		
 		if (m_CurrentScreen == GameMode::Coop)

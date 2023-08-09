@@ -3,7 +3,7 @@
 
 namespace dae
 {
-	class Bullet
+	class Bullet final
 	{
 	public:
 		Bullet(glm::vec2 pos, glm::vec2 vel);

@@ -80,7 +80,6 @@ void dae::GoldStateComponent::Update(float deltaTime)
 	if (m_TimerDone)
 	{
 		//Falling
-		std::cout << "Falling\n";
 		const glm::vec2 newPos = m_pOwner->GetRelativePosition();
 		m_MoneyState = Falling;
 		m_pOwner->SetRelativePosition(newPos.x, newPos.y + m_Speed * deltaTime);
