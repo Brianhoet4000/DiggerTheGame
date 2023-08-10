@@ -71,6 +71,9 @@
     <ClCompile Include="AIMovementComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="BulletTimerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
@@ -122,6 +125,9 @@
       <Filter>Prefab</Filter>
     </ClInclude>
     <ClInclude Include="AIMovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletTimerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

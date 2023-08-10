@@ -1,7 +1,5 @@
 #pragma once
-#include <memory>
 #include <glm/vec2.hpp>
-
 #include "BaseComponent.h"
 
 namespace dae
@@ -11,7 +9,7 @@ namespace dae
 	{
 	public:
 
-		BulletComponent(dae::GameObject* owner, glm::vec2 vel);
+		BulletComponent(dae::GameObject* owner, glm::vec2 vel, int amountOfBounces);
 		virtual ~BulletComponent() override = default;
 		BulletComponent(const BulletComponent& other) = delete;
 		BulletComponent(BulletComponent&& other) = delete;
@@ -22,6 +20,9 @@ namespace dae
 
 	private:
 		glm::vec2 m_vel;
+		int m_Bounce;
+		int m_AmountOfBounce;
+		const float m_Speed;
 	};
 
 }

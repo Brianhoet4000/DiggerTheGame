@@ -75,11 +75,14 @@ GameCommands::ShootingBullet::ShootingBullet(dae::GameObject* owner,dae::Scene* 
 {
     m_pGameObject = owner;
     m_Scene = scene;
+    m_pBulletTimer = owner->GetComponent<dae::BulletTimerComponent>();
 }
 
 void GameCommands::ShootingBullet::Execute(float)
 {
     if(GetKeyPressed()) return;
+
+    if (m_pBulletTimer->ReturnHasShot()) return;
 
     auto shootingState = m_pGameObject->GetComponent<dae::ShootingDirComponent>();
 
@@ -101,6 +104,7 @@ void GameCommands::ShootingBullet::Execute(float)
     }
 
     auto bullet = std::make_shared<dae::Bullet>(m_pGameObject->GetRelativePosition(), m_Dir);
+    m_pBulletTimer->SetHasShot(true);
     m_Scene->Add(bullet->ReturnBullet());
 
     SetKeyPressed(true);

@@ -1,4 +1,5 @@
 #pragma once
+#include "BulletTimerComponent.h"
 #include "Commands.h"
 #include "CountDownTimer.h"
 #include "GameCollisionComponent.h"
@@ -25,6 +26,7 @@ namespace GameCommands
 	private:
 		glm::vec2 m_Dir{};
 		dae::Scene* m_Scene;
+		dae::BulletTimerComponent* m_pBulletTimer{};
 	public:
 		ShootingBullet(dae::GameObject* owner,dae::Scene* scene);
 		virtual void Execute(float deltaTime) override;

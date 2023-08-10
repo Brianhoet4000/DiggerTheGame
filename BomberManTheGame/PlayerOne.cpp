@@ -26,6 +26,10 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	pCollider->SetCollisionRectOffset(5.f);
 	pCollider->SetRenderCollisionBox(false);
 
+	//BulletTimer
+	auto pTimer = std::make_shared<dae::BulletTimerComponent>(pPlayerOne.get());
+	pPlayerOne->AddComponent(pTimer);
+
 	//ShootingDir
 	auto pShootingDir = std::make_shared<ShootingDirComponent>();
 	pPlayerOne->AddComponent(pShootingDir);
@@ -61,6 +65,8 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandLeft);
 		controllerButton = dae::Controller::ControllerButton::DpadRight;
 		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandRight);
+		controllerButton = dae::Controller::ControllerButton::ButtonA;
+		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
 	}
 
 	auto pHealth = std::make_shared<dae::HealthComponent>(pPlayerOne.get(), 4);

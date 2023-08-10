@@ -38,6 +38,10 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		pCollider->SetCollisionRectOffset(5.f);
 		pPlayerTwo->AddComponent(pCollider);
 
+		//BulletTimer
+		auto pTimer = std::make_shared<dae::BulletTimerComponent>(pPlayerTwo.get());
+		pPlayerTwo->AddComponent(pTimer);
+
 		//ShootingDir
 		auto pShootingDir = std::make_shared<ShootingDirComponent>();
 		pPlayerTwo->AddComponent(pShootingDir);
