@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include "BaseComponent.h"
-#include "CountDownTimer.h"
+//#include "CountDownTimer.h"
 
 namespace dae
 {
@@ -31,7 +31,6 @@ namespace dae
 
 	private:
 		glm::vec2 m_Direction{ 0,5 };
-		dae::CountDownTimer* m_pTimer;
 		const float m_Speed{ 35.f };
 		glm::vec2 m_EstimatedPos;
 

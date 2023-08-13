@@ -38,6 +38,14 @@ namespace dae
             {
                 m_pEnemies.push_back(box);
             }
+            else if(owner->GetTag() == "Player_01")
+            {
+                m_pFirstPlayer = box;
+            }
+            else if(owner->GetTag() == "Player_02")
+            {
+                m_pSecondPlayer = box;
+            }
         }
     }
 
@@ -47,44 +55,82 @@ namespace dae
     }
     void dae::GameCollisionMngr::RemoveDirtBox(GameCollisionComponent* box)
     {
-        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
+        RemoveCollisionBox(box);
         m_pDirtBoxes.erase(std::remove(m_pDirtBoxes.begin(), m_pDirtBoxes.end(), box), m_pDirtBoxes.end());
     }
     void dae::GameCollisionMngr::RemoveEmeraldBox(GameCollisionComponent* box)
     {
-        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
+        RemoveCollisionBox(box);
         m_pEmeraldBoxes.erase(std::remove(m_pEmeraldBoxes.begin(), m_pEmeraldBoxes.end(), box), m_pEmeraldBoxes.end());
     }
     void dae::GameCollisionMngr::RemoveGoldBox(GameCollisionComponent* box)
     {
-        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
-        m_pGoldBoxes.erase(std::remove(m_pGoldBoxes.begin(), m_pGoldBoxes.end(), box), m_pGoldBoxes.end());
+        RemoveCollisionBox(box);
+    	m_pGoldBoxes.erase(std::remove(m_pGoldBoxes.begin(), m_pGoldBoxes.end(), box), m_pGoldBoxes.end());
     }
     void GameCollisionMngr::RemoveBulletBox(GameCollisionComponent* box)
     {
-        m_pCollisonBoxes.erase(std::remove(m_pCollisonBoxes.begin(), m_pCollisonBoxes.end(), box), m_pCollisonBoxes.end());
+        RemoveCollisionBox(box);
         m_pBulletBoxes.erase(std::remove(m_pBulletBoxes.begin(), m_pBulletBoxes.end(), box), m_pBulletBoxes.end());
     }
+    void GameCollisionMngr::RemoveFirstPlayerBox(GameCollisionComponent* box)
+    {
+        m_pFirstPlayer = nullptr;
+        RemoveCollisionBox(box);
+    }
+    void GameCollisionMngr::RemoveSecondPlayerBox(GameCollisionComponent* box)
+    {
+        m_pSecondPlayer = nullptr;
+        RemoveCollisionBox(box);
+    }
 
-    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllWallColliders()
+    void GameCollisionMngr::RemoveEnemyBox(GameCollisionComponent* box)
+    {
+        RemoveCollisionBox(box);
+        m_pEnemies.erase(std::remove(m_pEnemies.begin(), m_pEnemies.end(), box), m_pEnemies.end());
+    }
+
+    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllWall()
     {
         std::cout << "Wall: " << m_pWallBoxes.size() << "\n";
         return m_pWallBoxes;
     }
-    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllDirtColliders()
+    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllDirt()
     {
         std::cout << "Dirt: " << m_pDirtBoxes.size() << "\n";
         return m_pDirtBoxes;
     }
-    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllEmeraldColliders()
+    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllEmerald()
     {
         std::cout << "Emerald: " << m_pEmeraldBoxes.size() << "\n";
         return m_pEmeraldBoxes;
     }
-    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllGoldColliders()
+    std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllGold()
     {
         std::cout << "Gold: " << m_pGoldBoxes.size() << "\n";
         return m_pGoldBoxes;
+    }
+    std::vector<dae::GameCollisionComponent*> GameCollisionMngr::GetAllEnemies()
+    {
+        return m_pEnemies;
+    }
+
+    std::vector<GameCollisionComponent*> GameCollisionMngr::GetAllPlayers() const
+    {
+        std::vector<dae::GameCollisionComponent*> pPlayers;
+
+        pPlayers.push_back(m_pFirstPlayer);
+
+
+        if (m_pSecondPlayer != nullptr)
+        {
+            if (!m_pSecondPlayer->GetIsVersus())
+            {
+                pPlayers.push_back(m_pSecondPlayer);
+            }
+        }
+
+        return pPlayers;
     }
 
     bool dae::GameCollisionMngr::CheckForCollision(const GameCollisionComponent* box) const
@@ -168,6 +214,27 @@ namespace dae
         return nullptr;
     }
 
+    GameCollisionComponent* GameCollisionMngr::CheckOverlapWithEnemiesComponent(const GameCollisionComponent* box) const
+    {
+        if (!m_pEnemies.empty())
+        {
+            for (const auto& otherBox : m_pEnemies)
+            {
+                if (otherBox == box)
+                    continue;
+
+                if (box->GetCollisionRect().x < otherBox->GetCollisionRect().x + otherBox->GetCollisionRect().w &&
+                    box->GetCollisionRect().x + box->GetCollisionRect().w > otherBox->GetCollisionRect().x &&
+                    box->GetCollisionRect().y < otherBox->GetCollisionRect().y + otherBox->GetCollisionRect().h &&
+                    box->GetCollisionRect().y + box->GetCollisionRect().h > otherBox->GetCollisionRect().y)
+                {
+                    return otherBox;
+                }
+            }
+        }
+        return nullptr;
+    }
+
     GameCollisionComponent* GameCollisionMngr::CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const
     {
         for (const auto& otherbox : m_pCollisonBoxes)
@@ -187,6 +254,59 @@ namespace dae
             }
 		}
 		return nullptr;
+    }
+
+    GameCollisionComponent* GameCollisionMngr::CheckOverlapWithPlayers(const GameCollisionComponent* box) const
+    {
+	    for (const auto& player : m_pCollisonBoxes)
+	    {
+		    if(player->GetOwner()->GetTag() == "Player_01")
+		    {
+                if (box->GetCollisionRect().x < player->GetCollisionRect().x + player->GetCollisionRect().w &&
+                    box->GetCollisionRect().x + box->GetCollisionRect().w > player->GetCollisionRect().x &&
+                    box->GetCollisionRect().y < player->GetCollisionRect().y + player->GetCollisionRect().h &&
+                    box->GetCollisionRect().y + box->GetCollisionRect().h > player->GetCollisionRect().y)
+                {
+                    return player;
+                }
+		    }
+
+            if(player->GetOwner()->GetTag() == "Player_02")
+            {
+                if(!player->GetIsVersus())
+                {
+                    if (box->GetCollisionRect().x < player->GetCollisionRect().x + player->GetCollisionRect().w &&
+                        box->GetCollisionRect().x + box->GetCollisionRect().w > player->GetCollisionRect().x &&
+                        box->GetCollisionRect().y < player->GetCollisionRect().y + player->GetCollisionRect().h &&
+                        box->GetCollisionRect().y + box->GetCollisionRect().h > player->GetCollisionRect().y)
+                    {
+                        return player;
+                    }
+                }
+            }
+	    }
+        return nullptr;
+    }
+
+    bool GameCollisionMngr::CheckOverlapWithEnemies(const GameCollisionComponent* box) const
+    {
+        if (!m_pEnemies.empty())
+        {
+            for (const auto& otherbox : m_pEnemies)
+            {
+                if (otherbox == box)
+                    continue;
+
+                if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
+                    box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
+                    box->GetCollisionRect().y < otherbox->GetCollisionRect().y + otherbox->GetCollisionRect().h &&
+                    box->GetCollisionRect().y + box->GetCollisionRect().h > otherbox->GetCollisionRect().y)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     bool dae::GameCollisionMngr::CheckForOverlapDirt(const dae::GameCollisionComponent* box) const
@@ -246,9 +366,9 @@ namespace dae
         return false;
     }
 
-    void GameCollisionMngr::PlayerLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir)
+    void GameCollisionMngr::PlayerLogicBox(dae::GameCollisionComponent* box, glm::vec2 dir)
     {
-        auto OverlappedBox = CheckForCollisionComponent(ownerBox);
+        auto OverlappedBox = CheckForCollisionComponent(box);
 
         if (OverlappedBox != nullptr)
         {
@@ -275,8 +395,8 @@ namespace dae
                 //If Gold not Broken and falls die
                 if(!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldStateComponent::Falling)
                 {
-                    ownerBox->GetOwner()->MarkTrueForDeleting();
-                    RemoveCollisionBox(ownerBox);
+                    box->GetOwner()->MarkTrueForDeleting();
+                    RemoveCollisionBox(box);
                 }
 
                 //Push Gold Left
@@ -306,15 +426,15 @@ namespace dae
         }
     }
 
-    void GameCollisionMngr::NobbinLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir)
+    void GameCollisionMngr::NobbinLogicBox(dae::GameCollisionComponent* box, glm::vec2 dir)
     {
-        auto GoldOverlappedBox = CheckForGoldCollisionComponent(ownerBox);
-        auto DirtOverlappedBox = CheckForDirtCollisionComponent(ownerBox);
+        auto GoldOverlappedBox = CheckForGoldCollisionComponent(box);
+        auto DirtOverlappedBox = CheckForDirtCollisionComponent(box);
 
         //Hobbin
         if (DirtOverlappedBox != nullptr)
         {
-            if (ownerBox->GetOwner()->GetComponent<dae::HobbinComponent>()->ReturnCharacterState() == dae::HobbinComponent::Hobbin)
+            if (box->GetOwner()->GetComponent<dae::HobbinComponent>()->ReturnCharacterState() == dae::HobbinComponent::Hobbin)
             {
                 //Dirt block delete
                 if (DirtOverlappedBox->GetOwner()->GetTag() == "Break")
@@ -337,8 +457,8 @@ namespace dae
                     //If Gold not Broken and falls die
                     if (!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldStateComponent::Falling)
                     {
-                        ownerBox->GetOwner()->MarkTrueForDeleting();
-                        RemoveCollisionBox(ownerBox);
+                        box->GetOwner()->MarkTrueForDeleting();
+                        RemoveCollisionBox(box);
                     }
 
                     if(DirtOverlappedBox->GetOwner()->GetTag() == "Break")
@@ -376,7 +496,7 @@ namespace dae
         }
     }
 
-    bool dae::GameCollisionMngr::Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* collisionbox, bool checkDirt) const
+    bool dae::GameCollisionMngr::Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* box, bool checkDirt) const
     {
         /*
         std::cout << "Wall: " << m_pWallBoxes.size() << '\n';
@@ -386,11 +506,11 @@ namespace dae
         */
 
         glm::vec2 startPos = startpos;
-        startPos.x += collisionbox->GetCollisionRect().w / 2.0f;
-        startPos.y += collisionbox->GetCollisionRect().h / 2.0f;
+        startPos.x += box->GetCollisionRect().w / 2.0f;
+        startPos.y += box->GetCollisionRect().h / 2.0f;
 
         glm::vec2 dir = glm::normalize(direction);
-        float distance = collisionbox->GetCollisionRect().w / 2.f;
+        float distance = box->GetCollisionRect().w / 2.f;
         const float offset{ 1.f };
         // Check for collision with obstacles
         for (const auto& boxes : m_pWallBoxes)
@@ -422,14 +542,14 @@ namespace dae
         return true;
     }
 
-    bool GameCollisionMngr::AIRaycast(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* collisionbox) const
+    bool GameCollisionMngr::AIRaycast(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const
     {
         glm::vec2 startPos = startpos;
-        startPos.x += collisionbox->GetCollisionRect().w / 2.0f;
-        startPos.y += collisionbox->GetCollisionRect().h / 2.0f;
+        startPos.x += box->GetCollisionRect().w / 2.0f;
+        startPos.y += box->GetCollisionRect().h / 2.0f;
 
-        float distance = collisionbox->GetCollisionRect().w / 2.f;
-        const float offset{ 2.f };
+        float distance = box->GetCollisionRect().w / 2.f;
+        const float offset{ -0.5f };
         // Check for collision with obstacles
         for (const auto& boxes : m_pWallBoxes)
         {
@@ -453,6 +573,113 @@ namespace dae
             }
         }
         
+        return false;
+    }
+
+    bool GameCollisionMngr::AIRaycastUp(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const
+    {
+        glm::vec2 startPos = startpos;
+        startPos.y += box->GetCollisionRect().h / 2.0f;
+
+        float distance = box->GetCollisionRect().w / 2.f;
+        const float offset{ 2.f };
+        // Check for collision with obstacles
+        for (const auto& boxes : m_pWallBoxes)
+        {
+
+            if (startPos.y + direction.y * distance - offset >= boxes->GetCollisionRect().y)
+            {
+                return true;
+            }
+        }
+        for (const auto& boxes : m_pDirtBoxes)
+        {
+            if (startPos.y + direction.y * distance - offset >= boxes->GetCollisionRect().y)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool GameCollisionMngr::AIRaycastRight(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const
+    {
+        glm::vec2 startPos = startpos;
+        startPos.x += box->GetCollisionRect().w / 2.0f;
+
+        float distance = box->GetCollisionRect().w / 2.f;
+        const float offset{ 2.f };
+        // Check for collision with obstacles
+        for (const auto& boxes : m_pWallBoxes)
+        {
+            if (startPos.x + direction.x * distance - offset >= boxes->GetCollisionRect().x)
+            {
+                return true;
+            }
+        }
+        for (const auto& boxes : m_pDirtBoxes)
+        {
+            if (startPos.x + direction.x * distance - offset >= boxes->GetCollisionRect().x)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool GameCollisionMngr::AIRaycastLeft(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const
+    {
+        glm::vec2 startPos = startpos;
+        startPos.x += box->GetCollisionRect().w / 2.0f;
+        startPos.y += box->GetCollisionRect().h / 2.0f;
+
+        float distance = box->GetCollisionRect().w / 2.f;
+        const float offset{ 2.f };
+        // Check for collision with obstacles
+        for (const auto& boxes : m_pWallBoxes)
+        {
+
+            if (startPos.x + (direction.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w)
+            {
+                return true;
+            }
+        }
+        for (const auto& boxes : m_pDirtBoxes)
+        {
+            if (startPos.x + (direction.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool GameCollisionMngr::AIRaycastDown(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const
+    {
+        glm::vec2 startPos = startpos;
+        startPos.y += box->GetCollisionRect().h / 2.0f;
+
+        float distance = box->GetCollisionRect().w / 2.f;
+        const float offset{ 2.f };
+        // Check for collision with obstacles
+        for (const auto& boxes : m_pWallBoxes)
+        {
+            if (startPos.y + (direction.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h)
+            {
+                return true;
+            }
+        }
+        for (const auto& boxes : m_pDirtBoxes)
+        {
+            if (startPos.y + (direction.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 

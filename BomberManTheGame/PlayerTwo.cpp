@@ -47,10 +47,10 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		pPlayerTwo->AddComponent(pShootingDir);
 
 		//Movement
-		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), up, true);
-		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), down, true);
-		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), left, true);
-		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), right, true);
+		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Up, true);
+		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Down, true);
+		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Left, true);
+		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Right, true);
 
 
 
@@ -60,6 +60,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	}
 	else
 	{
+		m_Speed = 75;
 		//Texture Verus
 		auto pTexture = std::make_shared<dae::TextureComponent>(pPlayerTwo.get());
 		pTexture->SetTexture("Sprites/Nobbin.png");
@@ -73,10 +74,10 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		auto Hobbin = std::make_shared<dae::HobbinComponent>(pPlayerTwo.get());
 		pPlayerTwo->AddComponent(Hobbin);
 
-		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), up, false);
-		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), down, false);
-		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), left, false);
-		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), right, false);
+		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Up, false);
+		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Down, false);
+		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Left, false);
+		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Right, false);
 	}
 
 

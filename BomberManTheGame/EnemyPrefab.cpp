@@ -7,27 +7,27 @@
 
 dae::EnemyPrefab::EnemyPrefab(dae::Scene& scene, glm::vec2 StartPos)
 {
-	auto pEnemyGameObject = std::make_shared<dae::GameObject>("Enemy");
-	pEnemyGameObject->SetRelativePosition(StartPos);
+	m_pEnemy = std::make_shared<dae::GameObject>("Enemy");
+	m_pEnemy->SetRelativePosition(StartPos);
 
 	//Texture
-	auto pTexture = std::make_shared<dae::TextureComponent>(pEnemyGameObject.get());
+	auto pTexture = std::make_shared<dae::TextureComponent>(m_pEnemy.get());
 	pTexture->SetTexture("Sprites/Nobbin.png");
-	pEnemyGameObject->AddComponent(pTexture);
+	m_pEnemy->AddComponent(pTexture);
 
 	//Collision
-	auto pCollider = std::make_shared<dae::GameCollisionComponent>(pEnemyGameObject.get());
-	pEnemyGameObject->AddComponent(pCollider);
-	//Collider->SetCollisionRectOffset(5.f);
+	auto pCollider = std::make_shared<dae::GameCollisionComponent>(m_pEnemy.get());
+	m_pEnemy->AddComponent(pCollider);
+	pCollider->SetCollisionRectOffset(0.2f);
 	pCollider->SetRenderCollisionBox(true);
 
 	//Hobbin
-	auto hobbinComponent = std::make_shared<dae::HobbinComponent>(pEnemyGameObject.get());
-	pEnemyGameObject->AddComponent(hobbinComponent);
+	auto hobbinComponent = std::make_shared<dae::HobbinComponent>(m_pEnemy.get());
+	m_pEnemy->AddComponent(hobbinComponent);
 
 	//AIMovement
-	auto AIMovement = std::make_shared<dae::AIMovementComponent>(pEnemyGameObject.get());
-	pEnemyGameObject->AddComponent(AIMovement);
+	auto AIMovement = std::make_shared<dae::AIMovementComponent>(m_pEnemy.get());
+	m_pEnemy->AddComponent(AIMovement);
 
-	scene.Add(pEnemyGameObject);
+	scene.Add(m_pEnemy);
 }

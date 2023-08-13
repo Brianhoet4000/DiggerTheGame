@@ -17,8 +17,10 @@ namespace dae
 		EnemyPrefab& operator=(const EnemyPrefab& other) = delete;
 		EnemyPrefab& operator=(EnemyPrefab&& other) = delete;
 
-	private:
+		std::shared_ptr<dae::GameObject> returnGameObject() const {return m_pEnemy;}
 
+	private:
+		std::shared_ptr<dae::GameObject> m_pEnemy;
 	};
 
 }

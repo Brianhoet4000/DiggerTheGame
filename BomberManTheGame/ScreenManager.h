@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "Singleton.h"
 #include "TextComponent.h"
 
 namespace dae
@@ -33,7 +32,6 @@ namespace dae
 		}
 
 		void CreateAppropriateGameModeScreen();
-
 
 	private:
 

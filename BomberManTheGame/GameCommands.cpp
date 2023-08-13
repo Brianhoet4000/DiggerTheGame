@@ -21,17 +21,14 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
     if (m_pGameObject->ReturnDeleting()) return;
 
     glm::vec2 pos = m_pGameObject->GetRelativePosition();
-   
-    //glm::vec2 upMiddel = { m_pGameObject->GetRelativePosition().x / 2 , m_pGameObject->GetRelativePosition().y };
-    //glm::vec2 downMiddel = { m_pGameObject->GetRelativePosition().x , m_pGameObject->GetRelativePosition().y + 24 };
-    //glm::vec2 Leftmiddel = { m_pGameObject->GetRelativePosition().x , m_pGameObject->GetRelativePosition().y + 12 };
-    //glm::vec2 Rightmiddel = { m_pGameObject->GetRelativePosition().x + 24 , m_pGameObject->GetRelativePosition().y + 12 };
 
     if (m_Digger) //Single/Coop -> Digger
     {
         //ShootingDir
         {
             auto shootingstate = m_pGameObject->GetComponent<dae::ShootingDirComponent>();
+
+            if (shootingstate == nullptr) return;
 
             if (m_Dir.x > 0)
             {
@@ -82,9 +79,13 @@ void GameCommands::ShootingBullet::Execute(float)
 {
     if(GetKeyPressed()) return;
 
+    if (m_pGameObject == nullptr) return;
+
     if (m_pBulletTimer->ReturnHasShot()) return;
 
     auto shootingState = m_pGameObject->GetComponent<dae::ShootingDirComponent>();
+
+    if (shootingState == nullptr) return;
 
     if(shootingState->returnFaceState() == dae::ShootingDirComponent::Right)
     {
@@ -157,12 +158,13 @@ GameCommands::AcceptGameMode::AcceptGameMode(std::shared_ptr<dae::GameObject> ow
 void GameCommands::AcceptGameMode::Execute(float)
 {
     if (GetKeyPressed()) return;
-
+    if (m_Pressed) return;
 
     if(m_pScreenManager != nullptr)
     {
     m_pScreenManager->CreateAppropriateGameModeScreen();
     SetKeyPressed(true);
+    m_Pressed = true;
     }
 }
 

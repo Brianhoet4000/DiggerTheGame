@@ -17,7 +17,6 @@ namespace dae
 
 	private:
 		std::shared_ptr<dae::GameObject> m_pBullet;
-		dae::GameObject* m_pOwner;
 		glm::vec2 m_Vel;
 	};
 }

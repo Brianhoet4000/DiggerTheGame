@@ -24,29 +24,44 @@ namespace dae
 		void RemoveEmeraldBox(GameCollisionComponent* box);
 		void RemoveGoldBox(GameCollisionComponent* box);
 		void RemoveBulletBox(GameCollisionComponent* box);
+		void RemoveFirstPlayerBox(GameCollisionComponent* box);
+		void RemoveSecondPlayerBox(GameCollisionComponent* box);
+		void RemoveEnemyBox(GameCollisionComponent* box);
 
-		std::vector<GameCollisionComponent*> GetAllWallColliders();
-		std::vector<GameCollisionComponent*> GetAllDirtColliders();
-		std::vector<GameCollisionComponent*> GetAllEmeraldColliders();
-		std::vector<GameCollisionComponent*> GetAllGoldColliders();
+		std::vector<GameCollisionComponent*> GetAllWall();
+		std::vector<GameCollisionComponent*> GetAllDirt();
+		std::vector<GameCollisionComponent*> GetAllEmerald();
+		std::vector<GameCollisionComponent*> GetAllGold();
+		std::vector<GameCollisionComponent*> GetAllEnemies();
+		GameCollisionComponent* GetFirstPlayer() const { return m_pFirstPlayer; }
+		GameCollisionComponent* GetSecondPlayer() const { return m_pSecondPlayer; }
+		std::vector<GameCollisionComponent*> GetAllPlayers() const;
 
-		bool CheckForCollision(const GameCollisionComponent* box) const;
+		
 		GameCollisionComponent* CheckForCollisionComponent(const GameCollisionComponent* box) const;
 		GameCollisionComponent* CheckForGoldCollisionComponent(const GameCollisionComponent* box) const;
 		GameCollisionComponent* CheckForDirtCollisionComponent(const GameCollisionComponent* box) const;
+		GameCollisionComponent* CheckOverlapWithEnemiesComponent(const GameCollisionComponent* box) const;
 
 		GameCollisionComponent* CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const;
-
+		GameCollisionComponent* CheckOverlapWithPlayers(const GameCollisionComponent* box) const;
+		
+		bool CheckForCollision(const GameCollisionComponent* box) const;
 		bool CheckForOverlapDirt(const dae::GameCollisionComponent* box) const;
 		bool CheckForOverlapWall(const dae::GameCollisionComponent* box) const;
 		bool CheckForOverlapBrokenGold(const dae::GameCollisionComponent* box) const;
+		bool CheckOverlapWithEnemies(const GameCollisionComponent* box) const;
 
-		void PlayerLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
-		void NobbinLogicBox(dae::GameCollisionComponent* ownerBox, glm::vec2 dir);
+		void PlayerLogicBox(dae::GameCollisionComponent* box, glm::vec2 dir);
+		void NobbinLogicBox(dae::GameCollisionComponent* box, glm::vec2 dir);
 
-		bool Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* collisionbox, bool checkDirt) const;
+		bool Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* box, bool checkDirt) const;
 
-		bool AIRaycast(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* collisionbox) const;
+		bool AIRaycast(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const;
+		bool AIRaycastUp(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const;
+		bool AIRaycastRight(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const;
+		bool AIRaycastLeft(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const;
+		bool AIRaycastDown(glm::vec2 startpos, glm::vec2 direction, const dae::GameCollisionComponent* box) const;
 
 	private:
 		std::vector<GameCollisionComponent*> m_pCollisonBoxes;
@@ -56,9 +71,10 @@ namespace dae
 		std::vector<GameCollisionComponent*> m_pGoldBoxes;
 		std::vector<GameCollisionComponent*> m_pBulletBoxes;
 		std::vector<GameCollisionComponent*> m_pEnemies;
-		const float m_Dim = 24.f;
+		GameCollisionComponent* m_pFirstPlayer{nullptr};
+		GameCollisionComponent* m_pSecondPlayer{nullptr};
 
-		//GameCollisionComponent* m_pGoldBag;
+		const float m_Dim = 24.f;
 		const int m_Volume{ 5 };
 	};
 

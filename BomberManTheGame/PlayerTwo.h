@@ -16,11 +16,11 @@ namespace dae
 		PlayerTwo& operator=(PlayerTwo&& other) = delete;
 
 	private:
-		const float speed{ 50.f };
-		glm::vec2 up = { 0.f,-speed };
-		glm::vec2 down = { 0.f,speed };
-		glm::vec2 right = { speed,0.f };
-		glm::vec2 left = { -speed,0.f };
+		float m_Speed{ 50.f };
+		glm::vec2 m_Up = { 0.f,-m_Speed };
+		glm::vec2 m_Down = { 0.f,m_Speed };
+		glm::vec2 m_Right = { m_Speed,0.f };
+		glm::vec2 m_Left = { -m_Speed,0.f };
 	};
 
 }

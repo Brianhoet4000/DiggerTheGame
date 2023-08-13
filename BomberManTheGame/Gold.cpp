@@ -1,6 +1,6 @@
 #include "Gold.h"
 
-#include "CountDownTimer.h"
+//#include "CountDownTimer.h"
 #include "GameCollisionComponent.h"
 #include "GoldStateComponent.h"
 #include "TextureComponent.h"
@@ -19,8 +19,8 @@ dae::Gold::Gold(glm::vec2 pos)
 	pCollider->SetRenderCollisionBox(true);
 	m_pGold->AddComponent(pCollider);
 
-	auto pTimer = std::make_shared<dae::CountDownTimer>(m_pGold.get(), 3.f);
-	m_pGold->AddComponent(pTimer);
+	//auto pTimer = std::make_shared<dae::CountDownTimer>(m_pGold.get(), 3.f);
+	//m_pGold->AddComponent(pTimer);
 
 	//GoldLogic
 	auto pGoldStateCp = std::make_shared<GoldStateComponent>(m_pGold.get());

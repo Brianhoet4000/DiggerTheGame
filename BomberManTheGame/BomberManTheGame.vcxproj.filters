@@ -26,7 +26,7 @@
     <ClCompile Include="DiggerTheGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CountDownTimer.cpp">
+    <ClCompile Include="SpawnTimerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="LevelPrefab.cpp">
@@ -34,9 +34,6 @@
     </ClCompile>
     <ClCompile Include="GameCommands.cpp">
       <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="ScreenManager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerTwo.cpp">
       <Filter>Prefab</Filter>
@@ -74,12 +71,18 @@
     <ClCompile Include="BulletTimerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ScreenManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
       <Filter>Prefab</Filter>
     </ClInclude>
-    <ClInclude Include="CountDownTimer.h">
+    <ClInclude Include="SpawnTimerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelPrefab.h">
@@ -87,9 +90,6 @@
     </ClInclude>
     <ClInclude Include="GameCommands.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="ScreenManager.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerTwo.h">
       <Filter>Prefab</Filter>
@@ -129,6 +129,12 @@
     </ClInclude>
     <ClInclude Include="BulletTimerComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Prefab</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

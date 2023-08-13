@@ -30,8 +30,10 @@ namespace dae
 
 		void Update(float deltaTime) override;
 
+		void MoveAI(float deltaTime, glm::vec2 dir) const;
+
 	private:
-		float m_Speed{70.f};
+		float m_Speed{30.f};
 		GameCollisionComponent* m_pCollision;
 		glm::vec2 m_DirLeft{-1,0};
 		glm::vec2 m_DirRight{1, 0};

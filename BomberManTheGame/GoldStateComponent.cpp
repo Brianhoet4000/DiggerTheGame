@@ -8,7 +8,6 @@
 dae::GoldStateComponent::GoldStateComponent(dae::GameObject* owner)
 {
 	m_pOwner = owner;
-	m_pTimer = m_pOwner->GetComponent<dae::CountDownTimer>();
 	m_EstimatedPos = glm::vec2{ 0,0 };
 	m_Countdownvalue = m_Startvalue;
 }

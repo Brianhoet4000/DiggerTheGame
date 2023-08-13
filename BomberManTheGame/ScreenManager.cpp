@@ -4,6 +4,7 @@
 #include <glm/vec2.hpp>
 
 #include "EnemyPrefab.h"
+#include "EnemySpawner.h"
 #include "GameCommands.h"
 #include "FPSCounterComponent.h"
 #include "InputManager.h"
@@ -21,8 +22,6 @@ namespace dae
 
 	void dae::ScreenManager::CreateMenuScreen()
 	{
-		
-
 		auto& scene = dae::SceneManager::GetInstance().CreateScene("Main");
 
 		auto GameObjBackGround = std::make_shared<dae::GameObject>();
@@ -31,6 +30,23 @@ namespace dae
 		GameObjBackGround->SetRelativePosition(GameObjBackGround->GetWorldPosition());
 		GameObjBackGround->AddComponent(go);
 		scene.Add(GameObjBackGround);
+
+		//Controls
+		{
+			auto KeyboardControls = std::make_shared<dae::GameObject>();
+			auto Keyboard = std::make_shared<dae::TextureComponent>(KeyboardControls.get());
+			Keyboard->SetTexture("Controls/WASDSpace.png");
+			KeyboardControls->SetRelativePosition(m_Width / 6, 300);
+			KeyboardControls->AddComponent(Keyboard);
+			scene.Add(KeyboardControls);
+
+			auto ControllerControls = std::make_shared<dae::GameObject>();
+			auto Controller = std::make_shared<dae::TextureComponent>(ControllerControls.get());
+			Controller->SetTexture("Controls/ControllerInput.png");
+			ControllerControls->SetRelativePosition((m_Width - (m_Width/4)) - Controller->GetSize().x, 300);
+			ControllerControls->AddComponent(Controller);
+			scene.Add(ControllerControls);
+		}
 
 		auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 		auto GameType = std::make_shared<GameObject>();
@@ -103,7 +119,9 @@ namespace dae
 
 			auto player = std::make_shared<PlayerOne>(scene, Level->GetSpawnPosition()[0], GameObjBackGround, Level.get(), true);
 
-			auto enemy = std::make_shared<EnemyPrefab>(scene, Level->GetEnemySpawnPosition());
+			//auto enemy = std::make_shared<EnemyPrefab>(scene, Level->GetEnemySpawnPosition());
+
+			auto enemySpawn = std::make_shared<EnemySpawner>(scene, Level->GetEnemySpawnPosition());
 		}
 		
 		if (m_CurrentScreen == GameMode::Coop)

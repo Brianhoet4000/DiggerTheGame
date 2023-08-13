@@ -19,7 +19,6 @@ namespace dae
 
 	private:
 		std::shared_ptr<dae::GameObject> m_pEmerald;
-
 	};
 
 }
