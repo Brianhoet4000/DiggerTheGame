@@ -26,18 +26,18 @@ namespace dae
 		void CreateGameScreen();
 
 		int GetCurrentEnum() const { return m_CurrentScreen; }
-		void SetCurrentEnum(int enumid)
+		void SetCurrentEnum(GameMode state)
 		{
-			m_CurrentScreen = static_cast<GameMode>(enumid);
+			m_CurrentScreen = state;
 		}
 
 		void CreateAppropriateGameModeScreen();
 
 	private:
 
-		int m_CurrentScreen{ 0 };
-		float m_Width{ 640 };
-		float m_Height{ 480 };
+		GameMode m_CurrentScreen{ SinglePlayer };
+		const float m_Width{ 640 };
+		const float m_Height{ 480 };
 
 		std::shared_ptr<TextComponent> m_pGameModeDisplayText;
 		std::shared_ptr<GameObject> m_pGameModeDisplay;

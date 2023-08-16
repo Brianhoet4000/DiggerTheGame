@@ -3,6 +3,7 @@
 
 #include "EnemyPrefab.h"
 #include "GameObject.h"
+#include "TextureComponent.h"
 
 dae::SpawnTimerComponent::SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner,float StartCountDownNumber, int MaxNumberOfEnemies)
 	:m_StartCountDownValue{StartCountDownNumber}
@@ -36,6 +37,11 @@ void dae::SpawnTimerComponent::Update(float deltaTime)
 			{
 				m_Start = false;
 				m_Counter = m_StartCountDownValue;
+			}
+			else
+			{
+				auto pTexture = m_pOwner->GetComponent<dae::TextureComponent>();
+				pTexture->SetMustRender(true);
 			}
 		}
 	}

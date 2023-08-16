@@ -1,6 +1,4 @@
 #include "Emerald.h"
-
-#include "CollisionBoxComponent.h"
 #include "GameCollisionComponent.h"
 #include "TextureComponent.h"
 

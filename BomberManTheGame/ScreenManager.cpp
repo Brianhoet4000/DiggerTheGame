@@ -1,8 +1,6 @@
 #include "ScreenManager.h"
-
 #include <SDL_scancode.h>
 #include <glm/vec2.hpp>
-
 #include "EnemyPrefab.h"
 #include "EnemySpawner.h"
 #include "GameCommands.h"
@@ -13,7 +11,6 @@
 #include "SoundSystem.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
-
 #include "PlayerOne.h"
 #include "PlayerTwo.h"
 
@@ -129,31 +126,29 @@ namespace dae
 		if(m_CurrentScreen == GameMode::SinglePlayer)
 		{
 			//Level
-			auto Level = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
+			auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
 
-			auto player = std::make_shared<PlayerOne>(scene, Level->GetSpawnPosition()[0], GameObjBackGround, Level.get(), true);
+			auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), true);
 
-			//auto enemy = std::make_shared<EnemyPrefab>(scene, Level->GetEnemySpawnPosition());
-
-			auto enemySpawn = std::make_shared<EnemySpawner>(scene, Level->GetEnemySpawnPosition(), 2);
+			auto pEnemySpawn = std::make_shared<EnemySpawner>(scene, pLevel->GetEnemySpawnPosition(), 2);
 		}
 		
 		if (m_CurrentScreen == GameMode::Coop)
 		{
 			//Level
-			auto Level = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
+			auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
 
-			auto Player = std::make_shared<PlayerOne>(scene, Level->GetSpawnPosition()[0], GameObjBackGround, Level.get(), false);
-			auto PlayerSecond = std::make_shared<PlayerTwo>(scene, Level->GetSpawnPosition()[1], GameObjBackGround, true);
+			auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), false);
+			auto pPlayerSecond = std::make_shared<PlayerTwo>(scene, pLevel->GetSpawnPosition()[1], GameObjBackGround, true);
 		}
 
 		if (m_CurrentScreen == GameMode::Versus)
 		{
 			//Level
-			auto Level = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
+			auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
 
-			auto Player = std::make_shared<PlayerOne>(scene, Level->GetSpawnPosition()[0], GameObjBackGround, Level.get(), false);
-			auto PlayerSecond = std::make_shared<PlayerTwo>(scene, Level->GetSpawnPosition()[1], GameObjBackGround, false);
+			auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), false);
+			auto pPlayerSecond = std::make_shared<PlayerTwo>(scene, pLevel->GetSpawnPosition()[1], GameObjBackGround, false);
 		}
 		
 

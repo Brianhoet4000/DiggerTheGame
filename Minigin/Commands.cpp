@@ -7,7 +7,7 @@ namespace dae
 {
     class HealthComponent;
 
-    MoveCommand::MoveCommand(dae::GameObject* owner, const glm::vec2& dir)
+    MoveCommand::MoveCommand(std::shared_ptr<dae::GameObject> owner, const glm::vec2& dir)
     {
         m_pGameObject = owner;
         m_Dir = dir;
@@ -25,7 +25,7 @@ namespace dae
     }
 
 
-    HealthCommand::HealthCommand(dae::GameObject* owner)
+    HealthCommand::HealthCommand(std::shared_ptr<dae::GameObject> owner)
     {
         m_pGameObject = owner;
     }
@@ -40,7 +40,7 @@ namespace dae
         }
     }
 
-    PointCommand::PointCommand(dae::GameObject* gameObj)
+    PointCommand::PointCommand(std::shared_ptr<dae::GameObject> gameObj)
     {
         m_pGameObject = gameObj;
     }

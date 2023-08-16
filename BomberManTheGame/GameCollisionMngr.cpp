@@ -83,7 +83,6 @@ namespace dae
         m_pSecondPlayer = nullptr;
         RemoveCollisionBox(box);
     }
-
     void GameCollisionMngr::RemoveEnemyBox(GameCollisionComponent* box)
     {
         RemoveCollisionBox(box);
@@ -92,22 +91,18 @@ namespace dae
 
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllWall()
     {
-        std::cout << "Wall: " << m_pWallBoxes.size() << "\n";
         return m_pWallBoxes;
     }
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllDirt()
     {
-        std::cout << "Dirt: " << m_pDirtBoxes.size() << "\n";
         return m_pDirtBoxes;
     }
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllEmerald()
     {
-        std::cout << "Emerald: " << m_pEmeraldBoxes.size() << "\n";
         return m_pEmeraldBoxes;
     }
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllGold()
     {
-        std::cout << "Gold: " << m_pGoldBoxes.size() << "\n";
         return m_pGoldBoxes;
     }
     std::vector<dae::GameCollisionComponent*> GameCollisionMngr::GetAllEnemies()

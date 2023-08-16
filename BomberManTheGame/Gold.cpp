@@ -1,6 +1,4 @@
 #include "Gold.h"
-
-//#include "CountDownTimer.h"
 #include "GameCollisionComponent.h"
 #include "GoldStateComponent.h"
 #include "TextureComponent.h"

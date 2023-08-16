@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 
-		GameWinLosConditionComponent(dae::GameObject* owner);
+		GameWinLosConditionComponent(dae::GameObject* owner, dae::GameObject* level);
 		virtual ~GameWinLosConditionComponent() = default;
 		GameWinLosConditionComponent(const GameWinLosConditionComponent& other) = delete;
 		GameWinLosConditionComponent(GameWinLosConditionComponent&& other) = delete;
@@ -18,6 +18,8 @@ namespace dae
 		void Update(float) override;
 
 	private:
+		bool m_Finished;
+		GameObject* pLevel;
 	};
 
 }

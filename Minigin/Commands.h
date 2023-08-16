@@ -13,8 +13,8 @@ namespace dae
         void SetKeyPressed(bool keyPressed) { m_KeyPressed = keyPressed; }
         bool GetKeyPressed() const { return m_KeyPressed; }
     protected:
-        dae::GameObject* GetGameActor() const { return m_pGameObject; }
-        dae::GameObject* m_pGameObject{};
+        std::shared_ptr<dae::GameObject> GetGameActor() const { return m_pGameObject; }
+        std::shared_ptr<dae::GameObject> m_pGameObject{};
         bool m_KeyPressed = false;
     };
 
@@ -23,7 +23,7 @@ namespace dae
     private:
         glm::vec2 m_Dir{};
     public:
-        MoveCommand(dae::GameObject* owner, const glm::vec2& dir);
+        MoveCommand(std::shared_ptr<dae::GameObject>, const glm::vec2& dir);
         virtual void Execute(float deltaTime) override;
     };
 
@@ -32,14 +32,14 @@ namespace dae
     {
 
     public:
-        HealthCommand(dae::GameObject* owner);
+        HealthCommand(std::shared_ptr<dae::GameObject> owner);
         virtual void Execute(float) override;
     };
 
     class PointCommand final : public Command
     {
     public:
-        PointCommand(dae::GameObject* gameObj);
+        PointCommand(std::shared_ptr<dae::GameObject> gameObj);
         virtual void Execute(float) override;
 
     };

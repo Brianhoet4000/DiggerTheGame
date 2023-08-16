@@ -1,7 +1,5 @@
 #include "Bullet.h"
-
 #include "BulletComponent.h"
-#include "BulletTimerComponent.h"
 #include "GameCollisionComponent.h"
 #include "TextureComponent.h"
 

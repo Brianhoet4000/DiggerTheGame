@@ -13,12 +13,7 @@
 #include <iostream>
 
 #include "GameObject.h"
-#include "Commands.h"
-#include "GameCollisionMngr.h"
 #include "ScreenManager.h"
-#include "ServiceLocator.h"
-#include "SoundSystem.h"
-#include <Renderer.h>
 
 void load()
 {

@@ -16,7 +16,7 @@ namespace GameCommands
 		bool m_Digger;
 		bool m_DoOnce = false;
 	public:
-		DiggerMovement(dae::GameObject* owner, const glm::vec2& dir, bool digger);
+		DiggerMovement(std::shared_ptr<dae::GameObject> owner, const glm::vec2& dir, bool digger);
 		virtual void Execute(float deltaTime) override;
 	};
 
@@ -27,7 +27,7 @@ namespace GameCommands
 		dae::Scene* m_Scene;
 		dae::BulletTimerComponent* m_pBulletTimer{};
 	public:
-		ShootingBullet(dae::GameObject* owner,dae::Scene* scene);
+		ShootingBullet(std::shared_ptr<dae::GameObject> owner,dae::Scene* scene);
 		virtual void Execute(float deltaTime) override;
 	};
 
@@ -37,9 +37,9 @@ namespace GameCommands
 		std::shared_ptr<dae::GameObject> m_pScreen{};
 		dae::GameObject* m_pTextMode;
 		dae::ScreenManager* m_pScreenManager{};
-		int m_CurrentScreen;
+		dae::ScreenManager::GameMode& m_CurrentScreen;
 	public:
-		SwitchGameMode(std::shared_ptr<dae::GameObject> owner, dae::GameObject* text, const int& currentScreen, dae::ScreenManager* screen);
+		SwitchGameMode(std::shared_ptr<dae::GameObject> owner, dae::GameObject* text, dae::ScreenManager::GameMode& currentScreen, dae::ScreenManager* screen);
 		virtual void Execute(float) override;
 
 	};
@@ -62,7 +62,7 @@ namespace GameCommands
 		dae::LevelPrefab* m_pLevel;
 
 	public:
-		SkipLevel(dae::GameObject* owner,dae::Scene* scene, dae::LevelPrefab* level);
+		SkipLevel(std::shared_ptr<dae::GameObject> owner,dae::Scene* scene, dae::LevelPrefab* level);
 		virtual void Execute(float) override;
 	};
 

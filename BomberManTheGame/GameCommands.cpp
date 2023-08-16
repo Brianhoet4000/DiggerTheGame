@@ -1,14 +1,12 @@
 #include "GameCommands.h"
-
 #include "Bullet.h"
 #include "CollisionBoxManager.h"
 #include "GameCollisionMngr.h"
-#include "GoldStateComponent.h"
 #include "InputManager.h"
 #include "ServiceLocator.h"
 #include "ShootingDirComponent.h"
 
-GameCommands::DiggerMovement::DiggerMovement(dae::GameObject* owner, const glm::vec2& dir, bool digger)
+GameCommands::DiggerMovement::DiggerMovement(std::shared_ptr<dae::GameObject> owner, const glm::vec2& dir, bool digger)
 {
 	m_pGameObject = owner;
 	m_Dir = dir;
@@ -68,7 +66,7 @@ void GameCommands::DiggerMovement::Execute(float deltaTime)
     m_pGameObject->SetRelativePosition(pos);
 }
 
-GameCommands::ShootingBullet::ShootingBullet(dae::GameObject* owner,dae::Scene* scene)
+GameCommands::ShootingBullet::ShootingBullet(std::shared_ptr<dae::GameObject> owner,dae::Scene* scene)
 {
     m_pGameObject = owner;
     m_Scene = scene;
@@ -112,7 +110,7 @@ void GameCommands::ShootingBullet::Execute(float)
 }
 
 
-GameCommands::SwitchGameMode::SwitchGameMode(std::shared_ptr<dae::GameObject> owner, dae::GameObject* text, const int& currentScreen, dae::ScreenManager* screen)
+GameCommands::SwitchGameMode::SwitchGameMode(std::shared_ptr<dae::GameObject> owner, dae::GameObject* text, dae::ScreenManager::GameMode& currentScreen, dae::ScreenManager* screen)
 	:m_pScreen{owner},
     m_pTextMode{text},
     m_CurrentScreen{ currentScreen },
@@ -129,17 +127,17 @@ void GameCommands::SwitchGameMode::Execute(float)
     switch (m_CurrentScreen)
     {
     case 0:
-        m_CurrentScreen = 1;
+        m_CurrentScreen = dae::ScreenManager::GameMode::Coop;
         text->SetText("Coop");
         break;
 
     case 1:
-        m_CurrentScreen = 2;
+        m_CurrentScreen = dae::ScreenManager::GameMode::Versus;
         text->SetText("Versus");
         break;
 
     case 2:
-        m_CurrentScreen = 0;
+        m_CurrentScreen = dae::ScreenManager::GameMode::SinglePlayer;
         text->SetText("Single");
         break;
     }
@@ -168,11 +166,11 @@ void GameCommands::AcceptGameMode::Execute(float)
     }
 }
 
-GameCommands::SkipLevel::SkipLevel(dae::GameObject* owner, dae::Scene* scene, dae::LevelPrefab* level)
+GameCommands::SkipLevel::SkipLevel(std::shared_ptr<dae::GameObject> owner, dae::Scene* scene, dae::LevelPrefab* level)
     :m_pScene{ scene }
     , m_pLevel{ level }
 {
-    m_pGameObject = owner;
+    m_pGameObject = owner;   
 }
 
 void GameCommands::SkipLevel::Execute(float)

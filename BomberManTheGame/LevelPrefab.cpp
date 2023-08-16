@@ -1,10 +1,10 @@
 #include "LevelPrefab.h"
-
 #include "ResourceManager.h"
 #include "TextureComponent.h"
 #include <random>
 #include "Emerald.h"
 #include "GameCollisionComponent.h"
+#include "GameWinLosConditionComponent.h"
 #include "Gold.h"
 
 dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
@@ -94,6 +94,12 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 	AddBreakAbleBlocks(scene);
 	AddEmeralds(scene);
 	AddGold(scene);
+
+	auto pWinLoseChecker = std::make_shared<dae::GameObject>();
+	auto pTheChecker = std::make_shared<GameWinLosConditionComponent>(pWinLoseChecker.get(), pLevelObj.get());
+	pWinLoseChecker->AddComponent(pTheChecker);
+
+	scene.Add(pWinLoseChecker);
 }
 
 void dae::LevelPrefab::AddBreakAbleBlocks(dae::Scene& scene)

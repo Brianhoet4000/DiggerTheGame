@@ -1,7 +1,6 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include "BaseComponent.h"
-//#include "CountDownTimer.h"
 
 namespace dae
 {
@@ -31,7 +30,7 @@ namespace dae
 
 	private:
 		glm::vec2 m_Direction{ 0,5 };
-		const float m_Speed{ 35.f };
+		const float m_Speed{ 55.f };
 		glm::vec2 m_EstimatedPos;
 
 		bool m_ResetEstimatedPos = false;
@@ -39,7 +38,7 @@ namespace dae
 
 		bool m_StartTimer = false;
 		bool m_TimerDone = false;
-		float m_Startvalue = 3.f;
+		float m_Startvalue = 1.5f;
 		float m_Countdownvalue = 0.f;
 
 		MoneyBagState m_MoneyState{ Full };

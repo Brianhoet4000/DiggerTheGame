@@ -47,14 +47,14 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		pPlayerTwo->AddComponent(pShootingDir);
 
 		//Movement
-		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Up, true);
-		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Down, true);
-		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Left, true);
-		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Right, true);
+		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Up, true);
+		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Down, true);
+		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Left, true);
+		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Right, true);
 
 
 
-		std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(pPlayerTwo.get(), &scene);
+		std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(pPlayerTwo, &scene);
 		controllerButton = dae::Controller::ControllerButton::ButtonA;
 		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
 	}
@@ -74,10 +74,10 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		auto Hobbin = std::make_shared<dae::HobbinComponent>(pPlayerTwo.get());
 		pPlayerTwo->AddComponent(Hobbin);
 
-		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Up, false);
-		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Down, false);
-		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Left, false);
-		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo.get(), m_Right, false);
+		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Up, false);
+		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Down, false);
+		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Left, false);
+		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(pPlayerTwo, m_Right, false);
 	}
 
 
