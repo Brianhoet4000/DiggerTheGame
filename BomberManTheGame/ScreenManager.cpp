@@ -33,19 +33,33 @@ namespace dae
 
 		//Controls
 		{
-			auto KeyboardControls = std::make_shared<dae::GameObject>();
-			auto Keyboard = std::make_shared<dae::TextureComponent>(KeyboardControls.get());
-			Keyboard->SetTexture("Controls/WASDSpace.png");
-			KeyboardControls->SetRelativePosition(m_Width / 6, 300);
-			KeyboardControls->AddComponent(Keyboard);
-			scene.Add(KeyboardControls);
+			auto pKeyboardControls = std::make_shared<dae::GameObject>();
+			auto pKeyboard = std::make_shared<dae::TextureComponent>(pKeyboardControls.get());
+			pKeyboard->SetTexture("Controls/WASDSpace.png");
+			pKeyboardControls->SetRelativePosition(m_Width / 6, 300);
+			pKeyboardControls->AddComponent(pKeyboard);
+			scene.Add(pKeyboardControls);
 
-			auto ControllerControls = std::make_shared<dae::GameObject>();
-			auto Controller = std::make_shared<dae::TextureComponent>(ControllerControls.get());
-			Controller->SetTexture("Controls/ControllerInput.png");
-			ControllerControls->SetRelativePosition((m_Width - (m_Width/4)) - Controller->GetSize().x, 300);
-			ControllerControls->AddComponent(Controller);
-			scene.Add(ControllerControls);
+			auto pControllerControls = std::make_shared<dae::GameObject>();
+			auto pController = std::make_shared<dae::TextureComponent>(pControllerControls.get());
+			pController->SetTexture("Controls/ControllerInput.png");
+			pControllerControls->SetRelativePosition((m_Width - (m_Width/4)) - pController->GetSize().x, 300);
+			pControllerControls->AddComponent(pController);
+			scene.Add(pControllerControls);
+
+			auto pTabIcon = std::make_shared<dae::GameObject>();
+			auto pTab = std::make_shared<dae::TextureComponent>(pTabIcon.get());
+			pTab->SetTexture("Controls/TabIcon.png");
+			pTabIcon->AddComponent(pTab);
+			pTabIcon->SetRelativePosition(40, 90);
+			scene.Add(pTabIcon);
+
+			auto pEAccept = std::make_shared<dae::GameObject>();
+			auto pE = std::make_shared<dae::TextureComponent>(pEAccept.get());
+			pE->SetTexture("Controls/EAcceptIcon.png");
+			pEAccept->AddComponent(pE);
+			pEAccept->SetRelativePosition(40 + pTab->GetSize().x/2 - pE->GetSize().x /2, 140);
+			scene.Add(pEAccept);
 		}
 
 		auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
@@ -121,7 +135,7 @@ namespace dae
 
 			//auto enemy = std::make_shared<EnemyPrefab>(scene, Level->GetEnemySpawnPosition());
 
-			auto enemySpawn = std::make_shared<EnemySpawner>(scene, Level->GetEnemySpawnPosition());
+			auto enemySpawn = std::make_shared<EnemySpawner>(scene, Level->GetEnemySpawnPosition(), 2);
 		}
 		
 		if (m_CurrentScreen == GameMode::Coop)

@@ -4,8 +4,10 @@
 #include "EnemyPrefab.h"
 #include "GameObject.h"
 
-dae::SpawnTimerComponent::SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner,float StartCountDownNumber)
-	:m_StartCountDownValue(StartCountDownNumber)
+dae::SpawnTimerComponent::SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner,float StartCountDownNumber, int MaxNumberOfEnemies)
+	:m_StartCountDownValue{StartCountDownNumber}
+	,m_MaxNumberOfEnemies{MaxNumberOfEnemies}
+	,m_EnemyNumber{0}
 {
 	m_Start = false;
 	m_Counter = m_StartCountDownValue;
@@ -19,7 +21,7 @@ void dae::SpawnTimerComponent::Update(float deltaTime)
 	{
 		auto enemy = std::make_shared<dae::EnemyPrefab>(*m_pScene, m_pOwner->GetRelativePosition());
 		m_pScene->Add(enemy->returnGameObject());
-
+		++m_EnemyNumber;
 		m_Start = true;
 	}
 
@@ -30,8 +32,11 @@ void dae::SpawnTimerComponent::Update(float deltaTime)
 
 		if (m_Counter <= 0)
 		{
-			m_Start = false;
-			m_Counter = m_StartCountDownValue;
+			if (m_EnemyNumber != m_MaxNumberOfEnemies)
+			{
+				m_Start = false;
+				m_Counter = m_StartCountDownValue;
+			}
 		}
 	}
 }

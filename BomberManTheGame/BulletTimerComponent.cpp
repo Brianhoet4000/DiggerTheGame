@@ -1,5 +1,4 @@
 #include "BulletTimerComponent.h"
-
 #include "GameObject.h"
 #include "TextureComponent.h"
 

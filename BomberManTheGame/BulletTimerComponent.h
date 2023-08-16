@@ -4,8 +4,6 @@
 namespace dae
 {
 
-
-
 	class BulletTimerComponent : public dae::BaseComponent
 	{
 	public:

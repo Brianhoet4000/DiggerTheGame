@@ -77,6 +77,9 @@
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>Prefab</Filter>
     </ClCompile>
+    <ClCompile Include="GameWinLosConditionComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
@@ -135,6 +138,9 @@
     </ClInclude>
     <ClInclude Include="EnemySpawner.h">
       <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWinLosConditionComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

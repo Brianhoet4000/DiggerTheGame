@@ -1,6 +1,5 @@
 #pragma once
 #include <glm/vec2.hpp>
-
 #include "BaseComponent.h"
 #include "GameCollisionComponent.h"
 
@@ -19,7 +18,6 @@ namespace dae
 			Up,
 			Down
 		};
-
 
 		AIMovementComponent(dae::GameObject* owner);
 		virtual ~AIMovementComponent() override = default;

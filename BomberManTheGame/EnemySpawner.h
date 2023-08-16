@@ -8,7 +8,7 @@ namespace dae
 	class EnemySpawner final
 	{
 	public:
-		EnemySpawner(dae::Scene& scene,glm::vec2 StartPos);
+		EnemySpawner(dae::Scene& scene,glm::vec2 StartPos, int MaxEnemies);
 
 		~EnemySpawner() = default;
 		EnemySpawner(const EnemySpawner& other) = delete;

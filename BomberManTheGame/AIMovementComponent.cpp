@@ -1,6 +1,7 @@
 #include "AIMovementComponent.h"
 #include "GameCollisionMngr.h"
 #include "GameObject.h"
+#include "GoldStateComponent.h"
 #include "HobbinComponent.h"
 
 dae::AIMovementComponent::AIMovementComponent(dae::GameObject* owner)
@@ -17,6 +18,24 @@ void dae::AIMovementComponent::Update(float deltaTime)
 	{
 		overlapPlayer->GetOwner()->MarkTrueForDeleting();
 		dae::GameCollisionMngr::GetInstance().RemoveFirstPlayerBox(overlapPlayer);
+	}
+
+	auto OverlappedBox = dae::GameCollisionMngr::GetInstance().CheckForCollisionComponent(m_pCollision);
+
+	if (OverlappedBox != nullptr)
+	{
+		//Gold Related
+		if (OverlappedBox->GetOwner()->GetTag() == "Gold")
+		{
+			auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldStateComponent>();
+
+			//If Gold not Broken and falls die
+			if (!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldStateComponent::Falling)
+			{
+				m_pOwner->MarkTrueForDeleting();
+				dae::GameCollisionMngr::GetInstance().RemoveEnemyBox(m_pCollision);
+			}
+		}
 	}
 
 	auto hobbincompo = m_pOwner->GetComponent<dae::HobbinComponent>();
@@ -93,16 +112,26 @@ void dae::AIMovementComponent::Update(float deltaTime)
 	}
 	else
 	{
-		auto OverlappedBox = dae::GameCollisionMngr::GetInstance().CheckForCollisionComponent(m_pCollision);
+		const float offset{ 0.3f };
+		auto OverlappedBoxDirtAndEmerald = dae::GameCollisionMngr::GetInstance().CheckForCollisionComponent(m_pCollision);
 
-		if (OverlappedBox != nullptr)
+		if (OverlappedBoxDirtAndEmerald != nullptr)
 		{
 			//Dirt block delete
-			if (OverlappedBox->GetOwner()->GetTag() == "Break")
+			if (OverlappedBoxDirtAndEmerald->GetOwner()->GetTag() == "Break")
 			{
-				dae::GameCollisionMngr::GetInstance().RemoveDirtBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
-				OverlappedBox->GetOwner()->MarkTrueForDeleting();
+				dae::GameCollisionMngr::GetInstance().RemoveDirtBox(OverlappedBoxDirtAndEmerald->GetOwner()->GetComponent<dae::GameCollisionComponent>());
+				OverlappedBoxDirtAndEmerald->GetOwner()->MarkTrueForDeleting();
 			}
+
+			//Overlap with emerald pick up
+			if (OverlappedBoxDirtAndEmerald->GetOwner()->GetTag() == "Emerald")
+			{
+				dae::GameCollisionMngr::GetInstance().RemoveEmeraldBox(OverlappedBoxDirtAndEmerald->GetOwner()->GetComponent<dae::GameCollisionComponent>());
+				OverlappedBoxDirtAndEmerald->GetOwner()->MarkTrueForDeleting();
+			}
+
+			
 		}
 
 		if(m_Horizontal)
@@ -117,16 +146,16 @@ void dae::AIMovementComponent::Update(float deltaTime)
 				if (player == nullptr) return;
 			}
 
-			if (pPlayers[0]->GetOwner()->GetRelativePosition().y < m_pOwner->GetRelativePosition().y)
+			if (pPlayers[0]->GetOwner()->GetRelativePosition().y - offset < m_pOwner->GetRelativePosition().y)
 			{
 				MoveAI(deltaTime, m_DirUp);
 			}
-			else if(pPlayers[0]->GetOwner()->GetRelativePosition().y > m_pOwner->GetRelativePosition().y)
+			else if(pPlayers[0]->GetOwner()->GetRelativePosition().y + offset > m_pOwner->GetRelativePosition().y)
 			{
 				MoveAI(deltaTime, m_DirDown);
 			}
 
-			const float offset{0.3f};
+			
 			if(pPlayers[0]->GetOwner()->GetRelativePosition().y < m_pOwner->GetRelativePosition().y + offset &&
 				pPlayers[0]->GetOwner()->GetRelativePosition().y > m_pOwner->GetRelativePosition().y - offset)
 			{
@@ -146,16 +175,15 @@ void dae::AIMovementComponent::Update(float deltaTime)
 				if(player == nullptr) return;
 			}
 
-			if (pPlayers[0]->GetOwner()->GetRelativePosition().x < m_pOwner->GetRelativePosition().x)
+			if (pPlayers[0]->GetOwner()->GetRelativePosition().x - offset < m_pOwner->GetRelativePosition().x)
 			{
 				MoveAI(deltaTime, m_DirLeft);
 			}
-			else if (pPlayers[0]->GetOwner()->GetRelativePosition().y > m_pOwner->GetRelativePosition().y)
+			else if (pPlayers[0]->GetOwner()->GetRelativePosition().y + offset > m_pOwner->GetRelativePosition().y)
 			{
 				MoveAI(deltaTime, m_DirRight);
 			}
 
-			const float offset{ 0.2f };
 			if (pPlayers[0]->GetOwner()->GetRelativePosition().x < m_pOwner->GetRelativePosition().x - offset &&
 				pPlayers[0]->GetOwner()->GetRelativePosition().y > m_pOwner->GetRelativePosition().y + offset)
 			{
