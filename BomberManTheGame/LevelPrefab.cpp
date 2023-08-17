@@ -9,8 +9,11 @@
 
 dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 {
-	auto pLevelObj = std::make_shared<dae::GameObject>();
-	scene.Add(pLevelObj);
+	//auto pLevelObj = std::make_shared<dae::GameObject>();
+	//scene.Add(pLevelObj);
+
+	m_pLevelObj = std::make_shared<dae::GameObject>();
+	scene.Add(m_pLevelObj);
 
 	constexpr int width{ 640 };
 	constexpr int height{ 480 };
@@ -26,7 +29,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 
 		auto pTexture = std::make_shared<dae::TextureComponent>(pBlock.get());
 
-		pLevelObj->AddChild(pBlock);
+		m_pLevelObj->AddChild(pBlock);
 
 		pBlock->AddComponent(pTexture);
 		pBlock->SetRelativePosition({ pos.x, pos.y });
@@ -94,12 +97,6 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 	AddBreakAbleBlocks(scene);
 	AddEmeralds(scene);
 	AddGold(scene);
-
-	auto pWinLoseChecker = std::make_shared<dae::GameObject>();
-	auto pTheChecker = std::make_shared<GameWinLosConditionComponent>(pWinLoseChecker.get(), pLevelObj.get());
-	pWinLoseChecker->AddComponent(pTheChecker);
-
-	scene.Add(pWinLoseChecker);
 }
 
 void dae::LevelPrefab::AddBreakAbleBlocks(dae::Scene& scene)
@@ -120,7 +117,9 @@ void dae::LevelPrefab::AddBreakAbleBlocks(dae::Scene& scene)
 	
 		//Pos
 		pBreakBlock->SetRelativePosition({ m_BlockPositions[i].x, m_BlockPositions[i].y }); // Position it above the path block
-	
+
+		m_pLevelObj->AddChild(pBreakBlock);
+
 		scene.Add(pBreakBlock);
 	}
 }
@@ -130,6 +129,7 @@ void dae::LevelPrefab::AddEmeralds(dae::Scene& scene)
 	for (size_t i = 0; i < m_EmeraldPositions.size(); ++i)
 	{
 		auto newEmerald = std::make_shared<dae::Emerald>(m_EmeraldPositions[i]);
+		m_pLevelObj->AddChild(newEmerald->ReturnEmerald());
 		scene.Add(newEmerald->ReturnEmerald());
 	}
 }
@@ -138,8 +138,9 @@ void dae::LevelPrefab::AddGold(dae::Scene& scene)
 {
 	for (size_t i = 0; i < m_GoldPositions.size(); ++i)
 	{
-		m_GoldPositions[i].y = m_GoldPositions[i].y + 3.0f;
+		m_GoldPositions[i].y = m_GoldPositions[i].y + 2.0f;
 		auto newGold = std::make_shared<dae::Gold>(m_GoldPositions[i]);
+		m_pLevelObj->AddChild(newGold->ReturnGold());
 		scene.Add(newGold->ReturnGold());
 	}
 }

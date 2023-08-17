@@ -255,6 +255,8 @@ namespace dae
     {
 	    for (const auto& player : m_pCollisonBoxes)
 	    {
+            if (player == nullptr) return nullptr;
+
 		    if(player->GetOwner()->GetTag() == "Player_01")
 		    {
                 if (box->GetCollisionRect().x < player->GetCollisionRect().x + player->GetCollisionRect().w &&
@@ -524,7 +526,6 @@ namespace dae
         {
             for (const auto& boxes : m_pDirtBoxes)
             {
-
                 if (startPos.x + (dir.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
                     startPos.x + dir.x * distance - offset >= boxes->GetCollisionRect().x &&
                     startPos.y + (dir.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&

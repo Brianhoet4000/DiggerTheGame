@@ -44,6 +44,8 @@ namespace dae
 
 		for(const auto& child : m_pChildren)
 		{
+			if (child->ReturnDeleting()) continue;
+
 			child->Render();
 		}
 	}
@@ -152,7 +154,7 @@ namespace dae
 	void GameObject::FlagIsTrue()
 	{
 		m_dirtyFlag = true;
-		for (const auto child : m_pChildren)
+		for (const auto& child : m_pChildren)
 		{
 			child->FlagIsTrue();
 		}
@@ -170,11 +172,6 @@ namespace dae
 
 	void GameObject::MarkTrueForDeleting()
 	{
-		if(m_pParent != nullptr)
-		{
-			std::cout << "Yeet";
-		}
-		
 		//m_pSubject->NotifyObservers(PLAYER_DIED);
 		//m_pParent->RemoveComponent(m_pParent->GetComponent<dae::>())
 		//auto colrext = m_pParent->GetComponent<dae::CollisionBoxComponent>()->GetCollisionRect();

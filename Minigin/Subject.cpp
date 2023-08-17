@@ -18,7 +18,7 @@ void dae::Subject::RemoveObserver(std::shared_ptr<Observer> observer)
 
 void dae::Subject::NotifyObservers(dae::Event event)
 {
-    for ( auto &observer : m_pObservers)
+    for (const auto& observer : m_pObservers)
     {
         observer->Notify(event, m_pOwner);
     }

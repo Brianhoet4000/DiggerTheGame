@@ -80,8 +80,9 @@ namespace dae
 	};
 
 	dae::SoundSystem::SoundSystem()
+		:m_pImpl(std::make_unique<SoundSystemImpl>())
 	{
-		m_pImpl = std::make_unique<SoundSystemImpl>();
+		
 	}
 
 	SoundSystem::~SoundSystem()

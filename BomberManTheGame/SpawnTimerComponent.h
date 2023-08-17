@@ -23,6 +23,8 @@ namespace dae
 		}
 		bool GetBool() const { return m_Start; }
 
+		int RemainingNumberOfEnemies() const { return m_EnemyNumber; }
+
 	private:
 		float m_StartCountDownValue;
 		float m_Counter;

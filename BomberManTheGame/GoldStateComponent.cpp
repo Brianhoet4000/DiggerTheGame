@@ -14,6 +14,8 @@ dae::GoldStateComponent::GoldStateComponent(dae::GameObject* owner)
 
 void dae::GoldStateComponent::Update(float deltaTime)
 {
+	if (m_pOwner == nullptr) return;
+
 	if(!m_ResetEstimatedPos)
 	{
 		m_EstimatedPos = m_pOwner->GetRelativePosition() + glm::vec2{0, 48};

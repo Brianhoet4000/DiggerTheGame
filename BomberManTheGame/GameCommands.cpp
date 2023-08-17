@@ -175,7 +175,22 @@ GameCommands::SkipLevel::SkipLevel(std::shared_ptr<dae::GameObject> owner, dae::
 
 void GameCommands::SkipLevel::Execute(float)
 {
-    m_pScene->Remove(m_pLevel->returnLevelObj());
+    if (GetKeyPressed()) return;
+
+	m_pScene->RemoveAll();
+    
+    //for (auto element : m_pLevel->returnLevelObj()->GetChildren())
+    //{
+    //    element->MarkTrueForDeleting();
+    //}
+
+    dae::ScreenManager::GetInstance().IncrementCurrentLevel();
+	
+    //m_pScene->Remove(m_pLevel->returnLevelObj());
+    //dae::ScreenManager::GetInstance().IncrementCurrentLevel();
+    //dae::ScreenManager::GetInstance().CreateAppropriateGameModeScreen();
+
+    SetKeyPressed(true);
 }
 
 void GameCommands::MuteMusic::Execute(float)

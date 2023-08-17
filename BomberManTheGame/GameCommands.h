@@ -66,6 +66,17 @@ namespace GameCommands
 		virtual void Execute(float) override;
 	};
 
+	class ResetLevel : public dae::Command
+	{
+	private:
+		dae::Scene* m_pScene;
+		dae::LevelPrefab* m_pLevel;
+
+	public:
+		ResetLevel(std::shared_ptr<dae::GameObject> owner, dae::Scene* scene, dae::LevelPrefab* level);
+		virtual void Execute(float) override;
+	};
+
 	class MuteMusic : public dae::Command
 	{
 	private:

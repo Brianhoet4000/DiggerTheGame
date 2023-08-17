@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include "Scene.h"
+#include "SpawnTimerComponent.h"
+#include "GameObject.h"
 
 namespace dae
 {
@@ -16,7 +18,10 @@ namespace dae
 		EnemySpawner& operator=(const EnemySpawner& other) = delete;
 		EnemySpawner& operator=(EnemySpawner&& other) = delete;
 
+		std::shared_ptr<dae::GameObject> getSpawnObj() { return m_pSpawner; }
+
 	private:
+		std::shared_ptr<dae::GameObject> m_pSpawner;
 	};
 
 }

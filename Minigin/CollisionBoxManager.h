@@ -10,7 +10,7 @@ namespace dae
 	class CollisionBoxManager : public Singleton<CollisionBoxManager>
 	{
 	public:
-		CollisionBoxManager() = default;
+		
 		virtual ~CollisionBoxManager() = default;
 		CollisionBoxManager(const CollisionBoxManager& other) = delete;
 		CollisionBoxManager(CollisionBoxManager&& other) = delete;
@@ -26,6 +26,8 @@ namespace dae
 		bool Raycast(glm::vec2 startpos, glm::vec2 direction, dae::CollisionBoxComponent* collisionbox) const;
 
 	private:
+		friend class Singleton<CollisionBoxManager>;
+		CollisionBoxManager() = default;
 		std::vector<CollisionBoxComponent*> m_pCollisonBoxes;
 		std::vector<dae::GameObject*> m_pOwners;
 	};

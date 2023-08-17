@@ -30,7 +30,7 @@ void dae::UI::UpdateUI(dae::GameObject* owner, const std::string& UIType)
 	std::string newValue{};
 	dae::UIComponent* text{};
 
-	for (auto sibling : owner->GetParent()->GetChildren())
+	for (const auto& sibling : owner->GetParent()->GetChildren())
 	{
 		if (sibling->ReturnDeleting()) continue;
 

@@ -27,8 +27,9 @@ void load()
 	std::cout << "Dpad to move secondPlayer\n";
 	std::cout << "A to shoot\n";
 	
-	auto Screenmanager = std::make_unique<dae::ScreenManager>();
-	Screenmanager->CreateMenuScreen();
+	//auto Screenmanager = std::make_unique<dae::ScreenManager>();
+	//Screenmanager->CreateMenuScreen();
+	dae::ScreenManager::GetInstance().CreateMenuScreen();
 	//const float scale{ 1.08f };
 	//SDL_RenderSetScale(dae::Renderer::GetInstance().GetSDLRenderer(), scale, scale);
 }

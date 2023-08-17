@@ -32,7 +32,7 @@ namespace dae
 		explicit Scene(const std::string& name);
 
 		std::string m_Name;
-		std::vector < std::shared_ptr<GameObject>> m_pObjects{};
+		std::vector <std::shared_ptr<GameObject>> m_pObjects{};
 
 		bool m_IsActive{};
 

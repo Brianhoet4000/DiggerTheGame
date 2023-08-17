@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "EnemySpawner.h"
 
 namespace dae
 {
@@ -8,7 +9,7 @@ namespace dae
 	{
 	public:
 
-		GameWinLosConditionComponent(dae::GameObject* owner, dae::GameObject* level);
+		GameWinLosConditionComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner);
 		virtual ~GameWinLosConditionComponent() = default;
 		GameWinLosConditionComponent(const GameWinLosConditionComponent& other) = delete;
 		GameWinLosConditionComponent(GameWinLosConditionComponent&& other) = delete;
@@ -19,7 +20,8 @@ namespace dae
 
 	private:
 		bool m_Finished;
-		GameObject* pLevel;
+		std::shared_ptr<dae::GameObject> m_pSpawner;
+		bool m_DoOnce = false;
 	};
 
 }
