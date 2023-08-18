@@ -15,7 +15,7 @@ namespace dae
 		void RemoveScene(std::shared_ptr<dae::Scene> scene);
 		void NextScene();
 		void SetActiveScene(const std::string& sceneName);
-		std::shared_ptr<Scene> GetActiveScene() const { return m_pScenes[m_ActiveScene]; }
+		Scene* GetActiveScene() const { return m_pScenes[m_ActiveScene].get(); }
 		std::string GetActiveSceneName() const;
 
 		void Update(float deltaTime);

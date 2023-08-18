@@ -50,6 +50,7 @@ namespace dae
 		int m_CurrentLevel{ 0 };
 
 		std::shared_ptr<PlayerOne> m_pPlayer;
+
 	};
 
 }

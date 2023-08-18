@@ -177,6 +177,7 @@ void GameCommands::SkipLevel::Execute(float)
     if (m_CreatedEndScreen) return;
 
     dae::ScreenManager::GetInstance().IncrementCurrentLevel();
+    dae::GameCollisionMngr::GetInstance().ClearAll();
 
     if (dae::ScreenManager::GetInstance().GetCurrentLevel() == 3)
     {
@@ -187,7 +188,7 @@ void GameCommands::SkipLevel::Execute(float)
     }
 
     dae::ScreenManager::GetInstance().CreateGameScreen();
-    dae::SceneManager::GetInstance().NextScene();
+    //dae::SceneManager::GetInstance().NextScene();
     
     
 
@@ -213,12 +214,11 @@ GameCommands::ResetLevel::ResetLevel(dae::Scene* scene, dae::LevelPrefab* level)
 void GameCommands::ResetLevel::Execute(float)
 {
     
-    dae::SceneManager::GetInstance().NextScene();
+    //dae::SceneManager::GetInstance().NextScene();
     auto scene = dae::SceneManager::GetInstance().GetActiveScene();
-    std::cout << scene->GetName() << '\n';
-    dae::GameCollisionMngr::GetInstance().ClearAll();
+    //std::cout << scene->GetName() << '\n';
+    //dae::GameCollisionMngr::GetInstance().ClearAll();
     scene->RemoveAll();
-
     
 
     dae::ScreenManager::GetInstance().CreateGameScreen();

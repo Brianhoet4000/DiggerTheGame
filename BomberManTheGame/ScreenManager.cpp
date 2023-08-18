@@ -21,7 +21,7 @@ namespace dae
 	void dae::ScreenManager::CreateMenuScreen()
 	{
 		auto& scene = dae::SceneManager::GetInstance().CreateScene("Main");
-
+		scene.SetActive(true);
 		auto GameObjBackGround = std::make_shared<dae::GameObject>();
 		auto go = std::make_shared<dae::TextureComponent>(GameObjBackGround.get());
 		go->SetTexture("background.png");
@@ -83,13 +83,14 @@ namespace dae
 		dae::servicelocator::register_sound_system(std::make_unique<dae::SoundSystem>());
 		dae::servicelocator::get_sound_system().Load(0, "GamePlaySound.wav");
 		dae::servicelocator::get_sound_system().Load(1, "PickupSound.wav");
-		dae::servicelocator::get_sound_system().Load(2, "MoneyBagBreaking.wav");
+		dae::servicelocator::get_sound_system().Load(2, "MoneyBagBreaking.wav"); 
 	}
 
 	void dae::ScreenManager::CreateGameScreen()
 	{
 		auto& scene = dae::SceneManager::GetInstance().CreateScene("Game" + std::to_string(m_CurrentLevel) );
-		
+		scene.SetActive(true);
+
 		auto GameObjBackGround = std::make_shared<dae::GameObject>();
 		auto go = std::make_shared<dae::TextureComponent>(GameObjBackGround.get());
 		go->SetTexture("background.png");

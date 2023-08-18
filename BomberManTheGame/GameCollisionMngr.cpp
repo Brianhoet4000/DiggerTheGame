@@ -98,6 +98,8 @@ namespace dae
         m_pGoldBoxes.clear();
         m_pBulletBoxes.clear();
         m_pEnemies.clear();
+        m_pFirstPlayer = nullptr;
+        m_pSecondPlayer = nullptr;
     }
 
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllWall()
