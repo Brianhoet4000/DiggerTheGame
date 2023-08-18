@@ -1,19 +1,22 @@
 #pragma once
 #include "SceneManager.h"
 
+
 namespace dae
 {
 	class GameObject;
+	class TextComponent;
+
 	class Scene final
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(std::shared_ptr<GameObject> object);
-		void Remove(std::shared_ptr<GameObject> object);
+		void Remove(const std::shared_ptr<GameObject>&);
 		void RemoveAll();
 
 		void Update(float deltaTime);
-		void FixedUpdate(float deltaTime);
+		void FixedUpdate(float deltaTime) const;
 		void Render() const;
 
 		std::string GetName() const { return m_Name; }
@@ -28,15 +31,15 @@ namespace dae
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
-	private: 
+	private:
 		explicit Scene(const std::string& name);
 
 		std::string m_Name;
-		std::vector <std::shared_ptr<GameObject>> m_pObjects{};
+		std::vector<std::shared_ptr<GameObject>> m_pObjects{};
 
 		bool m_IsActive{};
 
-		static unsigned int m_idCounter; 
+		static unsigned int m_IdCounter;
 	};
 
 }

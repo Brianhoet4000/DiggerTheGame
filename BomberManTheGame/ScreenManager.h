@@ -23,14 +23,15 @@ namespace dae
 		ScreenManager& operator=(const ScreenManager& other) = delete;
 		ScreenManager& operator=(ScreenManager&& other) = delete;
 
-		void CreateMenuScreen();
-		void CreateGameScreen();
-		void CreateGameOverScreen();
+		void CreateMenuScreen(dae::Scene& scene);
+		void CreateGameScreen(dae::Scene& scene);
 
-		int GetCurrentEnum() const { return m_CurrentScreen; }
+		void CreateGameOverScreen(dae::Scene& scene);
+
+		int GetCurrentEnum() const { return m_CurrentGameMode; }
 		void SetCurrentEnum(GameMode state)
 		{
-			m_CurrentScreen = state;
+			m_CurrentGameMode = state;
 		}
 
 		int GetCurrentLevel() { return m_CurrentLevel; }
@@ -41,15 +42,13 @@ namespace dae
 	private:
 		friend class Singleton<ScreenManager>;
 		ScreenManager() = default;
-		GameMode m_CurrentScreen{ SinglePlayer };
+		GameMode m_CurrentGameMode{ SinglePlayer };
 		const float m_Width{ 640 };
 		const float m_Height{ 480 };
 
 		std::shared_ptr<TextComponent> m_pGameModeDisplayText;
 		std::shared_ptr<GameObject> m_pGameModeDisplay;
 		int m_CurrentLevel{ 0 };
-
-		std::shared_ptr<PlayerOne> m_pPlayer;
 
 	};
 

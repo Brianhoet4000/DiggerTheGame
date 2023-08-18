@@ -10,10 +10,9 @@
 #include "ShootingDirComponent.h"
 #include "UIComponent.h"
 
-dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shared_ptr<GameObject> background, LevelPrefab* level, bool ControllerEnabled)
+dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 {
 	m_pPlayerOne = std::make_shared<dae::GameObject>("Player_01");
-	m_pPlayerOne->SetRelativePosition(PlayerStartPos);
 
 	//Texture
 	auto pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerOne.get());
@@ -40,16 +39,12 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(m_pPlayerOne, m_Left, true);
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(m_pPlayerOne, m_Right, true);
 	std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(m_pPlayerOne,&scene);
-	std::shared_ptr<GameCommands::SkipLevel> SkipLevel = std::make_shared<GameCommands::SkipLevel>(&scene, level);
-	std::shared_ptr<GameCommands::ResetLevel> ResetLevel = std::make_shared<GameCommands::ResetLevel>(&scene, level);
 
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_W, moveCommandUp);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_S, moveCommandDown);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_A, moveCommandLeft);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_D, moveCommandRight);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_SPACE, ShootCommand);
-	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_Q, SkipLevel);
-	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_R, ResetLevel);
 
 	if(ControllerEnabled)
 	{
@@ -91,7 +86,7 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		"Lives", PlayerOneLives.get());
 	PlayerOneLives->SetRelativePosition({ 5, 340 });
 	PlayerOneLives->AddComponent(textBomberManLives);
-	background->AddChild(PlayerOneLives);
+	//background->AddChild(PlayerOneLives);
 	scene.Add(PlayerOneLives);
 
 	//Points Display
@@ -100,7 +95,7 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shar
 		"Points", PlayerOnePoints.get());
 	PlayerOnePoints->SetRelativePosition({ 5, 360 });
 	PlayerOnePoints->AddComponent(textBluePoints);
-	background->AddChild(PlayerOnePoints);
+	//background->AddChild(PlayerOnePoints);
 	scene.Add(PlayerOnePoints);
 
 

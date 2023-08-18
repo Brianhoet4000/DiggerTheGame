@@ -20,9 +20,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlayerOne.cpp">
-      <Filter>Prefab</Filter>
-    </ClCompile>
     <ClCompile Include="DiggerTheGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -79,6 +76,12 @@
     </ClCompile>
     <ClCompile Include="GameWinLosConditionComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerOne.cpp">
+      <Filter>Prefab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="GameWinLosConditionComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

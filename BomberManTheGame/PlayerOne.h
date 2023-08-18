@@ -8,7 +8,7 @@ namespace dae
 	class PlayerOne final
 	{
 	public:
-		PlayerOne(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shared_ptr<GameObject> background, LevelPrefab* level, bool ControllerEnabled);
+		PlayerOne(dae::Scene& scene, bool ControllerEnabled);
 
 		~PlayerOne() = default;
 		PlayerOne(const PlayerOne& other) = delete;

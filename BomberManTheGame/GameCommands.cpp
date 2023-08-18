@@ -103,7 +103,7 @@ void GameCommands::ShootingBullet::Execute(float)
 
     auto bullet = std::make_shared<dae::Bullet>(m_pGameObject->GetRelativePosition(), m_Dir);
     m_pBulletTimer->SetHasShot(true);
-    m_Scene->Add(bullet->ReturnBullet());
+    dae::SceneManager::GetInstance().GetActiveScene()->Add(bullet->ReturnBullet());
 
     SetKeyPressed(true);
 }
@@ -146,74 +146,54 @@ void GameCommands::SwitchGameMode::Execute(float)
     SetKeyPressed(true);
 }
 
-GameCommands::AcceptGameMode::AcceptGameMode(std::shared_ptr<dae::GameObject> owner, dae::ScreenManager* screen)
-	:m_pScreen{owner},
-	m_pScreenManager{screen}
-{
-}
-
 void GameCommands::AcceptGameMode::Execute(float)
 {
     if (GetKeyPressed()) return;
-    if (m_Pressed) return;
 
-    if(m_pScreenManager != nullptr)
+    if (dae::SceneManager::GetInstance().GetActiveSceneName() == "MainMenu")
     {
-    m_pScreenManager->CreateAppropriateGameModeScreen();
-    SetKeyPressed(true);
-    m_Pressed = true;
+        dae::SceneManager::GetInstance().NextScene();
+        dae::SceneManager::GetInstance().NextScene();
+        dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
+        SetKeyPressed(true);
     }
-}
 
-GameCommands::SkipLevel::SkipLevel(dae::Scene* scene, dae::LevelPrefab* level)
-    :m_pScene{ scene }
-    , m_pLevel{ level }
-{
+    
 }
 
 void GameCommands::SkipLevel::Execute(float)
 {
     if (GetKeyPressed()) return;
-    if (m_CreatedEndScreen) return;
 
-    dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-    dae::GameCollisionMngr::GetInstance().ClearAll();
-
-    if (dae::ScreenManager::GetInstance().GetCurrentLevel() == 3)
+    if(dae::SceneManager::GetInstance().GetActiveSceneName() == "GameOver" ||
+        dae::SceneManager::GetInstance().GetActiveSceneName() == "MainMenu")
     {
-        dae::ScreenManager::GetInstance().CreateGameOverScreen();
-        m_CreatedEndScreen = true;
         SetKeyPressed(true);
         return;
     }
 
-    dae::ScreenManager::GetInstance().CreateGameScreen();
-    //dae::SceneManager::GetInstance().NextScene();
-    
-    
+    dae::SceneManager::GetInstance().NextScene();
 
-    
-    /*
-    else
+    if (dae::SceneManager::GetInstance().GetActiveSceneName() != "GameOver")
     {
-        dae::ScreenManager::GetInstance().CreateGameScreen();
-        dae::SceneManager::GetInstance().NextScene();
-        SetKeyPressed(true);
+        dae::GameCollisionMngr::GetInstance().ClearAll();
+        dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
     }
-    */
 
     SetKeyPressed(true);
 }
 
-GameCommands::ResetLevel::ResetLevel(dae::Scene* scene, dae::LevelPrefab* level)
-    :m_pScene{ scene }
-    , m_pLevel{ level }
-{
-}
 
 void GameCommands::ResetLevel::Execute(float)
 {
-    
+    if (GetKeyPressed()) return;
+
+    if (dae::SceneManager::GetInstance().GetActiveSceneName() == "GameOver" ||
+        dae::SceneManager::GetInstance().GetActiveSceneName() == "MainMenu")
+    {
+        SetKeyPressed(true);
+        return;
+    }
     //dae::SceneManager::GetInstance().NextScene();
     auto scene = dae::SceneManager::GetInstance().GetActiveScene();
     //std::cout << scene->GetName() << '\n';
@@ -221,7 +201,7 @@ void GameCommands::ResetLevel::Execute(float)
     scene->RemoveAll();
     
 
-    dae::ScreenManager::GetInstance().CreateGameScreen();
+   // dae::ScreenManager::GetInstance().CreateGameScreen();
 }
 
 void GameCommands::MuteMusic::Execute(float)

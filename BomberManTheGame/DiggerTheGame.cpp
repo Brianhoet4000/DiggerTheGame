@@ -13,6 +13,8 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "PlayerManager.h"
+#include "PlayerTwo.h"
 #include "ScreenManager.h"
 
 void load()
@@ -29,7 +31,31 @@ void load()
 	
 	//auto Screenmanager = std::make_unique<dae::ScreenManager>();
 	//Screenmanager->CreateMenuScreen();
-	dae::ScreenManager::GetInstance().CreateMenuScreen();
+	
+
+	auto& startscene = dae::SceneManager::GetInstance().CreateScene("MainMenu");
+	dae::ScreenManager::GetInstance().CreateMenuScreen(startscene);
+	startscene.SetActive(true);
+
+	auto& waitingScenePlayer = dae::SceneManager::GetInstance().CreateScene("WaitingScene");
+
+	auto pPlayer_01 = std::make_shared<dae::PlayerOne>(waitingScenePlayer, false);
+	PlayerManager::GetInstance().AddPlayer(pPlayer_01->ReturnPlayer());
+
+	auto pPlayer_02 = std::make_shared<dae::PlayerTwo>(waitingScenePlayer, true);
+
+	dae::SceneManager::GetInstance().CreateScene("Game0");
+	
+
+	dae::SceneManager::GetInstance().CreateScene("Game1");
+	
+
+	dae::SceneManager::GetInstance().CreateScene("Game2");
+	
+
+	auto& sceneGameOver = dae::SceneManager::GetInstance().CreateScene("GameOver");
+	dae::ScreenManager::GetInstance().CreateGameOverScreen(sceneGameOver);
+	
 
 	//dae::ScreenManager::GetInstance().CreateGameScreen();
 	//const float scale{ 1.08f };

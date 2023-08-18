@@ -193,12 +193,13 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClCompile Include="Gold.cpp" />
     <ClCompile Include="GoldStateComponent.cpp" />
     <ClCompile Include="HobbinComponent.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="PlayerOne.cpp" />
     <ClCompile Include="PlayerTwo.cpp" />
     <ClCompile Include="DiggerTheGame.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="SpawnTimerComponent.cpp" />
     <ClCompile Include="LevelPrefab.cpp" />
-    <ClCompile Include="PlayerOne.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClInclude Include="Gold.h" />
     <ClInclude Include="GoldStateComponent.h" />
     <ClInclude Include="HobbinComponent.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="PlayerTwo.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="SpawnTimerComponent.h" />

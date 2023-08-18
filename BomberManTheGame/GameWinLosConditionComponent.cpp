@@ -27,7 +27,7 @@ void dae::GameWinLosConditionComponent::Update(float)
 
 	if (m_Finished && !m_DoOnce && dae::ScreenManager::GetInstance().GetCurrentLevel() == 3)
 	{
-		dae::ScreenManager::GetInstance().CreateGameOverScreen();
+		//dae::ScreenManager::GetInstance().CreateGameOverScreen();
 		m_DoOnce = true;
 	}
 
@@ -35,7 +35,7 @@ void dae::GameWinLosConditionComponent::Update(float)
 	if(m_Finished && !m_DoOnce && dae::ScreenManager::GetInstance().GetCurrentLevel() != 3)
 	{
 		dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-		dae::ScreenManager::GetInstance().CreateGameScreen();
+		//dae::ScreenManager::GetInstance().CreateGameScreen();
 		m_DoOnce = true;
 	}
 }

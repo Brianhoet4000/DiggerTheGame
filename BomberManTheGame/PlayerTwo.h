@@ -7,7 +7,7 @@ namespace dae
 	class PlayerTwo final
 	{
 	public:
-		PlayerTwo(dae::Scene& scene, glm::vec2 PlayerStartPos, std::shared_ptr<GameObject> background, bool Coop);
+		PlayerTwo(dae::Scene& scene, bool Coop);
 
 		~PlayerTwo() = default;
 		PlayerTwo(const PlayerTwo& other) = delete;
@@ -15,12 +15,22 @@ namespace dae
 		PlayerTwo& operator=(const PlayerTwo& other) = delete;
 		PlayerTwo& operator=(PlayerTwo&& other) = delete;
 
+		void SetCoopBool(bool Coop)
+		{
+			if(Coop)
+			{
+				m_pPlayerTwo->GetComponent<TextComponent>();
+			}
+		}
+
 	private:
 		float m_Speed{ 50.f };
 		glm::vec2 m_Up = { 0.f,-m_Speed };
 		glm::vec2 m_Down = { 0.f,m_Speed };
 		glm::vec2 m_Right = { m_Speed,0.f };
 		glm::vec2 m_Left = { -m_Speed,0.f };
+
+		std::shared_ptr<dae::GameObject> m_pPlayerTwo;
 	};
 
 }

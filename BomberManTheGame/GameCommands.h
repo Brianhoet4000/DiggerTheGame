@@ -47,33 +47,26 @@ namespace GameCommands
 	class AcceptGameMode : public dae::Command
 	{
 	private:
-		std::shared_ptr<dae::GameObject> m_pScreen{};
-		dae::ScreenManager* m_pScreenManager{};
-		bool m_Pressed{ false };
 	public:
-		AcceptGameMode(std::shared_ptr<dae::GameObject> owner, dae::ScreenManager* screen);
+		AcceptGameMode() = default;
 		virtual void Execute(float) override;
 	};
 
 	class SkipLevel : public dae::Command
 	{
 	private:
-		dae::Scene* m_pScene;
-		dae::LevelPrefab* m_pLevel;
 		bool m_CreatedEndScreen = false;
 	public:
-		SkipLevel(dae::Scene* scene, dae::LevelPrefab* level);
+		SkipLevel() = default;
 		virtual void Execute(float) override;
 	};
 
 	class ResetLevel : public dae::Command
 	{
 	private:
-		dae::Scene* m_pScene;
-		dae::LevelPrefab* m_pLevel;
 
 	public:
-		ResetLevel(dae::Scene* scene, dae::LevelPrefab* level);
+		ResetLevel() = default;
 		virtual void Execute(float) override;
 	};
 

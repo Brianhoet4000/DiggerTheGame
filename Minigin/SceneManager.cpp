@@ -1,49 +1,52 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void dae::SceneManager::Update(float deltaTime)
+using namespace dae;
+
+void SceneManager::Update(float deltaTime) const
 {
-	for(const auto& scene : m_pScenes)
+	for (auto& scene : m_pScenes)
 	{
-		if (!scene->IsActive()) return;
+		if (!scene->IsActive())
+			continue;
 
 		scene->Update(deltaTime);
+		return; //only want to update 1 scene
 	}
 }
 
-void dae::SceneManager::FixedUpdate(float deltaTime)
+void SceneManager::FixedUpdate(float fixedTimeStep) const
 {
-	for (const auto& scene : m_pScenes)
+	for (auto& scene : m_pScenes)
 	{
-		if (!scene->IsActive()) return;
+		if (!scene->IsActive())
+			continue;
 
-		scene->FixedUpdate(deltaTime);
+		scene->FixedUpdate(fixedTimeStep);
+		return;
 	}
 }
 
-void dae::SceneManager::Render()
+void SceneManager::Render() const
 {
 	for (const auto& scene : m_pScenes)
 	{
-		if (!scene->IsActive()) return;
+		if (!scene->IsActive())
+			continue;
 
 		scene->Render();
+		return;
 	}
 }
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
+Scene& SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
 	m_pScenes.push_back(scene);
 	return *scene;
 }
 
-void dae::SceneManager::RemoveScene(std::shared_ptr<dae::Scene> scene)
-{
-	m_pScenes.erase(std::remove(m_pScenes.begin(), m_pScenes.end(), scene), m_pScenes.end());
-}
-
-void dae::SceneManager::NextScene()
+void SceneManager::NextScene()
 {
 	m_pScenes[m_ActiveScene]->SetActive(false);
 
@@ -54,7 +57,7 @@ void dae::SceneManager::NextScene()
 	m_pScenes[m_ActiveScene]->SetActive(true);
 }
 
-void dae::SceneManager::SetActiveScene(const std::string& sceneName)
+void SceneManager::SetActiveScene(const std::string& sceneName)
 {
 	m_pScenes[m_ActiveScene]->SetActive(false);
 
@@ -67,7 +70,7 @@ void dae::SceneManager::SetActiveScene(const std::string& sceneName)
 	}
 }
 
-std::string dae::SceneManager::GetActiveSceneName() const
+std::string SceneManager::GetActiveSceneName() const
 {
 	return m_pScenes[m_ActiveScene]->GetName();
 }

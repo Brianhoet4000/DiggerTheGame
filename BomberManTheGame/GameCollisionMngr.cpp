@@ -509,12 +509,6 @@ namespace dae
 
     bool dae::GameCollisionMngr::Raycast(glm::vec2 startpos, glm::vec2 direction,const dae::GameCollisionComponent* box, bool checkDirt) const
     {
-        /*
-        std::cout << "Wall: " << m_pWallBoxes.size() << '\n';
-        std::cout << "Dirt: " << m_pDirtBoxes.size() << '\n';
-        std::cout << "Emerald: " << m_pEmeraldBoxes.size() << '\n';
-        std::cout << "Gold: " << m_pGoldBoxes.size() << '\n';
-        */
 
         glm::vec2 startPos = startpos;
         startPos.x += box->GetCollisionRect().w / 2.0f;
