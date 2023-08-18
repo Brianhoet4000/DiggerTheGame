@@ -117,6 +117,7 @@ namespace dae
 		std::shared_ptr<GameCommands::MuteMusic> muteMusic = std::make_shared<GameCommands::MuteMusic>();
 		dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_F2, muteMusic);
 
+		/*
 		switch (m_CurrentGameMode)
 		{
 		case SinglePlayer:
@@ -166,7 +167,7 @@ namespace dae
 			break;
 		}
 
-
+		*/
 
 		if(m_CurrentGameMode == GameMode::SinglePlayer)
 		{
@@ -175,7 +176,6 @@ namespace dae
 				//Level
 				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
 
-				//auto EnemySpawner = std::make_shared<dae::EnemySpawner>(scene, pLevel->GetEnemySpawnPosition(), 2);
 				auto player = PlayerManager::GetInstance().GetPlayers();
 				dae::SceneManager::GetInstance().GetActiveScene()->Add(player[0]);
 				player[0]->SetRelativePosition(pLevel->GetSpawnPosition()[0]);
@@ -212,15 +212,97 @@ namespace dae
 		
 		if (m_CurrentGameMode == GameMode::Coop)
 		{
-			//Level
-			auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
+			if (m_CurrentLevel == 0)
+			{
+				auto Player_02 = std::make_shared<dae::PlayerTwo>(scene, true);
+				PlayerManager::GetInstance().AddPlayer(Player_02->ReturnPlayer());
+
+				//Level
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
+
+
+				for (int i = 0; i < static_cast<int>(PlayerManager::GetInstance().GetPlayers().size()); ++i)
+				{
+					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
+					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
+				}
+
+				auto pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 6);
+			}
+
+			if (m_CurrentLevel == 1)
+			{
+				//Level
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_1.txt");
+
+				for (int i = 0; i < static_cast<int>(PlayerManager::GetInstance().GetPlayers().size()); ++i)
+				{
+					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
+					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
+				}
+
+				auto pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 12);
+			}
+
+			if (m_CurrentLevel == 2)
+			{
+				//Level
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_2.txt");
+
+				for (int i = 0; i < static_cast<int>(PlayerManager::GetInstance().GetPlayers().size()); ++i)
+				{
+					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
+					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
+				}
+
+				auto pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 15);
+			}
+			
 		}
 
 		if (m_CurrentGameMode == GameMode::Versus)
 		{
-			//Level
-			auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
+			if (m_CurrentLevel == 0)
+			{
+				auto Player_02 = std::make_shared<dae::PlayerTwo>(scene, false);
+				PlayerManager::GetInstance().AddPlayer(Player_02->ReturnPlayer());
+
+				//Level
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
+
+				for (int i = 0; i < static_cast<int>(PlayerManager::GetInstance().GetPlayers().size()); ++i)
+				{
+					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
+					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
+				}
+
+			}
+
+			if (m_CurrentLevel == 1)
+			{
+				//Level
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_1.txt");
+
+				for (int i = 0; i < static_cast<int>(PlayerManager::GetInstance().GetPlayers().size()); ++i)
+				{
+					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
+					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
+				}
+			}
+
+			if (m_CurrentLevel == 2)
+			{
+				//Level
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_2.txt");
+
+				for (int i = 0; i < static_cast<int>(PlayerManager::GetInstance().GetPlayers().size()); ++i)
+				{
+					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
+					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
+				}
+			}
 		}
+		
 
 		IncrementCurrentLevel();
 	}

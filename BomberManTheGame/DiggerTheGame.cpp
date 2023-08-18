@@ -42,8 +42,6 @@ void load()
 	auto pPlayer_01 = std::make_shared<dae::PlayerOne>(waitingScenePlayer, false);
 	PlayerManager::GetInstance().AddPlayer(pPlayer_01->ReturnPlayer());
 
-	auto pPlayer_02 = std::make_shared<dae::PlayerTwo>(waitingScenePlayer, true);
-
 	dae::SceneManager::GetInstance().CreateScene("Game0");
 	
 

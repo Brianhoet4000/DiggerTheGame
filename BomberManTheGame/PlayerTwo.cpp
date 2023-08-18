@@ -35,6 +35,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 		//Collision
 		auto pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerTwo.get());
 		pCollider->SetCollisionRectOffset(5.f);
+		pCollider->SetRenderCollisionBox(true);
 		m_pPlayerTwo->AddComponent(pCollider);
 
 		//BulletTimer
@@ -50,8 +51,6 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 		moveCommandDown = std::make_shared<GameCommands::DiggerMovement>(m_pPlayerTwo, m_Down, true);
 		moveCommandLeft = std::make_shared<GameCommands::DiggerMovement>(m_pPlayerTwo, m_Left, true);
 		moveCommandRight = std::make_shared<GameCommands::DiggerMovement>(m_pPlayerTwo, m_Right, true);
-
-
 
 		std::shared_ptr<GameCommands::ShootingBullet> ShootCommand = std::make_shared<GameCommands::ShootingBullet>(m_pPlayerTwo, &scene);
 		controllerButton = dae::Controller::ControllerButton::ButtonA;

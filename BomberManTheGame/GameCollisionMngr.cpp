@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "GoldStateComponent.h"
 #include "HobbinComponent.h"
+#include "PlayerManager.h"
 #include "ServiceLocator.h"
 
 namespace dae
@@ -266,36 +267,22 @@ namespace dae
 
     GameCollisionComponent* GameCollisionMngr::CheckOverlapWithPlayers(const GameCollisionComponent* box) const
     {
-	    for (const auto& player : m_pCollisonBoxes)
-	    {
+        for (auto player : PlayerManager::GetInstance().GetPlayers())
+        {
             if (player == nullptr) return nullptr;
-            if (player->GetOwner()->ReturnDeleting()) return nullptr;
+            if (player->ReturnDeleting()) return nullptr;
 
-		    if(player->GetOwner()->GetTag() == "Player_01")
-		    {
-                if (box->GetCollisionRect().x < player->GetCollisionRect().x + player->GetCollisionRect().w &&
-                    box->GetCollisionRect().x + box->GetCollisionRect().w > player->GetCollisionRect().x &&
-                    box->GetCollisionRect().y < player->GetCollisionRect().y + player->GetCollisionRect().h &&
-                    box->GetCollisionRect().y + box->GetCollisionRect().h > player->GetCollisionRect().y)
-                {
-                    return player;
-                }
-		    }
+            auto PlayerBox = player->GetComponent<GameCollisionComponent>();
 
-            if(player->GetOwner()->GetTag() == "Player_02")
+            if (box->GetCollisionRect().x < PlayerBox->GetCollisionRect().x + PlayerBox->GetCollisionRect().w &&
+                box->GetCollisionRect().x + box->GetCollisionRect().w > PlayerBox->GetCollisionRect().x &&
+                box->GetCollisionRect().y < PlayerBox->GetCollisionRect().y + PlayerBox->GetCollisionRect().h &&
+                box->GetCollisionRect().y + box->GetCollisionRect().h > PlayerBox->GetCollisionRect().y)
             {
-                if(!player->GetIsVersus())
-                {
-                    if (box->GetCollisionRect().x < player->GetCollisionRect().x + player->GetCollisionRect().w &&
-                        box->GetCollisionRect().x + box->GetCollisionRect().w > player->GetCollisionRect().x &&
-                        box->GetCollisionRect().y < player->GetCollisionRect().y + player->GetCollisionRect().h &&
-                        box->GetCollisionRect().y + box->GetCollisionRect().h > player->GetCollisionRect().y)
-                    {
-                        return player;
-                    }
-                }
+                return PlayerBox;
             }
-	    }
+        }
+       
         return nullptr;
     }
 

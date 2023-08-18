@@ -23,6 +23,11 @@ namespace dae
 			}
 		}
 
+		std::shared_ptr<GameObject> ReturnPlayer()
+		{
+			return m_pPlayerTwo;
+		}
+
 	private:
 		float m_Speed{ 50.f };
 		glm::vec2 m_Up = { 0.f,-m_Speed };

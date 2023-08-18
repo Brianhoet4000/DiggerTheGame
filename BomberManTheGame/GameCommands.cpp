@@ -155,10 +155,9 @@ void GameCommands::AcceptGameMode::Execute(float)
         dae::SceneManager::GetInstance().NextScene();
         dae::SceneManager::GetInstance().NextScene();
         dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
+        dae::servicelocator::get_sound_system().playMusic(0, 10);
         SetKeyPressed(true);
     }
-
-    
 }
 
 void GameCommands::SkipLevel::Execute(float)
@@ -195,10 +194,10 @@ void GameCommands::ResetLevel::Execute(float)
         return;
     }
     //dae::SceneManager::GetInstance().NextScene();
-    auto scene = dae::SceneManager::GetInstance().GetActiveScene();
+    //auto scene = dae::SceneManager::GetInstance().GetActiveScene();
     //std::cout << scene->GetName() << '\n';
     //dae::GameCollisionMngr::GetInstance().ClearAll();
-    scene->RemoveAll();
+    //scene->RemoveAll();
     
 
    // dae::ScreenManager::GetInstance().CreateGameScreen();
