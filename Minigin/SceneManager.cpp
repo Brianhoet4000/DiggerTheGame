@@ -5,6 +5,8 @@ void dae::SceneManager::Update(float deltaTime)
 {
 	for(const auto& scene : m_pScenes)
 	{
+		//if (!scene->IsActive()) return;
+
 		scene->Update(deltaTime);
 	}
 }
@@ -13,6 +15,8 @@ void dae::SceneManager::FixedUpdate(float deltaTime)
 {
 	for (const auto& scene : m_pScenes)
 	{
+		//if (!scene->IsActive()) return;
+
 		scene->FixedUpdate(deltaTime);
 	}
 }
@@ -21,6 +25,8 @@ void dae::SceneManager::Render()
 {
 	for (const auto& scene : m_pScenes)
 	{
+		//if (!scene->IsActive()) return;
+
 		scene->Render();
 	}
 }

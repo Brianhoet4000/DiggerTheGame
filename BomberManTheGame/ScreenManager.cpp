@@ -80,18 +80,16 @@ namespace dae
 		dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_TAB, Switch);
 		dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_E, Accept);
 
-
 		dae::servicelocator::register_sound_system(std::make_unique<dae::SoundSystem>());
 		dae::servicelocator::get_sound_system().Load(0, "GamePlaySound.wav");
 		dae::servicelocator::get_sound_system().Load(1, "PickupSound.wav");
 		dae::servicelocator::get_sound_system().Load(2, "MoneyBagBreaking.wav");
-		
 	}
 
 	void dae::ScreenManager::CreateGameScreen()
 	{
-		auto& scene = dae::SceneManager::GetInstance().CreateScene("Game");
-
+		auto& scene = dae::SceneManager::GetInstance().CreateScene("Game" + std::to_string(m_CurrentLevel) );
+		
 		auto GameObjBackGround = std::make_shared<dae::GameObject>();
 		auto go = std::make_shared<dae::TextureComponent>(GameObjBackGround.get());
 		go->SetTexture("background.png");
@@ -130,9 +128,9 @@ namespace dae
 			if (m_CurrentLevel == 0)
 			{
 				//Level
-				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level.txt");
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
 
-				auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), true);
+				m_pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), true);
 
 				auto pEnemySpawn = std::make_shared<EnemySpawner>(scene, pLevel->GetEnemySpawnPosition(), 3);
 
@@ -146,9 +144,11 @@ namespace dae
 			if (m_CurrentLevel == 1)
 			{
 				//Level
-				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_01.txt");
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_1.txt");
 
-				auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), true);
+				//auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), true);
+
+				m_pPlayer->ReturnPlayer()->SetScene(&scene);
 
 				auto pEnemySpawn = std::make_shared<EnemySpawner>(scene, pLevel->GetEnemySpawnPosition(), 3);
 
@@ -159,10 +159,10 @@ namespace dae
 				scene.Add(pWinLoseChecker);
 			}
 
-			if (m_CurrentLevel == 3)
+			if (m_CurrentLevel == 2)
 			{
 				//Level
-				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_02.txt");
+				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_2.txt");
 
 				auto pPlayer = std::make_shared<PlayerOne>(scene, pLevel->GetSpawnPosition()[0], GameObjBackGround, pLevel.get(), true);
 
@@ -265,7 +265,7 @@ namespace dae
 		pNameObj->SetRelativePos({ 160, 250 });
 		pMainObj->AddChild(pNameObj);
 
-
+		
 		//HighScores
 		auto miniFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
 		glm::vec2 pos{ 350, 190 };
@@ -273,10 +273,10 @@ namespace dae
 		{
 			const auto o = std::make_shared<dae::GameObject>();
 			const std::string text = " ";
-			const auto t = std::make_shared<dae::TextComponent>(o.get(), text, miniFont, SDL_Color{ 255, 255, 50, 255 });
+			const auto t = std::make_shared<dae::TextComponent>(text, miniFont, o.get());
 			o->AddComponent(t);
 			o->SetTag("HighScore" + std::to_string(i));
-			o->SetRelativePos(pos);
+			o->SetRelativePosition(pos);
 			pMainObj->AddChild(o);
 			pos.y += 25;
 		}

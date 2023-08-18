@@ -76,9 +76,8 @@ GameCommands::ShootingBullet::ShootingBullet(std::shared_ptr<dae::GameObject> ow
 void GameCommands::ShootingBullet::Execute(float)
 {
     if(GetKeyPressed()) return;
-
     if (m_pGameObject == nullptr) return;
-
+    if (m_pGameObject->ReturnDeleting()) return;
     if (m_pBulletTimer->ReturnHasShot()) return;
 
     auto shootingState = m_pGameObject->GetComponent<dae::ShootingDirComponent>();
@@ -166,31 +165,63 @@ void GameCommands::AcceptGameMode::Execute(float)
     }
 }
 
-GameCommands::SkipLevel::SkipLevel(std::shared_ptr<dae::GameObject> owner, dae::Scene* scene, dae::LevelPrefab* level)
+GameCommands::SkipLevel::SkipLevel(dae::Scene* scene, dae::LevelPrefab* level)
     :m_pScene{ scene }
     , m_pLevel{ level }
 {
-    m_pGameObject = owner;   
 }
 
 void GameCommands::SkipLevel::Execute(float)
 {
     if (GetKeyPressed()) return;
-
-	m_pScene->RemoveAll();
-    
-    //for (auto element : m_pLevel->returnLevelObj()->GetChildren())
-    //{
-    //    element->MarkTrueForDeleting();
-    //}
+    if (m_CreatedEndScreen) return;
 
     dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-	
-    //m_pScene->Remove(m_pLevel->returnLevelObj());
-    //dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-    //dae::ScreenManager::GetInstance().CreateAppropriateGameModeScreen();
+
+    if (dae::ScreenManager::GetInstance().GetCurrentLevel() == 3)
+    {
+        dae::ScreenManager::GetInstance().CreateGameOverScreen();
+        m_CreatedEndScreen = true;
+        SetKeyPressed(true);
+        return;
+    }
+
+    dae::ScreenManager::GetInstance().CreateGameScreen();
+    dae::SceneManager::GetInstance().NextScene();
+    
+    
+
+    
+    /*
+    else
+    {
+        dae::ScreenManager::GetInstance().CreateGameScreen();
+        dae::SceneManager::GetInstance().NextScene();
+        SetKeyPressed(true);
+    }
+    */
 
     SetKeyPressed(true);
+}
+
+GameCommands::ResetLevel::ResetLevel(dae::Scene* scene, dae::LevelPrefab* level)
+    :m_pScene{ scene }
+    , m_pLevel{ level }
+{
+}
+
+void GameCommands::ResetLevel::Execute(float)
+{
+    
+    dae::SceneManager::GetInstance().NextScene();
+    auto scene = dae::SceneManager::GetInstance().GetActiveScene();
+    std::cout << scene->GetName() << '\n';
+    dae::GameCollisionMngr::GetInstance().ClearAll();
+    scene->RemoveAll();
+
+    
+
+    dae::ScreenManager::GetInstance().CreateGameScreen();
 }
 
 void GameCommands::MuteMusic::Execute(float)
@@ -201,3 +232,5 @@ void GameCommands::MuteMusic::Execute(float)
 
     SetKeyPressed(true);
 }
+
+

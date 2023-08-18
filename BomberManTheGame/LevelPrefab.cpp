@@ -9,11 +9,10 @@
 
 dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 {
-	//auto pLevelObj = std::make_shared<dae::GameObject>();
-	//scene.Add(pLevelObj);
+	auto pLevelObj = std::make_shared<dae::GameObject>();
+	scene.Add(pLevelObj);
 
-	m_pLevelObj = std::make_shared<dae::GameObject>();
-	scene.Add(m_pLevelObj);
+	
 
 	constexpr int width{ 640 };
 	constexpr int height{ 480 };
@@ -29,7 +28,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 
 		auto pTexture = std::make_shared<dae::TextureComponent>(pBlock.get());
 
-		m_pLevelObj->AddChild(pBlock);
+		pLevelObj->AddChild(pBlock);
 
 		pBlock->AddComponent(pTexture);
 		pBlock->SetRelativePosition({ pos.x, pos.y });
@@ -118,8 +117,6 @@ void dae::LevelPrefab::AddBreakAbleBlocks(dae::Scene& scene)
 		//Pos
 		pBreakBlock->SetRelativePosition({ m_BlockPositions[i].x, m_BlockPositions[i].y }); // Position it above the path block
 
-		m_pLevelObj->AddChild(pBreakBlock);
-
 		scene.Add(pBreakBlock);
 	}
 }
@@ -129,7 +126,6 @@ void dae::LevelPrefab::AddEmeralds(dae::Scene& scene)
 	for (size_t i = 0; i < m_EmeraldPositions.size(); ++i)
 	{
 		auto newEmerald = std::make_shared<dae::Emerald>(m_EmeraldPositions[i]);
-		m_pLevelObj->AddChild(newEmerald->ReturnEmerald());
 		scene.Add(newEmerald->ReturnEmerald());
 	}
 }
@@ -140,7 +136,6 @@ void dae::LevelPrefab::AddGold(dae::Scene& scene)
 	{
 		m_GoldPositions[i].y = m_GoldPositions[i].y + 2.0f;
 		auto newGold = std::make_shared<dae::Gold>(m_GoldPositions[i]);
-		m_pLevelObj->AddChild(newGold->ReturnGold());
 		scene.Add(newGold->ReturnGold());
 	}
 }

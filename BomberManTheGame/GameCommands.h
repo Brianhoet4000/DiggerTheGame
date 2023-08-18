@@ -60,9 +60,9 @@ namespace GameCommands
 	private:
 		dae::Scene* m_pScene;
 		dae::LevelPrefab* m_pLevel;
-
+		bool m_CreatedEndScreen = false;
 	public:
-		SkipLevel(std::shared_ptr<dae::GameObject> owner,dae::Scene* scene, dae::LevelPrefab* level);
+		SkipLevel(dae::Scene* scene, dae::LevelPrefab* level);
 		virtual void Execute(float) override;
 	};
 
@@ -73,7 +73,7 @@ namespace GameCommands
 		dae::LevelPrefab* m_pLevel;
 
 	public:
-		ResetLevel(std::shared_ptr<dae::GameObject> owner, dae::Scene* scene, dae::LevelPrefab* level);
+		ResetLevel(dae::Scene* scene, dae::LevelPrefab* level);
 		virtual void Execute(float) override;
 	};
 

@@ -12,6 +12,7 @@ dae::AIMovementComponent::AIMovementComponent(dae::GameObject* owner)
 
 void dae::AIMovementComponent::Update(float deltaTime)
 {
+	if (m_pOwner->ReturnDeleting()) return;
 
 	auto overlapPlayer = dae::GameCollisionMngr::GetInstance().CheckOverlapWithPlayers(m_pCollision);
 	if(overlapPlayer != nullptr)
@@ -130,8 +131,6 @@ void dae::AIMovementComponent::Update(float deltaTime)
 				dae::GameCollisionMngr::GetInstance().RemoveEmeraldBox(OverlappedBoxDirtAndEmerald->GetOwner()->GetComponent<dae::GameCollisionComponent>());
 				OverlappedBoxDirtAndEmerald->GetOwner()->MarkTrueForDeleting();
 			}
-
-			
 		}
 
 		if(m_Horizontal)

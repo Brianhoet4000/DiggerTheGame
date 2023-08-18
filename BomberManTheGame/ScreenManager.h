@@ -1,4 +1,5 @@
 #pragma once
+#include "PlayerOne.h"
 #include "Scene.h"
 #include "TextComponent.h"
 
@@ -47,6 +48,8 @@ namespace dae
 		std::shared_ptr<TextComponent> m_pGameModeDisplayText;
 		std::shared_ptr<GameObject> m_pGameModeDisplay;
 		int m_CurrentLevel{ 0 };
+
+		std::shared_ptr<PlayerOne> m_pPlayer;
 	};
 
 }

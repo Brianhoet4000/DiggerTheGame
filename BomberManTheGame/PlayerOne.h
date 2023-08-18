@@ -16,11 +16,15 @@ namespace dae
 		PlayerOne& operator=(const PlayerOne& other) = delete;
 		PlayerOne& operator=(PlayerOne&& other) = delete;
 
+		std::shared_ptr<dae::GameObject> ReturnPlayer() { return m_pPlayerOne; }
+
 	private:
 		const float m_Speed{ 50.f };
 		glm::vec2 m_Up = { 0.f,-m_Speed };
 		glm::vec2 m_Down = { 0.f,m_Speed };
 		glm::vec2 m_Right = { m_Speed,0.f };
 		glm::vec2 m_Left = { -m_Speed,0.f };
+
+		std::shared_ptr<dae::GameObject> m_pPlayerOne;
 	};
 }

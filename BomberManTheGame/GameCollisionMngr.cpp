@@ -89,6 +89,17 @@ namespace dae
         m_pEnemies.erase(std::remove(m_pEnemies.begin(), m_pEnemies.end(), box), m_pEnemies.end());
     }
 
+    void GameCollisionMngr::ClearAll()
+    {
+        m_pCollisonBoxes.clear();
+        m_pWallBoxes.clear();
+        m_pDirtBoxes.clear();
+        m_pEmeraldBoxes.clear();
+        m_pGoldBoxes.clear();
+        m_pBulletBoxes.clear();
+        m_pEnemies.clear();
+    }
+
     std::vector<dae::GameCollisionComponent*> dae::GameCollisionMngr::GetAllWall()
     {
         return m_pWallBoxes;
@@ -256,6 +267,7 @@ namespace dae
 	    for (const auto& player : m_pCollisonBoxes)
 	    {
             if (player == nullptr) return nullptr;
+            if (player->GetOwner()->ReturnDeleting()) return nullptr;
 
 		    if(player->GetOwner()->GetTag() == "Player_01")
 		    {

@@ -27,6 +27,7 @@ namespace dae
 		void RemoveFirstPlayerBox(GameCollisionComponent* box);
 		void RemoveSecondPlayerBox(GameCollisionComponent* box);
 		void RemoveEnemyBox(GameCollisionComponent* box);
+		void ClearAll();
 
 		std::vector<GameCollisionComponent*> GetAllWall();
 		std::vector<GameCollisionComponent*> GetAllDirt();

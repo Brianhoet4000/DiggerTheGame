@@ -8,11 +8,20 @@
 
 namespace dae
 {
+	class Scene;
 	class BaseComponent;
 
 	class GameObject final
 	{
 	public:
+
+		GameObject(const std::string& tag = "TagLess");
+		~GameObject() = default;
+		GameObject(const GameObject& other) = delete;
+		GameObject(GameObject&& other) = delete;
+		GameObject& operator=(const GameObject& other) = delete;
+		GameObject& operator=(GameObject&& other) = delete;
+
 		void Update(float deltaTime);
 		void FixedUpdate(float deltaTime);
 		void Render() const;
@@ -59,12 +68,9 @@ namespace dae
 		void MakeObserver(std::shared_ptr<Observer> observer);
 		void NotifyObservers(Event event);
 
-		GameObject(const std::string& tag = "TagLess");
-		~GameObject();
-		GameObject(const GameObject& other) = delete;
-		GameObject(GameObject&& other) = delete;
-		GameObject& operator=(const GameObject& other) = delete;
-		GameObject& operator=(GameObject&& other) = delete;
+		void SetScene(Scene* scene);
+		Scene* GetScene() const;
+
 	protected:
 		std::unique_ptr<Subject> m_pSubject;
 
@@ -81,6 +87,6 @@ namespace dae
 		bool m_dirtyFlag{ false };
 		std::string m_TagString;
 
-		
+		Scene* m_pScene{};
 	};
 }

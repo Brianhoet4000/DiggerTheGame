@@ -9,6 +9,11 @@
 
 namespace dae
 {
+	GameObject::GameObject(const std::string& tag)
+		:m_TagString{ tag }
+	{
+	}
+
 	void GameObject::Update(float deltaTime)
 	{
 		for (const auto& pComponent : m_pComponents)
@@ -198,12 +203,18 @@ namespace dae
 		m_pSubject->NotifyObservers(event);
 	}
 
-	GameObject::GameObject(const std::string& tag)
-		:m_TagString{ tag }
+	void GameObject::SetScene(Scene* scene)
 	{
+		m_pScene = scene;
+		for (const auto& c : m_pChildren)
+		{
+			c->SetScene(scene);
+		}
 	}
 
-	GameObject::~GameObject()
+	Scene* GameObject::GetScene() const
 	{
+		return m_pScene;
 	}
+
 }

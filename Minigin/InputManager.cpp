@@ -28,17 +28,12 @@ bool dae::InputManager::ProcessInput(float deltaTime)
         // etc...
     }
 
-    if(m_KeyCommands.size() > 0)
-    {
-        ProcessKeyboardInput(deltaTime);
-        ProcessControllerInput(deltaTime);
-    }
-    else
-    {
-        return false;
-    }
+   
+    ProcessKeyboardInput(deltaTime);
+    ProcessControllerInput(deltaTime);
 
-    return true;
+
+	return true;
 }
 
 //Controller
@@ -55,16 +50,16 @@ void dae::InputManager::BindControllerToCommand(unsigned int id, Controller::Con
 
 void dae::InputManager::UpdateControllers()
 {
-    for (auto& controller : m_Controllers)
+    for (const auto& controller : m_Controllers)
     {
         controller->Update();
     }
 }
 void dae::InputManager::ProcessControllerInput(float deltaTime)
 {
-    for (auto& controller : m_Controllers)
+    for (const auto& controller : m_Controllers)
     {
-        for (auto& command : m_Commands)
+        for (const auto& command : m_Commands)
         {
             const auto controllerKey = command.first.second;
             const unsigned int controllerId = command.first.first;
@@ -115,7 +110,6 @@ void dae::InputManager::ProcessKeyboardInput(float deltaTime)
         }
         else
         {
-            //Rikki helped with this
             keyCommand.second->SetKeyPressed(false);
         }
     }

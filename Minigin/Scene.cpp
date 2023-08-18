@@ -22,6 +22,11 @@ namespace dae
 
 	void Scene::RemoveAll()
 	{
+		for (const auto& element : m_pObjects)
+		{
+			element->MarkTrueForDeleting();
+		}
+
 		m_pObjects.clear();
 	}
 
@@ -38,7 +43,6 @@ namespace dae
 			}
 
 			object->Update(deltaTime);
-
 		}
 	}
 

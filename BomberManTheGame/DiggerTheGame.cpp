@@ -30,6 +30,8 @@ void load()
 	//auto Screenmanager = std::make_unique<dae::ScreenManager>();
 	//Screenmanager->CreateMenuScreen();
 	dae::ScreenManager::GetInstance().CreateMenuScreen();
+
+	//dae::ScreenManager::GetInstance().CreateGameScreen();
 	//const float scale{ 1.08f };
 	//SDL_RenderSetScale(dae::Renderer::GetInstance().GetSDLRenderer(), scale, scale);
 }
