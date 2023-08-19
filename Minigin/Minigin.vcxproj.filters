@@ -114,9 +114,6 @@
     <ClInclude Include="Counter.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="UIComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -224,9 +221,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="UIComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -241,9 +235,6 @@
     </ClCompile>
     <ClCompile Include="CollisionBoxManager.cpp">
       <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Observer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

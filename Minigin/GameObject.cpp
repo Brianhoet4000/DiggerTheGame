@@ -177,30 +177,12 @@ namespace dae
 
 	void GameObject::MarkTrueForDeleting()
 	{
-		//m_pSubject->NotifyObservers(PLAYER_DIED);
-		//m_pParent->RemoveComponent(m_pParent->GetComponent<dae::>())
-		//auto colrext = m_pParent->GetComponent<dae::CollisionBoxComponent>()->GetCollisionRect();
-		//SDL_RenderFillRectF(Renderer::GetInstance().GetSDLRenderer(), &colrext);
-
 		m_deletParentFromScene = true;
 	}
 
 	bool GameObject::ReturnDeleting()
 	{
 		return m_deletParentFromScene;
-	}
-
-	void GameObject::MakeObserver(std::shared_ptr<Observer> observer)
-	{
-		m_pSubject = std::make_unique<Subject>(this);
-		m_pSubject->AddObserver(observer);
-	}
-
-	void GameObject::NotifyObservers(Event event)
-	{
-		if (!m_pSubject) return;
-
-		m_pSubject->NotifyObservers(event);
 	}
 
 	void GameObject::SetScene(Scene* scene)

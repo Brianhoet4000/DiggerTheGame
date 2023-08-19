@@ -251,7 +251,6 @@ xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\SDL2_ttf.dll $(Outpu
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="UIComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp" />
@@ -302,7 +301,6 @@ xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\SDL2_ttf.dll $(Outpu
     </ClCompile>
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Minigin.cpp" />
-    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RotationComponent.cpp" />
@@ -315,7 +313,6 @@ xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\SDL2_ttf.dll $(Outpu
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="UIComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,10 +6,8 @@
 #include "Counter.h"
 #include "GameCommands.h"
 #include "HobbinComponent.h"
-#include "Observer.h"
 #include "ResourceManager.h"
 #include "ShootingDirComponent.h"
-#include "UIComponent.h"
 
 dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 {
@@ -99,25 +97,24 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	//PointCommand* pointCommand = new PointCommand{ GameObjBomberman.get() };
 	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_P, pointCommand);
 
-	const auto& pUIObserver = std::make_shared<UI>();
-	m_pPlayerTwo->MakeObserver(pUIObserver);
+
 
 	//Lives Display
 	const auto& PlayerTwoLives = std::make_shared<dae::GameObject>("Player_02");
-	const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
-	const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
-		"Lives", PlayerTwoLives.get());
+	//const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
+	//const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
+	//	"Lives", PlayerTwoLives.get());
 	PlayerTwoLives->SetRelativePosition({ 5, 400 });
-	PlayerTwoLives->AddComponent(textBomberManLives);
+	//PlayerTwoLives->AddComponent(textBomberManLives);
 	//background->AddChild(PlayerTwoLives);
 	scene.Add(PlayerTwoLives);
 
 	//Points Display
 	const auto& PlayerTwoPoints = std::make_shared<dae::GameObject>("Player_02");
-	const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
-		"Points", PlayerTwoPoints.get());
+	//const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
+	//	"Points", PlayerTwoPoints.get());
 	PlayerTwoPoints->SetRelativePosition({ 5, 420 });	
-	PlayerTwoPoints->AddComponent(textBluePoints);
+	//PlayerTwoPoints->AddComponent(textBluePoints);
 	//background->AddChild(PlayerTwoPoints);
 	scene.Add(PlayerTwoPoints);
 

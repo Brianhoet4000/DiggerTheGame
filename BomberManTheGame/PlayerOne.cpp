@@ -5,10 +5,8 @@
 #include <TextureComponent.h>
 #include "Counter.h"
 #include "GameCommands.h"
-#include "Observer.h"
 #include "ResourceManager.h"
 #include "ShootingDirComponent.h"
-#include "UIComponent.h"
 
 dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 {
@@ -76,25 +74,25 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 	//PointCommand* pointCommand = new PointCommand{ GameObjBomberman.get() };
 	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_P, pointCommand);
 
-	const auto& pUIObserver = std::make_shared<UI>();
-	m_pPlayerOne->MakeObserver(pUIObserver);
+	//const auto& pUIObserver = std::make_shared<UI>();
+	//m_pPlayerOne->MakeObserver(pUIObserver);
 
 	//Lives Display
 	const auto& PlayerOneLives = std::make_shared<dae::GameObject>("Player_01");
-	const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
-	const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
-		"Lives", PlayerOneLives.get());
+	//const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
+	//const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
+	//	"Lives", PlayerOneLives.get());
 	PlayerOneLives->SetRelativePosition({ 5, 340 });
-	PlayerOneLives->AddComponent(textBomberManLives);
+	//PlayerOneLives->AddComponent(textBomberManLives);
 	//background->AddChild(PlayerOneLives);
 	scene.Add(PlayerOneLives);
 
 	//Points Display
 	const auto& PlayerOnePoints = std::make_shared<dae::GameObject>("Player_01");
-	const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
-		"Points", PlayerOnePoints.get());
+	//const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
+	//	"Points", PlayerOnePoints.get());
 	PlayerOnePoints->SetRelativePosition({ 5, 360 });
-	PlayerOnePoints->AddComponent(textBluePoints);
+	//PlayerOnePoints->AddComponent(textBluePoints);
 	//background->AddChild(PlayerOnePoints);
 	scene.Add(PlayerOnePoints);
 

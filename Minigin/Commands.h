@@ -27,21 +27,4 @@ namespace dae
         virtual void Execute(float deltaTime) override;
     };
 
-
-    class HealthCommand : public Command
-    {
-
-    public:
-        HealthCommand(std::shared_ptr<dae::GameObject> owner);
-        virtual void Execute(float) override;
-    };
-
-    class PointCommand final : public Command
-    {
-    public:
-        PointCommand(std::shared_ptr<dae::GameObject> gameObj);
-        virtual void Execute(float) override;
-
-    };
-
 }
