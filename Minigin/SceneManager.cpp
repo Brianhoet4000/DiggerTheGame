@@ -11,7 +11,7 @@ void SceneManager::Update(float deltaTime) const
 			continue;
 
 		scene->Update(deltaTime);
-		return; //only want to update 1 scene
+		return;
 	}
 }
 

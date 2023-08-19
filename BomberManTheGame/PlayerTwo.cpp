@@ -28,22 +28,22 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	if (Coop)
 	{
 		//Texture Coop
-		auto pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerTwo.get());
+		const auto& pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerTwo.get());
 		pTexture->SetTexture("Sprites/Player1.png");
 		m_pPlayerTwo->AddComponent(pTexture);
 
 		//Collision
-		auto pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerTwo.get());
+		const auto& pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerTwo.get());
 		pCollider->SetCollisionRectOffset(5.f);
 		pCollider->SetRenderCollisionBox(true);
 		m_pPlayerTwo->AddComponent(pCollider);
 
 		//BulletTimer
-		auto pTimer = std::make_shared<dae::BulletTimerComponent>(m_pPlayerTwo.get());
+		const auto& pTimer = std::make_shared<dae::BulletTimerComponent>(m_pPlayerTwo.get());
 		m_pPlayerTwo->AddComponent(pTimer);
 
 		//ShootingDir
-		auto pShootingDir = std::make_shared<ShootingDirComponent>();
+		const auto& pShootingDir = std::make_shared<ShootingDirComponent>();
 		m_pPlayerTwo->AddComponent(pShootingDir);
 
 		//Movement
@@ -60,16 +60,16 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	{
 		m_Speed = 75;
 		//Texture Verus
-		auto pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerTwo.get());
+		const auto& pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerTwo.get());
 		pTexture->SetTexture("Sprites/Nobbin.png");
 		m_pPlayerTwo->AddComponent(pTexture);
 
 		//Collision
-		auto pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerTwo.get(), true);
+		const auto& pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerTwo.get(), true);
 		pCollider->SetRenderCollisionBox(false);
 		m_pPlayerTwo->AddComponent(pCollider);
 
-		auto Hobbin = std::make_shared<dae::HobbinComponent>(m_pPlayerTwo.get());
+		const auto& Hobbin = std::make_shared<dae::HobbinComponent>(m_pPlayerTwo.get());
 		m_pPlayerTwo->AddComponent(Hobbin);
 
 		moveCommandUp = std::make_shared<GameCommands::DiggerMovement>(m_pPlayerTwo, m_Up, false);
@@ -88,10 +88,10 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	controllerButton = dae::Controller::ControllerButton::DpadRight;
 	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandRight);
 
-	auto pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerTwo.get(), 4);
+	const auto& pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerTwo.get(), 4);
 	m_pPlayerTwo->AddComponent(pHealth);
 
-	auto pPoints = std::make_shared<dae::PointsComponent>(m_pPlayerTwo.get(), 0);
+	const auto& pPoints = std::make_shared<dae::PointsComponent>(m_pPlayerTwo.get(), 0);
 	m_pPlayerTwo->AddComponent(pPoints);
 
 	//HealthCommand* dieCommand = new HealthCommand{ GameObjBomberman.get() };
@@ -99,13 +99,13 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	//PointCommand* pointCommand = new PointCommand{ GameObjBomberman.get() };
 	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_P, pointCommand);
 
-	auto pUIObserver = std::make_shared<UI>();
+	const auto& pUIObserver = std::make_shared<UI>();
 	m_pPlayerTwo->MakeObserver(pUIObserver);
 
 	//Lives Display
-	auto PlayerTwoLives = std::make_shared<dae::GameObject>("Player_02");
-	auto fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
-	auto textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
+	const auto& PlayerTwoLives = std::make_shared<dae::GameObject>("Player_02");
+	const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
+	const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
 		"Lives", PlayerTwoLives.get());
 	PlayerTwoLives->SetRelativePosition({ 5, 400 });
 	PlayerTwoLives->AddComponent(textBomberManLives);
@@ -113,8 +113,8 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	scene.Add(PlayerTwoLives);
 
 	//Points Display
-	auto PlayerTwoPoints = std::make_shared<dae::GameObject>("Player_02");
-	auto textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
+	const auto& PlayerTwoPoints = std::make_shared<dae::GameObject>("Player_02");
+	const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
 		"Points", PlayerTwoPoints.get());
 	PlayerTwoPoints->SetRelativePosition({ 5, 420 });	
 	PlayerTwoPoints->AddComponent(textBluePoints);

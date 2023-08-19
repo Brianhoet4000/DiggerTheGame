@@ -15,22 +15,22 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 	m_pPlayerOne = std::make_shared<dae::GameObject>("Player_01");
 
 	//Texture
-	auto pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerOne.get());
+	const auto& pTexture = std::make_shared<dae::TextureComponent>(m_pPlayerOne.get());
 	pTexture->SetTexture("Sprites/Player.png");
 	m_pPlayerOne->AddComponent(pTexture);
 
 	//Collision
-	auto pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerOne.get());
+	const auto& pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerOne.get());
 	m_pPlayerOne->AddComponent(pCollider);
 	pCollider->SetCollisionRectOffset(5.f);
 	pCollider->SetRenderCollisionBox(true);
 
 	//BulletTimer
-	auto pTimer = std::make_shared<dae::BulletTimerComponent>(m_pPlayerOne.get());
+	const auto& pTimer = std::make_shared<dae::BulletTimerComponent>(m_pPlayerOne.get());
 	m_pPlayerOne->AddComponent(pTimer);
 
 	//ShootingDir
-	auto pShootingDir = std::make_shared<ShootingDirComponent>();
+	const auto& pShootingDir = std::make_shared<ShootingDirComponent>();
 	m_pPlayerOne->AddComponent(pShootingDir);
 
 	//Movement
@@ -65,10 +65,10 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
 	}
 
-	auto pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerOne.get(), 4);
+	const auto& pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerOne.get(), 4);
 	m_pPlayerOne->AddComponent(pHealth);
 
-	auto pPoints = std::make_shared<dae::PointsComponent>(m_pPlayerOne.get(), 0);
+	const auto& pPoints = std::make_shared<dae::PointsComponent>(m_pPlayerOne.get(), 0);
 	m_pPlayerOne->AddComponent(pPoints);
 
 	//std::shared_ptr<HealthCommand> dieCommand = std::make_shared<HealthCommand>(GameObjBomberman.get());
@@ -76,13 +76,13 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 	//PointCommand* pointCommand = new PointCommand{ GameObjBomberman.get() };
 	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_P, pointCommand);
 
-	auto pUIObserver = std::make_shared<UI>();
+	const auto& pUIObserver = std::make_shared<UI>();
 	m_pPlayerOne->MakeObserver(pUIObserver);
 
 	//Lives Display
-	auto PlayerOneLives = std::make_shared<dae::GameObject>("Player_01");
-	auto fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
-	auto textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
+	const auto& PlayerOneLives = std::make_shared<dae::GameObject>("Player_01");
+	const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
+	const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
 		"Lives", PlayerOneLives.get());
 	PlayerOneLives->SetRelativePosition({ 5, 340 });
 	PlayerOneLives->AddComponent(textBomberManLives);
@@ -90,8 +90,8 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 	scene.Add(PlayerOneLives);
 
 	//Points Display
-	auto PlayerOnePoints = std::make_shared<dae::GameObject>("Player_01");
-	auto textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
+	const auto& PlayerOnePoints = std::make_shared<dae::GameObject>("Player_01");
+	const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
 		"Points", PlayerOnePoints.get());
 	PlayerOnePoints->SetRelativePosition({ 5, 360 });
 	PlayerOnePoints->AddComponent(textBluePoints);

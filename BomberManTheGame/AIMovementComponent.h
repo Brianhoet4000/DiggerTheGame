@@ -29,6 +29,8 @@ namespace dae
 		void Update(float deltaTime) override;
 
 		void MoveAI(float deltaTime, glm::vec2 dir) const;
+		void GetClosestPlayer();
+		
 
 	private:
 		float m_Speed{40.f};
@@ -46,6 +48,8 @@ namespace dae
 		bool m_CheckRight = false;
 		bool m_CheckUp = false;
 		bool m_CheckDown = false;
+
+		GameObject* m_pClosestPlayer{};
 	};
 
 }

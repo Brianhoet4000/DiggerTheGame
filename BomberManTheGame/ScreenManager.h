@@ -15,7 +15,6 @@ namespace dae
 			Coop,
 			Versus
 		};
-
 		
 		virtual ~ScreenManager() = default;
 		ScreenManager(const ScreenManager& other) = delete;
@@ -37,7 +36,9 @@ namespace dae
 		int GetCurrentLevel() { return m_CurrentLevel; }
 		void IncrementCurrentLevel() { ++m_CurrentLevel; }
 
-		void CreateAppropriateGameModeScreen();
+		void CreateLevelZero(dae::Scene& scene);
+		void CreateLevelOne(dae::Scene& scene);
+		void CreateLevelTwo(dae::Scene& scene);
 
 	private:
 		friend class Singleton<ScreenManager>;

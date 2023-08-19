@@ -8,14 +8,14 @@
 #include "ScreenManager.h"
 #include "TextureComponent.h"
 
-dae::GameWinLosConditionComponent::GameWinLosConditionComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner)
+dae::GameWinLoseSingleCoopComponent::GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner)
 	:m_Finished{false}
 {
 	m_pOwner = owner;
 	m_pSpawner = Spawner;
 }
 
-void dae::GameWinLosConditionComponent::Update(float)
+void dae::GameWinLoseSingleCoopComponent::Update(float)
 {
 	if((GameCollisionMngr::GetInstance().GetAllEmerald().empty() &&
 		GameCollisionMngr::GetInstance().GetAllGold().empty()) ||
@@ -24,18 +24,18 @@ void dae::GameWinLosConditionComponent::Update(float)
 	{
 		m_Finished = true;
 	}
-
-	if (m_Finished && !m_DoOnce && dae::ScreenManager::GetInstance().GetCurrentLevel() == 3)
-	{
-		//dae::ScreenManager::GetInstance().CreateGameOverScreen();
-		m_DoOnce = true;
-	}
-
 	
 	if(m_Finished && !m_DoOnce && dae::ScreenManager::GetInstance().GetCurrentLevel() != 3)
 	{
-		dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-		//dae::ScreenManager::GetInstance().CreateGameScreen();
+		dae::SceneManager::GetInstance().NextScene();
+
+		if (dae::SceneManager::GetInstance().GetActiveSceneName() != "GameOver")
+		{
+			dae::GameCollisionMngr::GetInstance().ClearAll();
+			dae::ScreenManager::GetInstance().IncrementCurrentLevel();
+			dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
+		}
+
 		m_DoOnce = true;
 	}
 }

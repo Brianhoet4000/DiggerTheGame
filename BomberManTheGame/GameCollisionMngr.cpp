@@ -31,19 +31,19 @@ namespace dae
             {
                 m_pWallBoxes.push_back(box);
             }
-            else if(owner->GetTag() == "Bullet")
+            else if (owner->GetTag() == "Bullet")
             {
                 m_pBulletBoxes.push_back(box);
             }
-            else if(owner->GetTag() == "Enemy")
+            else if (owner->GetTag() == "Enemy")
             {
                 m_pEnemies.push_back(box);
             }
-            else if(owner->GetTag() == "Player_01")
+            else if (owner->GetTag() == "Player_01")
             {
                 m_pFirstPlayer = box;
             }
-            else if(owner->GetTag() == "Player_02")
+            else if (owner->GetTag() == "Player_02")
             {
                 m_pSecondPlayer = box;
             }
@@ -67,7 +67,7 @@ namespace dae
     void dae::GameCollisionMngr::RemoveGoldBox(GameCollisionComponent* box)
     {
         RemoveCollisionBox(box);
-    	m_pGoldBoxes.erase(std::remove(m_pGoldBoxes.begin(), m_pGoldBoxes.end(), box), m_pGoldBoxes.end());
+        m_pGoldBoxes.erase(std::remove(m_pGoldBoxes.begin(), m_pGoldBoxes.end(), box), m_pGoldBoxes.end());
     }
     void GameCollisionMngr::RemoveBulletBox(GameCollisionComponent* box)
     {
@@ -246,23 +246,21 @@ namespace dae
 
     GameCollisionComponent* GameCollisionMngr::CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const
     {
-        for (const auto& otherbox : m_pCollisonBoxes)
+        for (auto player : PlayerManager::GetInstance().GetPlayers())
         {
-            if (otherbox->GetOwner()->GetTag() == "Player_02" && otherbox->GetIsVersus())
+            const auto& pPlayerCollision = player->GetComponent<dae::GameCollisionComponent>();
+            if (pPlayerCollision->GetIsVersus())
             {
-                if (otherbox == box)
-                    continue;
-
-                if (box->GetCollisionRect().x < otherbox->GetCollisionRect().x + otherbox->GetCollisionRect().w &&
-                    box->GetCollisionRect().x + box->GetCollisionRect().w > otherbox->GetCollisionRect().x &&
-                    box->GetCollisionRect().y < otherbox->GetCollisionRect().y + otherbox->GetCollisionRect().h &&
-                    box->GetCollisionRect().y + box->GetCollisionRect().h > otherbox->GetCollisionRect().y)
+                if (box->GetCollisionRect().x < pPlayerCollision->GetCollisionRect().x + pPlayerCollision->GetCollisionRect().w &&
+                    box->GetCollisionRect().x + box->GetCollisionRect().w > pPlayerCollision->GetCollisionRect().x &&
+                    box->GetCollisionRect().y < pPlayerCollision->GetCollisionRect().y + pPlayerCollision->GetCollisionRect().h &&
+                    box->GetCollisionRect().y + box->GetCollisionRect().h > pPlayerCollision->GetCollisionRect().y)
                 {
-                    return otherbox;
+                    return pPlayerCollision;
                 }
             }
-		}
-		return nullptr;
+        }
+        return nullptr;
     }
 
     GameCollisionComponent* GameCollisionMngr::CheckOverlapWithPlayers(const GameCollisionComponent* box) const
@@ -545,20 +543,20 @@ namespace dae
         for (const auto& boxes : m_pWallBoxes)
         {
 
-            if (startPos.x + (direction.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
-                startPos.x + direction.x * distance - offset >= boxes->GetCollisionRect().x &&
-                startPos.y + (direction.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&
-                startPos.y + direction.y * distance - offset >= boxes->GetCollisionRect().y)
+            if (startPos.x + (direction.x * distance + offset) < boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
+                startPos.x + direction.x * distance - offset > boxes->GetCollisionRect().x &&
+                startPos.y + (direction.y * distance + offset) < boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&
+                startPos.y + direction.y * distance - offset > boxes->GetCollisionRect().y)
             {
                 return true;
             }
         }
         for (const auto& boxes : m_pDirtBoxes)
         {
-            if (startPos.x + (direction.x * distance + offset) <= boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
-                startPos.x + direction.x * distance - offset >= boxes->GetCollisionRect().x &&
-                startPos.y + (direction.y * distance + offset) <= boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&
-                startPos.y + direction.y * distance - offset >= boxes->GetCollisionRect().y)
+            if (startPos.x + (direction.x * distance + offset) < boxes->GetCollisionRect().x + boxes->GetCollisionRect().w &&
+                startPos.x + direction.x * distance - offset > boxes->GetCollisionRect().x &&
+                startPos.y + (direction.y * distance + offset) < boxes->GetCollisionRect().y + boxes->GetCollisionRect().h &&
+                startPos.y + direction.y * distance - offset > boxes->GetCollisionRect().y)
             {
                 return true;
             }

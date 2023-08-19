@@ -25,9 +25,6 @@ void dae::GameCollisionComponent::Render() const
 {
 	if (m_RenderCollisionBox)
 	{
-		//
-		// Color red { 255,0,0,1 };
-	//SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer() ,&m_CollisionBox);
 		SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 0, 255, 0, 1);
 		SDL_RenderDrawRectF(Renderer::GetInstance().GetSDLRenderer(), &m_CollisionBox);
 	}

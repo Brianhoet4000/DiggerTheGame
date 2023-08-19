@@ -28,7 +28,7 @@ void dae::GoldStateComponent::Update(float deltaTime)
 		if (m_pOwner->GetRelativePosition().y >= m_EstimatedPos.y - 2.f && !m_Broke && m_MoneyState == Full)
 		{
 			//Here Coins
-			const auto texture = m_pOwner->GetComponent<dae::TextureComponent>();
+			const auto& texture = m_pOwner->GetComponent<dae::TextureComponent>();
 			texture->SetTexture("Sprites/Gold.png");
 			m_Broke = true;
 

@@ -10,13 +10,13 @@ dae::EnemySpawner::EnemySpawner(dae::Scene& scene, glm::vec2 StartPos, int MaxEn
 	m_pSpawner = std::make_shared<dae::GameObject>();
 	m_pSpawner->SetRelativePosition(StartPos);
 
-	auto pTexture = std::make_shared<dae::TextureComponent>(m_pSpawner.get());
+	const auto& pTexture = std::make_shared<dae::TextureComponent>(m_pSpawner.get());
 	pTexture->SetTexture("Sprites/Cherry.png");
 	pTexture->SetMustRender(false);
 	m_pSpawner->AddComponent(pTexture);
 
 	//Timer
-	auto pTimer = std::make_shared<dae::SpawnTimerComponent>(&scene, m_pSpawner.get(), 7.f, MaxEnemies);
+	const auto& pTimer = std::make_shared<dae::SpawnTimerComponent>(&scene, m_pSpawner.get(), 7.f, MaxEnemies);
 	m_pSpawner->AddComponent(pTimer);
 
 	scene.Add(m_pSpawner);

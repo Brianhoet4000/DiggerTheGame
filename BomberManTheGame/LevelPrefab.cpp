@@ -9,10 +9,8 @@
 
 dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 {
-	auto pLevelObj = std::make_shared<dae::GameObject>();
-	scene.Add(pLevelObj);
-
-	
+	m_pLevelObj = std::make_shared<dae::GameObject>();
+	scene.Add(m_pLevelObj);
 
 	constexpr int width{ 640 };
 	constexpr int height{ 480 };
@@ -28,7 +26,7 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 
 		auto pTexture = std::make_shared<dae::TextureComponent>(pBlock.get());
 
-		pLevelObj->AddChild(pBlock);
+		m_pLevelObj->AddChild(pBlock);
 
 		pBlock->AddComponent(pTexture);
 		pBlock->SetRelativePosition({ pos.x, pos.y });
@@ -76,11 +74,9 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 			m_GoldPositions.push_back(pos);
 			break;
 		case 6:
-			//Enemies spawn
 			m_EnemySpawnPositions = pos;
 			break;
 			default:
-				//scene.Add(pBlock);
 				break;
 		}
 		pos.x += size.x;
@@ -96,6 +92,8 @@ dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)
 	AddBreakAbleBlocks(scene);
 	AddEmeralds(scene);
 	AddGold(scene);
+
+	
 }
 
 void dae::LevelPrefab::AddBreakAbleBlocks(dae::Scene& scene)

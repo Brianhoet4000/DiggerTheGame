@@ -5,16 +5,16 @@
 namespace dae
 {
 
-	class GameWinLosConditionComponent : public dae::BaseComponent
+	class GameWinLoseSingleCoopComponent : public dae::BaseComponent
 	{
 	public:
 
-		GameWinLosConditionComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner);
-		virtual ~GameWinLosConditionComponent() = default;
-		GameWinLosConditionComponent(const GameWinLosConditionComponent& other) = delete;
-		GameWinLosConditionComponent(GameWinLosConditionComponent&& other) = delete;
-		GameWinLosConditionComponent& operator=(const GameWinLosConditionComponent& other) = delete;
-		GameWinLosConditionComponent& operator=(GameWinLosConditionComponent&& other) = delete;
+		GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner);
+		virtual ~GameWinLoseSingleCoopComponent() = default;
+		GameWinLoseSingleCoopComponent(const GameWinLoseSingleCoopComponent& other) = delete;
+		GameWinLoseSingleCoopComponent(GameWinLoseSingleCoopComponent&& other) = delete;
+		GameWinLoseSingleCoopComponent& operator=(const GameWinLoseSingleCoopComponent& other) = delete;
+		GameWinLoseSingleCoopComponent& operator=(GameWinLoseSingleCoopComponent&& other) = delete;
 
 		void Update(float) override;
 
