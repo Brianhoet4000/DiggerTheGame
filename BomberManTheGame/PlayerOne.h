@@ -27,5 +27,6 @@ namespace dae
 		glm::vec2 m_Left = { -m_Speed,0.f };
 
 		std::shared_ptr<dae::GameObject> m_pPlayerOne;
+		int m_Controller1Index{ 0 };
 	};
 }

@@ -20,7 +20,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandLeft;
 	std::shared_ptr<GameCommands::DiggerMovement> moveCommandRight;
 
-	const int controller1Index{ 1 };
+	const int controller1Index{ 0 };
 	dae::InputManager::GetInstance().AddController(controller1Index);
 
 	dae::Controller::ControllerButton controllerButton{};

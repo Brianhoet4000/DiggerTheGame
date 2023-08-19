@@ -46,22 +46,24 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene)
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_D, moveCommandRight);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_SPACE, ShootCommand);
 
+	if (dae::ScreenManager::GetInstance().GetCurrentEnum() != dae::ScreenManager::SinglePlayer)
+		m_Controller1Index = 1;
+	else m_Controller1Index = 0;
 	
-	const int controller1Index{ 0 };
-	dae::InputManager::GetInstance().AddController(controller1Index);
+	dae::InputManager::GetInstance().AddController(m_Controller1Index);
 
 	dae::Controller::ControllerButton controllerButton{};
 
 	controllerButton = dae::Controller::ControllerButton::DpadUp;
-	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandUp);
+	dae::InputManager::GetInstance().BindControllerToCommand(m_Controller1Index, controllerButton, moveCommandUp);
 	controllerButton = dae::Controller::ControllerButton::DpadDown;
-	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandDown);
+	dae::InputManager::GetInstance().BindControllerToCommand(m_Controller1Index, controllerButton, moveCommandDown);
 	controllerButton = dae::Controller::ControllerButton::DpadLeft;
-	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandLeft);
+	dae::InputManager::GetInstance().BindControllerToCommand(m_Controller1Index, controllerButton, moveCommandLeft);
 	controllerButton = dae::Controller::ControllerButton::DpadRight;
-	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandRight);
+	dae::InputManager::GetInstance().BindControllerToCommand(m_Controller1Index, controllerButton, moveCommandRight);
 	controllerButton = dae::Controller::ControllerButton::ButtonA;
-	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
+	dae::InputManager::GetInstance().BindControllerToCommand(m_Controller1Index, controllerButton, ShootCommand);
 	
 
 	const auto& pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerOne.get(), 3);
