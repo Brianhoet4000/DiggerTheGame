@@ -2,6 +2,8 @@
 #include "CollisionBoxManager.h"
 #include "GameCollisionMngr.h"
 #include "GameObject.h"
+#include "HealthComponent.h"
+#include "ScreenManager.h"
 #include "ServiceLocator.h"
 #include "TextureComponent.h"
 
@@ -80,6 +82,17 @@ void dae::GoldStateComponent::Update(float deltaTime)
 
 	if (m_TimerDone)
 	{
+		if (!m_Broke)
+		{
+			const auto& pPlayerCollision = dae::GameCollisionMngr::GetInstance().CheckOverlapWithPlayers(m_pOwner->GetComponent<dae::GameCollisionComponent>());
+			if (pPlayerCollision != nullptr)
+			{
+				pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
+				dae::ScreenManager::GetInstance().ResetLevel();
+				return;
+			}
+		}
+
 		//Falling
 		const glm::vec2 newPos = m_pOwner->GetRelativePosition();
 		m_MoneyState = Falling;

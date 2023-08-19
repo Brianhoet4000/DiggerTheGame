@@ -39,6 +39,9 @@ namespace dae
 		void CreateLevelZero(dae::Scene& scene);
 		void CreateLevelOne(dae::Scene& scene);
 		void CreateLevelTwo(dae::Scene& scene);
+		void CreateUI(dae::Scene& scene, std::vector<std::shared_ptr<GameObject>>& players, bool SecondPlayer);
+		void ResetLevel() const;
+		GameObject* GetGameObjectInScene(dae::Scene& scene, std::string tag);
 
 	private:
 		friend class Singleton<ScreenManager>;
@@ -51,6 +54,7 @@ namespace dae
 		std::shared_ptr<GameObject> m_pGameModeDisplay;
 		int m_CurrentLevel{ 0 };
 		bool m_AddedPlayers = false;
+		std::shared_ptr<Font> m_pFont;
 	};
 
 }

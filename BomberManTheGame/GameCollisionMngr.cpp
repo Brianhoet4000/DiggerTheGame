@@ -3,6 +3,8 @@
 #include "GoldStateComponent.h"
 #include "HobbinComponent.h"
 #include "PlayerManager.h"
+#include "PointComponent.h"
+#include "ScreenManager.h"
 #include "ServiceLocator.h"
 
 namespace dae
@@ -284,6 +286,27 @@ namespace dae
         return nullptr;
     }
 
+    bool GameCollisionMngr::CheckOverlapWithPlayersBool(const GameCollisionComponent* box) const
+    {
+        for (auto player : PlayerManager::GetInstance().GetPlayers())
+        {
+            if (player == nullptr) return false;
+            if (player->ReturnDeleting()) return false;
+
+            auto PlayerBox = player->GetComponent<GameCollisionComponent>();
+
+            if (box->GetCollisionRect().x < PlayerBox->GetCollisionRect().x + PlayerBox->GetCollisionRect().w &&
+                box->GetCollisionRect().x + box->GetCollisionRect().w > PlayerBox->GetCollisionRect().x &&
+                box->GetCollisionRect().y < PlayerBox->GetCollisionRect().y + PlayerBox->GetCollisionRect().h &&
+                box->GetCollisionRect().y + box->GetCollisionRect().h > PlayerBox->GetCollisionRect().y)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool GameCollisionMngr::CheckOverlapWithEnemies(const GameCollisionComponent* box) const
     {
         if (!m_pEnemies.empty())
@@ -378,6 +401,20 @@ namespace dae
             //Overlap with emerald pick up
             if (OverlappedBox->GetOwner()->GetTag() == "Emerald")
             {
+                box->GetOwner()->GetComponent<PointComponent>()->IncreaseAmount(25);
+                Scene* scene = dae::SceneManager::GetInstance().GetActiveScene();
+
+                if (box->GetOwner()->GetTag() == "Player_01")
+                {
+                    const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
+                    points->GetComponent<TextComponent>()->SetText(std::to_string(box->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+                }
+                else
+                {
+                    const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
+                    points->GetComponent<TextComponent>()->SetText(std::to_string(box->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+                }
+
                 RemoveEmeraldBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                 OverlappedBox->GetOwner()->MarkTrueForDeleting();
                 dae::servicelocator::get_sound_system().playSound(1, m_Volume);
@@ -387,13 +424,6 @@ namespace dae
             if (OverlappedBox->GetOwner()->GetTag() == "Gold")
             {
                 auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldStateComponent>();
-
-                //If Gold not Broken and falls die
-                if(!goldState->GetCoinsBool() && goldState->GetMoneyBagState() == dae::GoldStateComponent::Falling)
-                {
-                    box->GetOwner()->MarkTrueForDeleting();
-                    RemoveCollisionBox(box);
-                }
 
                 //Push Gold Left
                 if (goldState->GetMoneyBagState() != dae::GoldStateComponent::Falling
@@ -414,6 +444,20 @@ namespace dae
                 //If Gold Broken and overlap pick up
                 if (goldState->GetCoinsBool())
                 {
+                    box->GetOwner()->GetComponent<PointComponent>()->IncreaseAmount(500);
+                    Scene* scene = dae::SceneManager::GetInstance().GetActiveScene();
+
+                    if (box->GetOwner()->GetTag() == "Player_01")
+                    {
+                        const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
+                        points->GetComponent<TextComponent>()->SetText(std::to_string(box->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+                    }
+                    else
+                    {
+                        const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
+                        points->GetComponent<TextComponent>()->SetText(std::to_string(box->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+                    }
+
                     RemoveGoldBox(OverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                     OverlappedBox->GetOwner()->MarkTrueForDeleting();
                     dae::servicelocator::get_sound_system().playSound(1, m_Volume);
@@ -484,6 +528,12 @@ namespace dae
                 //If Gold Broken and overlap pick up
                 if (goldState->GetCoinsBool())
                 {
+                    box->GetOwner()->GetComponent<PointComponent>()->IncreaseAmount(500);
+                    Scene* scene = dae::SceneManager::GetInstance().GetActiveScene();
+                    const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
+                    points->GetComponent<TextComponent>()->SetText(std::to_string(box->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+                    
+
                     RemoveGoldBox(GoldOverlappedBox->GetOwner()->GetComponent<dae::GameCollisionComponent>());
                     GoldOverlappedBox->GetOwner()->MarkTrueForDeleting();
                     dae::servicelocator::get_sound_system().playSound(1, m_Volume);

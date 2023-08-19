@@ -11,7 +11,8 @@ namespace dae
 	public:
 		CounterComponent(GameObject* owner, int startAmount);
 
-		void ChangeAmount(int difference);
+		void IncreaseAmount(int difference);
+		void DecreaseAmount(int difference);
 		void SetAmount(int newHealth);
 		int GetAmount() const;
 
@@ -20,17 +21,4 @@ namespace dae
 
 	};
 
-	class HealthComponent final : public CounterComponent
-	{
-	public:
-		HealthComponent(GameObject* owner, int startAmount) :
-			CounterComponent(owner, startAmount) {};
-	};
-
-	class PointsComponent final : public CounterComponent
-	{
-	public:
-		PointsComponent(GameObject* owner, int startAmount) :
-			CounterComponent(owner, startAmount) {};
-	};
 }

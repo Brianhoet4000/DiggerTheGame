@@ -83,6 +83,15 @@
     <ClCompile Include="PlayerOne.cpp">
       <Filter>Prefab</Filter>
     </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PointComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HighscoreComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
@@ -147,6 +156,15 @@
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PointComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HighscoreComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

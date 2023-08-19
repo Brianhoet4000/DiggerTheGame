@@ -46,6 +46,7 @@ namespace dae
 
 		GameCollisionComponent* CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const;
 		GameCollisionComponent* CheckOverlapWithPlayers(const GameCollisionComponent* box) const;
+		bool CheckOverlapWithPlayersBool(const GameCollisionComponent* box) const;
 		
 		bool CheckForCollision(const GameCollisionComponent* box) const;
 		bool CheckForOverlapDirt(const dae::GameCollisionComponent* box) const;

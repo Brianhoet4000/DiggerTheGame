@@ -8,7 +8,7 @@ namespace dae
 	class PlayerOne final
 	{
 	public:
-		PlayerOne(dae::Scene& scene, bool ControllerEnabled);
+		PlayerOne(dae::Scene& scene);
 
 		~PlayerOne() = default;
 		PlayerOne(const PlayerOne& other) = delete;

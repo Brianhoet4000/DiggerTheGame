@@ -16,15 +16,14 @@ CounterComponent::CounterComponent(GameObject* owner, int startAmount) :
 	m_pOwner = owner;
 }
 
-void CounterComponent::ChangeAmount(int difference)
+void CounterComponent::IncreaseAmount(int difference)
 {
 	m_Counter += difference;
+}
 
-	if (m_Counter < 0)
-	{
-		m_Counter = 0;
-		m_pOwner->MarkTrueForDeleting();
-	}
+void dae::CounterComponent::DecreaseAmount(int difference)
+{
+	m_Counter -= difference;
 }
 
 void CounterComponent::SetAmount(int newHealth)

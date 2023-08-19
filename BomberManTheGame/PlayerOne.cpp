@@ -5,10 +5,12 @@
 #include <TextureComponent.h>
 #include "Counter.h"
 #include "GameCommands.h"
+#include "HealthComponent.h"
+#include "PointComponent.h"
 #include "ResourceManager.h"
 #include "ShootingDirComponent.h"
 
-dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
+dae::PlayerOne::PlayerOne(dae::Scene& scene)
 {
 	m_pPlayerOne = std::make_shared<dae::GameObject>("Player_01");
 
@@ -44,58 +46,29 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene, bool ControllerEnabled)
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_D, moveCommandRight);
 	dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_SPACE, ShootCommand);
 
-	if(ControllerEnabled)
-	{
-		int controller1Index{ 0 };
-		dae::InputManager::GetInstance().AddController(controller1Index);
+	
+	const int controller1Index{ 0 };
+	dae::InputManager::GetInstance().AddController(controller1Index);
 
-		dae::Controller::ControllerButton controllerButton{};
+	dae::Controller::ControllerButton controllerButton{};
 
-		controllerButton = dae::Controller::ControllerButton::DpadUp;
-		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandUp);
-		controllerButton = dae::Controller::ControllerButton::DpadDown;
-		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandDown);
-		controllerButton = dae::Controller::ControllerButton::DpadLeft;
-		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandLeft);
-		controllerButton = dae::Controller::ControllerButton::DpadRight;
-		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandRight);
-		controllerButton = dae::Controller::ControllerButton::ButtonA;
-		dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
-	}
+	controllerButton = dae::Controller::ControllerButton::DpadUp;
+	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandUp);
+	controllerButton = dae::Controller::ControllerButton::DpadDown;
+	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandDown);
+	controllerButton = dae::Controller::ControllerButton::DpadLeft;
+	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandLeft);
+	controllerButton = dae::Controller::ControllerButton::DpadRight;
+	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, moveCommandRight);
+	controllerButton = dae::Controller::ControllerButton::ButtonA;
+	dae::InputManager::GetInstance().BindControllerToCommand(controller1Index, controllerButton, ShootCommand);
+	
 
-	const auto& pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerOne.get(), 4);
+	const auto& pHealth = std::make_shared<dae::HealthComponent>(m_pPlayerOne.get(), 3);
 	m_pPlayerOne->AddComponent(pHealth);
 
-	const auto& pPoints = std::make_shared<dae::PointsComponent>(m_pPlayerOne.get(), 0);
+	const auto& pPoints = std::make_shared<dae::PointComponent>(m_pPlayerOne.get(), 0);
 	m_pPlayerOne->AddComponent(pPoints);
-
-	//std::shared_ptr<HealthCommand> dieCommand = std::make_shared<HealthCommand>(GameObjBomberman.get());
-	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_O, dieCommand);
-	//PointCommand* pointCommand = new PointCommand{ GameObjBomberman.get() };
-	//dae::InputManager::GetInstance().BindKeyToCommand(SDL_SCANCODE_P, pointCommand);
-
-	//const auto& pUIObserver = std::make_shared<UI>();
-	//m_pPlayerOne->MakeObserver(pUIObserver);
-
-	//Lives Display
-	const auto& PlayerOneLives = std::make_shared<dae::GameObject>("Player_01");
-	//const auto& fontUI = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
-	//const auto& textBomberManLives = std::make_shared<dae::UIComponent>(fontUI, "Lives: ",
-	//	"Lives", PlayerOneLives.get());
-	PlayerOneLives->SetRelativePosition({ 5, 340 });
-	//PlayerOneLives->AddComponent(textBomberManLives);
-	//background->AddChild(PlayerOneLives);
-	scene.Add(PlayerOneLives);
-
-	//Points Display
-	const auto& PlayerOnePoints = std::make_shared<dae::GameObject>("Player_01");
-	//const auto& textBluePoints = std::make_shared<dae::UIComponent>(fontUI, "Points: ",
-	//	"Points", PlayerOnePoints.get());
-	PlayerOnePoints->SetRelativePosition({ 5, 360 });
-	//PlayerOnePoints->AddComponent(textBluePoints);
-	//background->AddChild(PlayerOnePoints);
-	scene.Add(PlayerOnePoints);
-
 
 	scene.Add(m_pPlayerOne);
 }

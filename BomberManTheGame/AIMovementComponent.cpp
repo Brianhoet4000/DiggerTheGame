@@ -2,8 +2,10 @@
 #include "GameCollisionMngr.h"
 #include "GameObject.h"
 #include "GoldStateComponent.h"
+#include "HealthComponent.h"
 #include "HobbinComponent.h"
 #include "PlayerManager.h"
+#include "ScreenManager.h"
 
 dae::AIMovementComponent::AIMovementComponent(dae::GameObject* owner)
 {
@@ -15,11 +17,12 @@ void dae::AIMovementComponent::Update(float deltaTime)
 {
 	if (m_pOwner->ReturnDeleting()) return;
 
-	const auto& pOverlapPlayer = dae::GameCollisionMngr::GetInstance().CheckOverlapWithPlayers(m_pCollision);
-	if(pOverlapPlayer != nullptr)
+	const auto& pPlayerCollision = dae::GameCollisionMngr::GetInstance().CheckOverlapWithPlayers(m_pOwner->GetComponent<dae::GameCollisionComponent>());
+	if (pPlayerCollision != nullptr)
 	{
-		pOverlapPlayer->GetOwner()->MarkTrueForDeleting();
-		dae::GameCollisionMngr::GetInstance().RemoveFirstPlayerBox(pOverlapPlayer);
+		pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
+		dae::ScreenManager::GetInstance().ResetLevel();
+		return;
 	}
 
 	const auto& pOverlappedBox = dae::GameCollisionMngr::GetInstance().CheckForCollisionComponent(m_pCollision);
