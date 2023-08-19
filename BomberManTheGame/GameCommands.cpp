@@ -153,11 +153,12 @@ void GameCommands::AcceptGameMode::Execute(float)
     if (dae::SceneManager::GetInstance().GetActiveSceneName() == "MainMenu")
     {
         dae::SceneManager::GetInstance().NextScene();
-        dae::SceneManager::GetInstance().NextScene();
         dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
         dae::servicelocator::get_sound_system().playMusic(0, 10);
         SetKeyPressed(true);
     }
+
+    
 }
 
 void GameCommands::SkipLevel::Execute(float)
@@ -176,6 +177,7 @@ void GameCommands::SkipLevel::Execute(float)
     if (dae::SceneManager::GetInstance().GetActiveSceneName() != "GameOver")
     {
         dae::GameCollisionMngr::GetInstance().ClearAll();
+        dae::ScreenManager::GetInstance().IncrementCurrentLevel();
         dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
     }
 
@@ -193,14 +195,10 @@ void GameCommands::ResetLevel::Execute(float)
         SetKeyPressed(true);
         return;
     }
-    //dae::SceneManager::GetInstance().NextScene();
-    //auto scene = dae::SceneManager::GetInstance().GetActiveScene();
-    //std::cout << scene->GetName() << '\n';
-    //dae::GameCollisionMngr::GetInstance().ClearAll();
-    //scene->RemoveAll();
     
-
-   // dae::ScreenManager::GetInstance().CreateGameScreen();
+    dae::GameCollisionMngr::GetInstance().ClearAll();
+    dae::SceneManager::GetInstance().GetActiveScene()->RemoveAll();
+    dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
 }
 
 void GameCommands::MuteMusic::Execute(float)
@@ -211,5 +209,3 @@ void GameCommands::MuteMusic::Execute(float)
 
     SetKeyPressed(true);
 }
-
-

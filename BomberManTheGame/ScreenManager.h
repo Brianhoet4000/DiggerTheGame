@@ -49,7 +49,7 @@ namespace dae
 		std::shared_ptr<TextComponent> m_pGameModeDisplayText;
 		std::shared_ptr<GameObject> m_pGameModeDisplay;
 		int m_CurrentLevel{ 0 };
-
+		bool m_AddedPlayers = false;
 	};
 
 }

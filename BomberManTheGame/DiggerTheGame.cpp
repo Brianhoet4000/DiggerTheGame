@@ -29,18 +29,10 @@ void load()
 	std::cout << "Dpad to move secondPlayer\n";
 	std::cout << "A to shoot\n";
 	
-	//auto Screenmanager = std::make_unique<dae::ScreenManager>();
-	//Screenmanager->CreateMenuScreen();
-	
 
 	auto& startscene = dae::SceneManager::GetInstance().CreateScene("MainMenu");
 	dae::ScreenManager::GetInstance().CreateMenuScreen(startscene);
 	startscene.SetActive(true);
-
-	auto& waitingScenePlayer = dae::SceneManager::GetInstance().CreateScene("WaitingScene");
-
-	auto pPlayer_01 = std::make_shared<dae::PlayerOne>(waitingScenePlayer, false);
-	PlayerManager::GetInstance().AddPlayer(pPlayer_01->ReturnPlayer());
 
 	dae::SceneManager::GetInstance().CreateScene("Game0");
 	

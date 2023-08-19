@@ -173,6 +173,12 @@ namespace dae
 		{
 			if (m_CurrentLevel == 0)
 			{
+				if (!m_AddedPlayers)
+				{
+					auto pPlayer_01 = std::make_shared<dae::PlayerOne>(scene, true);
+					PlayerManager::GetInstance().AddPlayer(pPlayer_01->ReturnPlayer());
+					m_AddedPlayers = true;
+				}
 				//Level
 				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
 
@@ -214,8 +220,15 @@ namespace dae
 		{
 			if (m_CurrentLevel == 0)
 			{
-				auto Player_02 = std::make_shared<dae::PlayerTwo>(scene, true);
-				PlayerManager::GetInstance().AddPlayer(Player_02->ReturnPlayer());
+				if (!m_AddedPlayers)
+				{
+					auto pPlayer_01 = std::make_shared<dae::PlayerOne>(scene, false);
+					PlayerManager::GetInstance().AddPlayer(pPlayer_01->ReturnPlayer());
+
+					auto Player_02 = std::make_shared<dae::PlayerTwo>(scene, true);
+					PlayerManager::GetInstance().AddPlayer(Player_02->ReturnPlayer());
+					m_AddedPlayers = true;
+				}
 
 				//Level
 				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
@@ -264,8 +277,15 @@ namespace dae
 		{
 			if (m_CurrentLevel == 0)
 			{
-				auto Player_02 = std::make_shared<dae::PlayerTwo>(scene, false);
-				PlayerManager::GetInstance().AddPlayer(Player_02->ReturnPlayer());
+				if (!m_AddedPlayers)
+				{
+					auto pPlayer_01 = std::make_shared<dae::PlayerOne>(scene, false);
+					PlayerManager::GetInstance().AddPlayer(pPlayer_01->ReturnPlayer());
+
+					auto Player_02 = std::make_shared<dae::PlayerTwo>(scene, false);
+					PlayerManager::GetInstance().AddPlayer(Player_02->ReturnPlayer());
+					m_AddedPlayers = true;
+				}
 
 				//Level
 				auto pLevel = std::make_shared<dae::LevelPrefab>(scene, "level_0.txt");
@@ -304,7 +324,7 @@ namespace dae
 		}
 		
 
-		IncrementCurrentLevel();
+		
 	}
 
 	void ScreenManager::CreateGameOverScreen(dae::Scene& scene)
