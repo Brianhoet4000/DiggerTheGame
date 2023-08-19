@@ -30,7 +30,6 @@ namespace dae
 
 		void MoveAI(float deltaTime, glm::vec2 dir) const;
 		void GetClosestPlayer();
-		
 
 	private:
 		float m_Speed{40.f};

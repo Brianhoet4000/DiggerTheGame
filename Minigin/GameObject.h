@@ -65,9 +65,6 @@ namespace dae
 		void MarkTrueForDeleting();
 		bool ReturnDeleting();
 
-		void MakeObserver(std::shared_ptr<Observer> observer);
-		void NotifyObservers(Event event);
-
 		void SetScene(Scene* scene);
 		Scene* GetScene() const;
 

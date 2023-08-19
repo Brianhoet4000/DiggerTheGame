@@ -243,7 +243,7 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Observer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Observer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
