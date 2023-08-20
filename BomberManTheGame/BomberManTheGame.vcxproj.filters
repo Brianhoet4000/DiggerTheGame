@@ -92,6 +92,9 @@
     <ClCompile Include="HighscoreComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ConditionVersusComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerOne.h">
@@ -164,6 +167,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="HighscoreComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionVersusComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

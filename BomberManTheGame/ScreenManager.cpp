@@ -8,6 +8,7 @@
 #include "FPSCounterComponent.h"
 #include "GameCollisionMngr.h"
 #include "ConditionSingleCoopComponent.h"
+#include "ConditionVersusComponent.h"
 #include "HealthComponent.h"
 #include "HighscoreComponent.h"
 #include "InputManager.h"
@@ -290,6 +291,9 @@ namespace dae
 					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
 				}
 
+				const auto& pWinLose = std::make_shared<dae::ConditionVersusComponent>(pLevel->returnLevelObj().get());
+				pLevel->returnLevelObj()->AddComponent(pWinLose);
+
 				auto players = PlayerManager::GetInstance().GetPlayers();
 				CreateUI(scene, players, true);
 			}
@@ -345,6 +349,9 @@ namespace dae
 					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
 					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
 				}
+
+				const auto& pWinLose = std::make_shared<dae::ConditionVersusComponent>(pLevel->returnLevelObj().get());
+				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				auto players = PlayerManager::GetInstance().GetPlayers();
 				CreateUI(scene, players, true);
@@ -402,6 +409,9 @@ namespace dae
 					dae::SceneManager::GetInstance().GetActiveScene()->Add(PlayerManager::GetInstance().GetPlayers()[i]);
 					PlayerManager::GetInstance().GetPlayers()[i]->SetRelativePosition(pLevel->GetSpawnPosition()[i]);
 				}
+
+				const auto& pWinLose = std::make_shared<dae::ConditionVersusComponent>(pLevel->returnLevelObj().get());
+				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				auto players = PlayerManager::GetInstance().GetPlayers();
 				CreateUI(scene, players, true);
