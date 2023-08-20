@@ -8,11 +8,11 @@
 #include "ScreenManager.h"
 #include "TextureComponent.h"
 
-dae::GameWinLoseSingleCoopComponent::GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner)
+dae::GameWinLoseSingleCoopComponent::GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> spawner)
 	:m_Finished{false}
 {
 	m_pOwner = owner;
-	m_pSpawner = Spawner;
+	m_pSpawner = spawner;
 }
 
 void dae::GameWinLoseSingleCoopComponent::Update(float)

@@ -8,7 +8,7 @@ namespace dae
 	class SpawnTimerComponent : public dae::BaseComponent
 	{
 	public:
-		SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner, float StartCountDownNumber, int MaxNumberOfEnemies);
+		SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner, float startCountDownNumber, int maxNumberOfEnemies);
 
 		virtual ~SpawnTimerComponent() override = default;
 		SpawnTimerComponent(const SpawnTimerComponent& other) = delete;

@@ -26,15 +26,9 @@ void dae::CounterComponent::DecreaseAmount(int difference)
 	m_Counter -= difference;
 }
 
-void CounterComponent::SetAmount(int newHealth)
+void CounterComponent::SetAmount(int newAmount)
 {
-	if (newHealth < 0)
-		return;
-
-	m_Counter = newHealth;
-
-	if (m_Counter == 0)
-		m_pOwner->MarkTrueForDeleting();
+	m_Counter = newAmount;
 }
 
 int CounterComponent::GetAmount() const

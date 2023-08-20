@@ -9,7 +9,7 @@ namespace dae
 	{
 	public:
 
-		HealthComponent(dae::GameObject* owner, int startamount);
+		HealthComponent(dae::GameObject* owner, int startAmount);
 
 		virtual ~HealthComponent() override = default;
 		HealthComponent(const HealthComponent& other) = delete;

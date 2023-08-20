@@ -5,10 +5,10 @@
 #include "GameObject.h"
 #include "TextureComponent.h"
 
-dae::SpawnTimerComponent::SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner,float StartCountDownNumber, int MaxNumberOfEnemies)
-	:m_StartCountDownValue{StartCountDownNumber}
-	,m_MaxNumberOfEnemies{MaxNumberOfEnemies}
-	,m_EnemyNumber{MaxNumberOfEnemies}
+dae::SpawnTimerComponent::SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner,float startCountDownNumber, int maxNumberOfEnemies)
+	:m_StartCountDownValue{startCountDownNumber}
+	,m_MaxNumberOfEnemies{maxNumberOfEnemies}
+	,m_EnemyNumber{maxNumberOfEnemies}
 {
 	m_Start = false;
 	m_Counter = m_StartCountDownValue;

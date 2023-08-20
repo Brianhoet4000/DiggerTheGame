@@ -9,7 +9,7 @@ namespace dae
 	{
 	public:
 
-		GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> Spawner);
+		GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> spawner);
 		virtual ~GameWinLoseSingleCoopComponent() = default;
 		GameWinLoseSingleCoopComponent(const GameWinLoseSingleCoopComponent& other) = delete;
 		GameWinLoseSingleCoopComponent(GameWinLoseSingleCoopComponent&& other) = delete;

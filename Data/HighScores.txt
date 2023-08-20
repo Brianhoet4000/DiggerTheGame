@@ -1,2 +1,3 @@
 bribri, 88
 bri,55
+testing, 150

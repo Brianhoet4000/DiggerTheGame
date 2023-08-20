@@ -270,7 +270,6 @@ namespace dae
         for (auto player : PlayerManager::GetInstance().GetPlayers())
         {
             if (player == nullptr) return nullptr;
-            if (player->ReturnDeleting()) return nullptr;
 
             auto PlayerBox = player->GetComponent<GameCollisionComponent>();
 

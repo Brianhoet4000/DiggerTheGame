@@ -3,6 +3,7 @@
 #include "GameCollisionMngr.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
+#include "PointComponent.h"
 #include "ScreenManager.h"
 #include "ServiceLocator.h"
 #include "TextureComponent.h"
@@ -88,6 +89,7 @@ void dae::GoldStateComponent::Update(float deltaTime)
 			if (pPlayerCollision != nullptr)
 			{
 				pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
+				pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->SetAmount(0);
 				dae::ScreenManager::GetInstance().ResetLevel();
 				return;
 			}

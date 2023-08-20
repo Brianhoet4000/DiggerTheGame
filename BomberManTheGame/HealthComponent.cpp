@@ -2,10 +2,10 @@
 
 #include "SceneManager.h"
 
-dae::HealthComponent::HealthComponent(dae::GameObject* owner, int startamount)
+dae::HealthComponent::HealthComponent(dae::GameObject* owner, int startAmount)
 {
 	m_pOwner = owner;
-	m_pCounterCp = std::make_unique<dae::CounterComponent>(owner, startamount);
+	m_pCounterCp = std::make_unique<dae::CounterComponent>(owner, startAmount);
 }
 
 void dae::HealthComponent::DecreaseAmount(int difference) const

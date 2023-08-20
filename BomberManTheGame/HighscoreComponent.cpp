@@ -11,6 +11,8 @@
 #include "Renderer.h"
 #include "TextComponent.h"
 #include "GameObject.h"
+#include "PlayerManager.h"
+#include "PointComponent.h"
 #include "ResourceManager.h"
 
 using namespace dae;
@@ -91,7 +93,14 @@ void HighscoreComponent::EnterName(float deltaTime)
     
     if (exit) return;
 
-    WriteToFile("../Data/HighScores.txt", name);
+    const auto players = PlayerManager::GetInstance().GetPlayers();
+    int score{};
+    for (const auto& p : players)
+    {
+        score += p->GetComponent<PointComponent>()->GetAmount();
+    }
+
+    WriteToFile("../Data/HighScores.txt", name + ", " + std::to_string(score));
 
     //Show names
     const auto highscores = GetHighscoreNames("../Data/HighScores.txt");
@@ -99,6 +108,8 @@ void HighscoreComponent::EnterName(float deltaTime)
 
     for(int i{}; i < highscores.size(); ++i)
     {
+        if (i >= 10) return;
+
         const auto pointsObj = std::make_shared<dae::GameObject>();
 
         const std::string text = highscores[i].name + " - " + std::to_string(highscores[i].score);

@@ -5,6 +5,7 @@
 #include "HealthComponent.h"
 #include "HobbinComponent.h"
 #include "PlayerManager.h"
+#include "PointComponent.h"
 #include "ScreenManager.h"
 
 dae::AIMovementComponent::AIMovementComponent(dae::GameObject* owner)
@@ -20,8 +21,23 @@ void dae::AIMovementComponent::Update(float deltaTime)
 	const auto& pPlayerCollision = dae::GameCollisionMngr::GetInstance().CheckOverlapWithPlayers(m_pOwner->GetComponent<dae::GameCollisionComponent>());
 	if (pPlayerCollision != nullptr)
 	{
-		pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
 		dae::ScreenManager::GetInstance().ResetLevel();
+		pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
+		pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->SetAmount(0);
+
+		Scene* scene = dae::SceneManager::GetInstance().GetActiveScene();
+
+		if (pPlayerCollision->GetOwner()->GetTag() == "Player_01")
+		{
+			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
+			points->GetComponent<TextComponent>()->SetText(std::to_string(pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+		}
+		else
+		{
+			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
+			points->GetComponent<TextComponent>()->SetText(std::to_string(pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+		}
+
 		return;
 	}
 

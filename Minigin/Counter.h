@@ -13,7 +13,7 @@ namespace dae
 
 		void IncreaseAmount(int difference);
 		void DecreaseAmount(int difference);
-		void SetAmount(int newHealth);
+		void SetAmount(int newAmount);
 		int GetAmount() const;
 
 	private:
