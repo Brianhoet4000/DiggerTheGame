@@ -18,6 +18,9 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{f6e6be23-5011-44fb-86d0-5558c55f44bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Observers">
+      <UniqueIdentifier>{cad70de4-53b1-4487-9c09-ed53f71eceb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DiggerTheGame.cpp">
@@ -171,6 +174,12 @@
     </ClInclude>
     <ClInclude Include="ConditionVersusComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthObserver.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="PointObserver.h">
+      <Filter>Observers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

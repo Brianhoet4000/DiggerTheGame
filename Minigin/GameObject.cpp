@@ -16,6 +16,7 @@ namespace dae
 
 	void GameObject::Update(float deltaTime)
 	{
+		
 
 		for (const auto& pComponent : m_pComponents)
 		{
