@@ -36,8 +36,6 @@ void HighscoreComponent::Render() const
 
 void HighscoreComponent::EnterName(float deltaTime)
 {
-    //Check if score isnt 0
-
     if (m_HasEnteredName) return;
 
     if (m_TimeBeforeWriting < 1)
@@ -86,12 +84,11 @@ void HighscoreComponent::EnterName(float deltaTime)
         }
     }
 
-
-    m_pNameText->SetText(name);
     m_HasEnteredName = true;
 
-    
     if (exit) return;
+
+    m_pNameText->SetText(name);
 
     const auto players = PlayerManager::GetInstance().GetPlayers();
     int score{};
@@ -109,7 +106,7 @@ void HighscoreComponent::EnterName(float deltaTime)
     const auto highscores = GetHighscoreNames("../Data/HighScores.txt");
     auto smallFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
 
-    for(int i{}; i < highscores.size(); ++i)
+    for(size_t i{}; i < highscores.size(); ++i)
     {
         if (i >= 10) return;
 

@@ -74,7 +74,7 @@
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>Prefab</Filter>
     </ClCompile>
-    <ClCompile Include="GameWinLosConditionComponent.cpp">
+    <ClCompile Include="ConditionSingleCoopComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerManager.cpp">
@@ -151,7 +151,7 @@
     <ClInclude Include="EnemySpawner.h">
       <Filter>Prefab</Filter>
     </ClInclude>
-    <ClInclude Include="GameWinLosConditionComponent.h">
+    <ClInclude Include="ConditionSingleCoopComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerManager.h">

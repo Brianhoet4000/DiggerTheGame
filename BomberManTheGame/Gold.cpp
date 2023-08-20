@@ -14,7 +14,7 @@ dae::Gold::Gold(glm::vec2 pos)
 
 	//Collision
 	const auto& pCollider = std::make_shared<GameCollisionComponent>(m_pGold.get());
-	pCollider->SetRenderCollisionBox(true);
+	pCollider->SetRenderCollisionBox(false);
 	m_pGold->AddComponent(pCollider);
 
 	//GoldLogic

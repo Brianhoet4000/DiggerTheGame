@@ -172,14 +172,7 @@ void GameCommands::SkipLevel::Execute(float)
         return;
     }
 
-    dae::SceneManager::GetInstance().NextScene();
-
-    if (dae::SceneManager::GetInstance().GetActiveSceneName() != "GameOver")
-    {
-        dae::GameCollisionMngr::GetInstance().ClearAll();
-        dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-        dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
-    }
+    dae::ScreenManager::GetInstance().ProceedNextLevel();
 
     SetKeyPressed(true);
 }

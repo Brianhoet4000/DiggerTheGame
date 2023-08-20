@@ -45,6 +45,7 @@ namespace dae
 		GameObject* GetGameObjectInScene(dae::Scene& scene, std::string tag);
 
 		void SkipToGameOverLevel();
+		void ProceedNextLevel() const;
 
 	private:
 		friend class Singleton<ScreenManager>;

@@ -7,7 +7,7 @@
 #include "GameCommands.h"
 #include "FPSCounterComponent.h"
 #include "GameCollisionMngr.h"
-#include "GameWinLosConditionComponent.h"
+#include "ConditionSingleCoopComponent.h"
 #include "HealthComponent.h"
 #include "HighscoreComponent.h"
 #include "InputManager.h"
@@ -112,14 +112,12 @@ namespace dae
 		pGameObjLogo->AddComponent(pDaeLogo);
 		scene.Add(pGameObjLogo);
 
-
 		const auto& pGameObjFps = std::make_shared<dae::GameObject>();
 		const auto& pFpsFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
 		const auto& pFpsCounter = std::make_shared<dae::FPSCounterComponent>("FPS", pFpsFont, pGameObjFps.get());
 		pGameObjFps->SetRelativePosition(0, 0);
 		pGameObjFps->AddComponent(pFpsCounter);
 		scene.Add(pGameObjFps);
-
 
 		//Player One
 		{
@@ -205,7 +203,6 @@ namespace dae
 		pointsObj->AddComponent(pointsText);
 		pMainObj->AddChild(pointsObj);
 
-
 		const auto scoreObj = std::make_shared<dae::GameObject>();
 		scoreObj->SetTag("Score");
 		scoreObj->SetRelativePosition({ 90, 250 });
@@ -215,7 +212,6 @@ namespace dae
 		pMainObj->AddChild(scoreObj);
 
 		scene.Add(pMainObj);
-
 	}
 
 	void ScreenManager::CreateLevelZero(dae::Scene& scene)
@@ -238,7 +234,7 @@ namespace dae
 				player[0]->SetRelativePosition(pLevel->GetSpawnPosition()[0]);
 
 				const auto& pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 3);
-				const auto& pWinLose = std::make_shared<dae::GameWinLoseSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
+				const auto& pWinLose = std::make_shared<dae::ConditionSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
 				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				CreateUI(scene, player, false);
@@ -266,7 +262,7 @@ namespace dae
 				}
 
 				const auto& pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 6);
-				const auto& pWinLose = std::make_shared<dae::GameWinLoseSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
+				const auto& pWinLose = std::make_shared<dae::ConditionSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
 				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				auto players = PlayerManager::GetInstance().GetPlayers();
@@ -314,7 +310,7 @@ namespace dae
 				player[0]->SetRelativePosition(pLevel->GetSpawnPosition()[0]);
 
 				const auto& pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 5);
-				const auto& pWinLose = std::make_shared<dae::GameWinLoseSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
+				const auto& pWinLose = std::make_shared<dae::ConditionSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
 				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				CreateUI(scene, player, false);
@@ -332,7 +328,7 @@ namespace dae
 				}
 
 				const auto& pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 12);
-				const auto& pWinLose = std::make_shared<dae::GameWinLoseSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
+				const auto& pWinLose = std::make_shared<dae::ConditionSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
 				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				auto players = PlayerManager::GetInstance().GetPlayers();
@@ -371,7 +367,7 @@ namespace dae
 				player[0]->SetRelativePosition(pLevel->GetSpawnPosition()[0]);
 
 				const auto& pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 7);
-				const auto& pWinLose = std::make_shared<dae::GameWinLoseSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
+				const auto& pWinLose = std::make_shared<dae::ConditionSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
 				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				CreateUI(scene, player, false);
@@ -389,7 +385,7 @@ namespace dae
 				}
 
 				const auto& pSpawner = std::make_shared<dae::EnemySpawner>(*dae::SceneManager::GetInstance().GetActiveScene(), pLevel->GetEnemySpawnPosition(), 15);
-				const auto& pWinLose = std::make_shared<dae::GameWinLoseSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
+				const auto& pWinLose = std::make_shared<dae::ConditionSingleCoopComponent>(pLevel->returnLevelObj().get(), pSpawner->getSpawnObj());
 				pLevel->returnLevelObj()->AddComponent(pWinLose);
 
 				auto players = PlayerManager::GetInstance().GetPlayers();
@@ -451,23 +447,26 @@ namespace dae
 	{
 		ownerbox->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
 		ownerbox->GetOwner()->GetComponent<PointComponent>()->SetAmount(0);
-
+		
 		const auto& scene = dae::SceneManager::GetInstance().GetActiveScene();
-
+		
 		if (ownerbox->GetOwner()->GetTag() == "Player_01")
 		{
-			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
+			const auto& points = GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
 			points->GetComponent<TextComponent>()->SetText(std::to_string(ownerbox->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
 		}
 		else
 		{
-			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
+			const auto& points = GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
 			points->GetComponent<TextComponent>()->SetText(std::to_string(ownerbox->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
 		}
 
-		dae::GameCollisionMngr::GetInstance().ClearAll();
+
 		dae::SceneManager::GetInstance().GetActiveScene()->RemoveAll();
-		GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
+		dae::GameCollisionMngr::GetInstance().ClearAll();
+		GetInstance().CreateGameScreen(*SceneManager::GetInstance().GetActiveScene());
+
+
 	}
 
 	GameObject* ScreenManager::GetGameObjectInScene(dae::Scene& scene, std::string tag)
@@ -484,8 +483,6 @@ namespace dae
 
 	void ScreenManager::SkipToGameOverLevel()
 	{
-		
-
 		switch (m_CurrentLevel)
 		{
 		case 0:
@@ -521,6 +518,18 @@ namespace dae
 			IncrementCurrentLevel();
 			break;
 		}
+		}
+	}
+
+	void ScreenManager::ProceedNextLevel() const
+	{
+		dae::SceneManager::GetInstance().NextScene();
+
+		if (dae::SceneManager::GetInstance().GetActiveSceneName() != "GameOver")
+		{
+			dae::GameCollisionMngr::GetInstance().ClearAll();
+			dae::ScreenManager::GetInstance().IncrementCurrentLevel();
+			dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
 		}
 	}
 

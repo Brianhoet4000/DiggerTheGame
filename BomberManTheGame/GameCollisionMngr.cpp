@@ -248,7 +248,7 @@ namespace dae
 
     GameCollisionComponent* GameCollisionMngr::CheckOverlapWithSecondPlayerVersus(const GameCollisionComponent* box) const
     {
-        for (auto player : PlayerManager::GetInstance().GetPlayers())
+        for (const auto& player : PlayerManager::GetInstance().GetPlayers())
         {
             const auto& pPlayerCollision = player->GetComponent<dae::GameCollisionComponent>();
             if (pPlayerCollision->GetIsVersus())
@@ -265,13 +265,30 @@ namespace dae
         return nullptr;
     }
 
+    GameCollisionComponent* GameCollisionMngr::CheckOverlapWithFirstPlayer(const GameCollisionComponent* box) const
+    {
+    	const auto& player = PlayerManager::GetInstance().GetPlayers()[0]->GetComponent<GameCollisionComponent>();
+		if (player != nullptr)
+		{
+			if (box->GetCollisionRect().x < player->GetCollisionRect().x + player->GetCollisionRect().w &&
+               box->GetCollisionRect().x + box->GetCollisionRect().w > player->GetCollisionRect().x &&
+               box->GetCollisionRect().y < player->GetCollisionRect().y + player->GetCollisionRect().h &&
+               box->GetCollisionRect().y + box->GetCollisionRect().h > player->GetCollisionRect().y)
+			{
+				return player;
+			}
+		}
+        
+        return nullptr;
+    }
+
     GameCollisionComponent* GameCollisionMngr::CheckOverlapWithPlayers(const GameCollisionComponent* box) const
     {
-        for (auto player : PlayerManager::GetInstance().GetPlayers())
+        for (const auto& player : PlayerManager::GetInstance().GetPlayers())
         {
             if (player == nullptr) return nullptr;
 
-            auto PlayerBox = player->GetComponent<GameCollisionComponent>();
+            const auto& PlayerBox = player->GetComponent<GameCollisionComponent>();
 
             if (box->GetCollisionRect().x < PlayerBox->GetCollisionRect().x + PlayerBox->GetCollisionRect().w &&
                 box->GetCollisionRect().x + box->GetCollisionRect().w > PlayerBox->GetCollisionRect().x &&
@@ -287,12 +304,12 @@ namespace dae
 
     bool GameCollisionMngr::CheckOverlapWithPlayersBool(const GameCollisionComponent* box) const
     {
-        for (auto player : PlayerManager::GetInstance().GetPlayers())
+        for (const auto& player : PlayerManager::GetInstance().GetPlayers())
         {
             if (player == nullptr) return false;
             if (player->ReturnDeleting()) return false;
 
-            auto PlayerBox = player->GetComponent<GameCollisionComponent>();
+            const auto& PlayerBox = player->GetComponent<GameCollisionComponent>();
 
             if (box->GetCollisionRect().x < PlayerBox->GetCollisionRect().x + PlayerBox->GetCollisionRect().w &&
                 box->GetCollisionRect().x + box->GetCollisionRect().w > PlayerBox->GetCollisionRect().x &&
@@ -386,7 +403,7 @@ namespace dae
 
     void GameCollisionMngr::PlayerLogicBox(dae::GameCollisionComponent* box, glm::vec2 dir)
     {
-        auto OverlappedBox = CheckForCollisionComponent(box);
+        const auto& OverlappedBox = CheckForCollisionComponent(box);
 
         if (OverlappedBox != nullptr)
         {
@@ -422,7 +439,7 @@ namespace dae
             //Gold Related
             if (OverlappedBox->GetOwner()->GetTag() == "Gold")
             {
-                auto goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldStateComponent>();
+                const auto& goldState = OverlappedBox->GetOwner()->GetComponent<dae::GoldStateComponent>();
 
                 //Push Gold Left
                 if (goldState->GetMoneyBagState() != dae::GoldStateComponent::Falling
@@ -467,8 +484,8 @@ namespace dae
 
     void GameCollisionMngr::NobbinLogicBox(dae::GameCollisionComponent* box, glm::vec2 dir)
     {
-        auto GoldOverlappedBox = CheckForGoldCollisionComponent(box);
-        auto DirtOverlappedBox = CheckForDirtCollisionComponent(box);
+        const auto& GoldOverlappedBox = CheckForGoldCollisionComponent(box);
+        const auto& DirtOverlappedBox = CheckForDirtCollisionComponent(box);
 
         //Hobbin
         if (DirtOverlappedBox != nullptr)

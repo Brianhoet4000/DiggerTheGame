@@ -189,7 +189,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="GameCollisionComponent.cpp" />
     <ClCompile Include="GameCollisionMngr.cpp" />
-    <ClCompile Include="GameWinLosConditionComponent.cpp" />
+    <ClCompile Include="ConditionSingleCoopComponent.cpp" />
     <ClCompile Include="Gold.cpp" />
     <ClCompile Include="GoldStateComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
@@ -215,7 +215,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="GameCollisionComponent.h" />
     <ClInclude Include="GameCollisionMngr.h" />
-    <ClInclude Include="GameWinLosConditionComponent.h" />
+    <ClInclude Include="ConditionSingleCoopComponent.h" />
     <ClInclude Include="Gold.h" />
     <ClInclude Include="GoldStateComponent.h" />
     <ClInclude Include="HealthComponent.h" />

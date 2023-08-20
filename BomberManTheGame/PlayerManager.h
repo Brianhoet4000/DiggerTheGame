@@ -17,7 +17,6 @@ public:
     PlayerManager(PlayerManager&&) = default;
     PlayerManager& operator=(PlayerManager&&) = default;
 
-
     static PlayerManager& GetInstance()
     {
         static PlayerManager instance;

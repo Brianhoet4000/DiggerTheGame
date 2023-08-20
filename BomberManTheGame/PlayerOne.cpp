@@ -23,7 +23,7 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene)
 	const auto& pCollider = std::make_shared<dae::GameCollisionComponent>(m_pPlayerOne.get());
 	m_pPlayerOne->AddComponent(pCollider);
 	pCollider->SetCollisionRectOffset(5.f);
-	pCollider->SetRenderCollisionBox(true);
+	pCollider->SetRenderCollisionBox(false);
 
 	//BulletTimer
 	const auto& pTimer = std::make_shared<dae::BulletTimerComponent>(m_pPlayerOne.get());

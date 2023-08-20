@@ -4,7 +4,7 @@
 #include <random>
 #include "Emerald.h"
 #include "GameCollisionComponent.h"
-#include "GameWinLosConditionComponent.h"
+#include "ConditionSingleCoopComponent.h"
 #include "Gold.h"
 
 dae::LevelPrefab::LevelPrefab(dae::Scene& scene, const std::string& LevelPath)

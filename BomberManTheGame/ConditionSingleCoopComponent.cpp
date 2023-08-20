@@ -1,4 +1,4 @@
-#include "GameWinLosConditionComponent.h"
+#include "ConditionSingleCoopComponent.h"
 
 #include <iostream>
 
@@ -10,20 +10,21 @@
 #include "ScreenManager.h"
 #include "TextureComponent.h"
 
-dae::GameWinLoseSingleCoopComponent::GameWinLoseSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> spawner)
+dae::ConditionSingleCoopComponent::ConditionSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> spawner)
 	:m_Finished{false}
 {
 	m_pOwner = owner;
 	m_pSpawner = spawner;
 }
 
-void dae::GameWinLoseSingleCoopComponent::Update(float)
+void dae::ConditionSingleCoopComponent::Update(float)
 {
 	for (const auto& player : PlayerManager::GetInstance().GetPlayers())
 	{
 		if (player->GetComponent<HealthComponent>()->GetAmount() <= -1)
 		{
-			dae::ScreenManager::GetInstance().SkipToGameOverLevel();
+			dae::SceneManager::GetInstance().GetActiveScene()->RemoveAll();
+			dae::SceneManager::GetInstance().SetActiveScene("GameOver");
 			return;
 		}
 	}
@@ -40,15 +41,7 @@ void dae::GameWinLoseSingleCoopComponent::Update(float)
 	
 	if(m_Finished && !m_DoOnce && dae::ScreenManager::GetInstance().GetCurrentLevel() != 3)
 	{
-		dae::SceneManager::GetInstance().NextScene();
-
-		if (dae::SceneManager::GetInstance().GetActiveSceneName() != "GameOver")
-		{
-			dae::GameCollisionMngr::GetInstance().ClearAll();
-			dae::ScreenManager::GetInstance().IncrementCurrentLevel();
-			dae::ScreenManager::GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
-		}
-
+		dae::ScreenManager::GetInstance().ProceedNextLevel();
 		m_DoOnce = true;
 	}
 }
