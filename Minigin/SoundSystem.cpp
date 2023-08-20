@@ -1,6 +1,11 @@
 #pragma once
 #include "SoundSystem.h"
+
+#include <condition_variable>
 #include <iostream>
+#include <queue>
+#include <thread>
+
 #include "SDL.h"
 
 namespace dae
@@ -12,9 +17,24 @@ namespace dae
 		{
 			Mix_Init(MIX_INIT_MP3);
 			Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
+
+			m_SoundThread = std::thread(&SoundSystemImpl::SoundThreadFunction, this);
 		}
 
-		~SoundSystemImpl() = default;
+		~SoundSystemImpl()
+		{
+			StopSoundThread();
+
+			// Clean up SDL_mixer resources and unload chunks
+			for (const auto& pair : m_Sound)
+			{
+				Mix_FreeChunk(pair.second);
+			}
+			m_Sound.clear();
+
+			Mix_CloseAudio();
+			Mix_Quit();
+		}
 
 		SoundSystemImpl(const SoundSystemImpl& other) = delete;
 		SoundSystemImpl(SoundSystemImpl&& other) = delete;
@@ -66,6 +86,50 @@ namespace dae
 				std::cout << "Resumed\n";
 			}
 		}
+		void SoundThreadFunction()
+		{
+			while (true)
+			{
+				std::unique_lock<std::mutex> lock(m_QueueMutex);
+				m_QueueCondition.wait(lock, [this] { return !m_PlayQueue.empty() || m_QuitFlag; });
+
+				if (m_QuitFlag)
+				{
+					break;
+				}
+
+				sound_id id = m_PlayQueue.front();
+				m_PlayQueue.pop();
+
+				lock.unlock();
+
+				// Play sound logic
+				auto playchunk = m_Sound.at(id);
+
+				if (playchunk != nullptr)
+				{
+					auto channel = Mix_PlayChannel(-1, playchunk, 0);
+					Mix_Volume(channel, MIX_MAX_VOLUME); // Adjust volume as needed
+				}
+
+				// Sleep for a short duration to avoid busy-waiting
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			}
+		}
+		void StopSoundThread()
+		{
+			{
+				std::lock_guard<std::mutex> lock(m_QueueMutex);
+				m_QuitFlag = true;
+			}
+
+			m_QueueCondition.notify_one();
+
+			if (m_SoundThread.joinable())
+			{
+				m_SoundThread.join();
+			}
+		}
 
 	private:
 		enum SoundState
@@ -76,7 +140,15 @@ namespace dae
 
 		std::map<sound_id, Mix_Chunk*> m_Sound{};
 		bool m_Muted = false;
+
+		std::thread m_SoundThread;
+		bool m_QuitFlag = false;
+		std::queue<sound_id> m_PlayQueue;
+		std::mutex m_QueueMutex;
+		std::condition_variable m_QueueCondition;
 	};
+
+
 
 	dae::SoundSystem::SoundSystem()
 		:m_pImpl(std::make_unique<SoundSystemImpl>())

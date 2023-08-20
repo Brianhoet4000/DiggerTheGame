@@ -18,7 +18,7 @@
 using namespace dae;
 
 HighscoreComponent::HighscoreComponent(GameObject* owner, const std::shared_ptr<Font>& font) :
-    m_pNameText{ std::make_unique<TextComponent>( "name", font, owner) }
+    m_pNameText{ std::make_unique<TextComponent>("name", font, owner) }
 {
     m_pOwner = owner;
 }
@@ -36,6 +36,8 @@ void HighscoreComponent::Render() const
 
 void HighscoreComponent::EnterName(float deltaTime)
 {
+    //Check if score isnt 0
+
     if (m_HasEnteredName) return;
 
     if (m_TimeBeforeWriting < 1)
@@ -85,7 +87,6 @@ void HighscoreComponent::EnterName(float deltaTime)
     }
 
     m_HasEnteredName = true;
-
     if (exit) return;
 
     m_pNameText->SetText(name);
@@ -106,7 +107,7 @@ void HighscoreComponent::EnterName(float deltaTime)
     const auto highscores = GetHighscoreNames("../Data/HighScores.txt");
     auto smallFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
 
-    for(size_t i{}; i < highscores.size(); ++i)
+    for (int i{}; i < highscores.size(); ++i)
     {
         if (i >= 10) return;
 
@@ -127,12 +128,12 @@ void HighscoreComponent::WriteToFile(const std::string& filename, const std::str
     std::ifstream inputFile(filename);
     std::ofstream outputFile;
 
-    if (inputFile.is_open()) 
+    if (inputFile.is_open())
     {
         std::string line;
         std::string fileContent;
 
-        while (std::getline(inputFile, line)) 
+        while (std::getline(inputFile, line))
         {
             fileContent += line + "\n";
         }
@@ -141,7 +142,7 @@ void HighscoreComponent::WriteToFile(const std::string& filename, const std::str
 
         outputFile.open(filename);
 
-        if (outputFile.is_open()) 
+        if (outputFile.is_open())
         {
             outputFile << fileContent << text;
             outputFile.close();
@@ -160,7 +161,7 @@ std::vector<HighscoreComponent::Highscore> HighscoreComponent::GetHighscoreNames
     {
         std::istringstream iss(line);
         std::string scoreStr, name;
-        std::getline(iss, name,',');
+        std::getline(iss, name, ',');
         std::getline(iss, scoreStr);
         int score = std::stoi(scoreStr);
         highscores.push_back({ name, score });

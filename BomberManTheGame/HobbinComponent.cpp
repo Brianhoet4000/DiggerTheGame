@@ -14,15 +14,15 @@ dae::HobbinComponent::HobbinComponent(dae::GameObject* owner)
 
 void dae::HobbinComponent::Update(float deltaTime)
 {
-	//if (m_pOwner->GetTag() == "Player_02")
-	//{
-	//	const auto& firstPlayer = dae::GameCollisionMngr::GetInstance().CheckOverlapWithFirstPlayer(m_pOwner->GetComponent<GameCollisionComponent>());
-	//	if (firstPlayer != nullptr)
-	//	{
-	//		dae::ScreenManager::GetInstance().PlayerKilledResetLevelAndStats(firstPlayer);
-	//		return;
-	//	}
-	//}
+	if (m_pOwner->GetTag() == "Player_02")
+	{
+		const auto& firstPlayer = dae::GameCollisionMngr::GetInstance().CheckOverlapWithFirstPlayer(m_pOwner->GetComponent<GameCollisionComponent>());
+		if (firstPlayer != nullptr)
+		{
+			dae::ScreenManager::GetInstance().PlayerKilledResetLevelAndStats(firstPlayer);
+			return;
+		}
+	}
 
 	if(m_CharacterState == Nobbin)
 	{

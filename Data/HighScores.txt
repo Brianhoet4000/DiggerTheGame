@@ -9,3 +9,4 @@ Merlijn, 50
 Kevin, 150
 Cop, 40
 Player1, 150
+rbaerg, 800
