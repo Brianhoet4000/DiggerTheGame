@@ -11,14 +11,6 @@ namespace dae
 	{
 	public:
 
-		enum MovementDir
-		{
-			Left,
-			Right,
-			Up,
-			Down
-		};
-
 		AIMovementComponent(dae::GameObject* owner);
 		virtual ~AIMovementComponent() override = default;
 		AIMovementComponent(const AIMovementComponent& other) = delete;
@@ -39,7 +31,6 @@ namespace dae
 		glm::vec2 m_DirUp{0, -1};
 		glm::vec2 m_DirDown{0, 1};
 
-		MovementDir m_MovementDir{ Left };
 		bool m_Horizontal = true;
 		bool m_Vertical = false;
 

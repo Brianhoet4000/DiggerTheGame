@@ -245,6 +245,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\SDL2_ttf.dll $(Outpu
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="BaseSoundSystem.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />

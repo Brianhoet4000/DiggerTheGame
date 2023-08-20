@@ -21,6 +21,9 @@
     <Filter Include="Observers">
       <UniqueIdentifier>{cad70de4-53b1-4487-9c09-ed53f71eceb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{82e164a5-a62b-4cbe-be39-0dd95e11ecdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DiggerTheGame.cpp">
@@ -97,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="ConditionVersusComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="NobbinState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="HobbinState.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +189,12 @@
     </ClInclude>
     <ClInclude Include="PointObserver.h">
       <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="NobbinState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="HobbinState.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -144,6 +144,9 @@
     <ClInclude Include="CollisionBoxManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
