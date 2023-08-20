@@ -4,9 +4,10 @@
 namespace dae
 {
 
-	BaseComponent::BaseComponent()
+	BaseComponent::BaseComponent(GameObject* owner)
 		:m_needsUpdate{ true }
 	{
+		m_pOwner = owner;
 	}
 
 	BaseComponent::~BaseComponent()

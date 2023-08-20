@@ -43,7 +43,7 @@ dae::PlayerTwo::PlayerTwo(dae::Scene& scene,  bool Coop)
 		m_pPlayerTwo->AddComponent(pTimer);
 
 		//ShootingDir
-		const auto& pShootingDir = std::make_shared<ShootingDirComponent>();
+		const auto& pShootingDir = std::make_shared<ShootingDirComponent>(m_pPlayerTwo.get());
 		m_pPlayerTwo->AddComponent(pShootingDir);
 
 		//Movement

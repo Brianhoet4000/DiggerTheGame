@@ -6,8 +6,8 @@
 #include "PlayerManager.h"
 
 dae::HobbinComponent::HobbinComponent(dae::GameObject* owner)
+	:BaseComponent(owner)
 {
-	m_pOwner = owner;
 	m_pTexture = owner->GetComponent<dae::TextureComponent>();
 	m_Countdownvalue = m_Startvalue;
 }

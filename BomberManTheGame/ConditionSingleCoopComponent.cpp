@@ -11,9 +11,9 @@
 #include "TextureComponent.h"
 
 dae::ConditionSingleCoopComponent::ConditionSingleCoopComponent(dae::GameObject* owner, std::shared_ptr<dae::GameObject> spawner)
-	:m_Finished{false}
+	:BaseComponent(owner)
+	,m_Finished{false}
 {
-	m_pOwner = owner;
 	m_pSpawner = spawner;
 }
 

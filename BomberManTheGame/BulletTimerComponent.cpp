@@ -3,11 +3,11 @@
 #include "TextureComponent.h"
 
 dae::BulletTimerComponent::BulletTimerComponent(dae::GameObject* owner)
-	:m_StartValue{5.f}
+	:BaseComponent(owner)
+	,m_StartValue{5.f}
 	,m_CurrentTime{m_StartValue}
 
 {
-	m_pOwner = owner;
 }
 
 void dae::BulletTimerComponent::Update(float deltaTime)

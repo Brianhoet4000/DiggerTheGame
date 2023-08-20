@@ -3,8 +3,10 @@
 #include "GameObject.h"
 
 dae::Transform::Transform(GameObject* owner)
+	:BaseComponent(owner)
+	,m_position(0,0)
 {
-	m_pOwner = owner;
+	
 }
 
 void dae::Transform::SetPosition(const float x, const float y)

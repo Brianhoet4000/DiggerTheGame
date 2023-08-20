@@ -19,6 +19,6 @@ namespace dae
 
 		//void Update(float) override;
 	private:
-		glm::vec2 m_position;
+		glm::vec2 m_position = {0,0};
 	};
 }

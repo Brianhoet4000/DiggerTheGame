@@ -10,10 +10,11 @@
 
 using namespace dae;
 
-CounterComponent::CounterComponent(GameObject* owner, int startAmount) :
+CounterComponent::CounterComponent(GameObject* owner, int startAmount)
+	: BaseComponent(owner),
 	m_Counter{ startAmount }
 {
-	m_pOwner = owner;
+	
 }
 
 void CounterComponent::IncreaseAmount(int difference)

@@ -17,10 +17,10 @@
 
 using namespace dae;
 
-HighscoreComponent::HighscoreComponent(GameObject* owner, const std::shared_ptr<Font>& font) :
+HighscoreComponent::HighscoreComponent(GameObject* owner, const std::shared_ptr<Font>& font)
+    :BaseComponent(owner),
     m_pNameText{ std::make_unique<TextComponent>("name", font, owner) }
 {
-    m_pOwner = owner;
 }
 
 void HighscoreComponent::Update(float deltaTime)

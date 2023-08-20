@@ -9,8 +9,8 @@
 #include "ScreenManager.h"
 
 dae::AIMovementComponent::AIMovementComponent(dae::GameObject* owner)
+	:BaseComponent(owner)
 {
-	m_pOwner = owner;
 	m_pCollision = owner->GetComponent<dae::GameCollisionComponent>();
 }
 
@@ -23,28 +23,6 @@ void dae::AIMovementComponent::Update(float deltaTime)
 	{
 		dae::ScreenManager::GetInstance().PlayerKilledResetLevelAndStats(pPlayerCollision);
 
-		/*
-		pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
-		pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->SetAmount(0);
-
-		const auto& scene = dae::SceneManager::GetInstance().GetActiveScene();
-
-		if (pPlayerCollision->GetOwner()->GetTag() == "Player_01")
-		{
-			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
-			points->GetComponent<TextComponent>()->SetText(std::to_string(pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
-		}
-		else
-		{
-			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
-			points->GetComponent<TextComponent>()->SetText(std::to_string(pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
-		}
-
-
-		dae::SceneManager::GetInstance().GetActiveScene()->RemoveAll();
-		dae::GameCollisionMngr::GetInstance().ClearAll();
-		dae::ScreenManager::GetInstance().CreateGameScreen(*SceneManager::GetInstance().GetActiveScene());
-		*/
 		return;
 	}
 

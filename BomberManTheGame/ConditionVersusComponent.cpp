@@ -7,9 +7,9 @@
 #include "ScreenManager.h"
 
 dae::ConditionVersusComponent::ConditionVersusComponent(dae::GameObject* owner)
-	:m_Finished{ false }
+	:BaseComponent(owner)
+	,m_Finished{ false }
 {
-	m_pOwner = owner;
 }
 
 void dae::ConditionVersusComponent::Update(float)

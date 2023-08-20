@@ -9,8 +9,8 @@
 #include "TextureComponent.h"
 
 dae::GoldStateComponent::GoldStateComponent(dae::GameObject* owner)
+	:BaseComponent(owner)
 {
-	m_pOwner = owner;
 	m_EstimatedPos = glm::vec2{ 0,0 };
 	m_Countdownvalue = m_Startvalue;
 }

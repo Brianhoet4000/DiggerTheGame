@@ -1,8 +1,8 @@
 #include "PointComponent.h"
 
 dae::PointComponent::PointComponent(dae::GameObject* owner, int startamount)
+	:BaseComponent(owner)
 {
-	m_pOwner = owner;
 	m_pCounterCp = std::make_unique<dae::CounterComponent>(owner, startamount);
 }
 

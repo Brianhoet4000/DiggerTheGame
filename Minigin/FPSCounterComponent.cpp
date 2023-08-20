@@ -8,10 +8,10 @@
 #include "GameObject.h"
 
 dae::FPSCounterComponent::FPSCounterComponent(const std::string& text, std::shared_ptr<Font> font, GameObject* owner)
-	:m_Text(text), m_Font(std::move(font)), m_TextTexture(nullptr)
+	:BaseComponent(owner),
+m_Text(text), m_Font(std::move(font)), m_TextTexture(nullptr)
 {
 	m_needsUpdate = true;
-	m_pOwner = owner;
 }
 
 void dae::FPSCounterComponent::Update(float)

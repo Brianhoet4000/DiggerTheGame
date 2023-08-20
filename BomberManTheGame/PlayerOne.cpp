@@ -30,7 +30,7 @@ dae::PlayerOne::PlayerOne(dae::Scene& scene)
 	m_pPlayerOne->AddComponent(pTimer);
 
 	//ShootingDir
-	const auto& pShootingDir = std::make_shared<ShootingDirComponent>();
+	const auto& pShootingDir = std::make_shared<ShootingDirComponent>(m_pPlayerOne.get());
 	m_pPlayerOne->AddComponent(pShootingDir);
 
 	//Movement

@@ -6,13 +6,13 @@
 #include "TextureComponent.h"
 
 dae::SpawnTimerComponent::SpawnTimerComponent(dae::Scene* scene, dae::GameObject* owner,float startCountDownNumber, int maxNumberOfEnemies)
-	:m_StartCountDownValue{startCountDownNumber}
+	:BaseComponent(owner)
+	,m_StartCountDownValue{startCountDownNumber}
 	,m_MaxNumberOfEnemies{maxNumberOfEnemies}
 	,m_EnemyNumber{maxNumberOfEnemies}
 {
 	m_Start = false;
 	m_Counter = m_StartCountDownValue;
-	m_pOwner = owner;
 	m_pScene = scene;
 }
 

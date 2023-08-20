@@ -5,11 +5,12 @@
 #include "GameObject.h"
 
 dae::RotationComponent::RotationComponent(GameObject* owner, float offset, float rotationSpeed)
-	:m_Radius(offset)
+	:BaseComponent(owner)
+	,m_Radius(offset)
 	,m_RotationSpeed(rotationSpeed)
 	,m_OffsetOfTheParent(owner->GetWorldPosition())
 {
-	m_pOwner = owner;
+	
 }
 
 void dae::RotationComponent::Update(float deltaTime)

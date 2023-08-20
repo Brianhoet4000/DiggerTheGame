@@ -12,12 +12,13 @@
 
 
 dae::BulletComponent::BulletComponent(dae::GameObject* owner, glm::vec2 vel, int amountOfBounces)
-	:m_vel{vel}
+	:BaseComponent(owner)
+	,m_vel{vel}
 	,m_Bounce{0}
 	,m_AmountOfBounce{amountOfBounces}
 	,m_Speed{75.f}
 {
-	m_pOwner = owner;
+	
 }
 
 void dae::BulletComponent::Update(float deltaTime)

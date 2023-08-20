@@ -3,8 +3,8 @@
 #include "SceneManager.h"
 
 dae::HealthComponent::HealthComponent(dae::GameObject* owner, int startAmount)
+	:BaseComponent(owner)
 {
-	m_pOwner = owner;
 	m_pCounterCp = std::make_unique<dae::CounterComponent>(owner, startAmount);
 }
 

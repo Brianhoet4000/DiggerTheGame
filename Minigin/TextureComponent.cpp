@@ -7,8 +7,9 @@ namespace dae
 {
 
 	TextureComponent::TextureComponent(GameObject* owner)
+		:BaseComponent(owner)
 	{
-		m_pOwner = owner;
+		
 	}
 
 	glm::vec2 TextureComponent::GetSize()

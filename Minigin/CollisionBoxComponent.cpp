@@ -5,8 +5,9 @@
 #include "TextureComponent.h"
 
 dae::CollisionBoxComponent::CollisionBoxComponent(dae::GameObject* owner)
+	:BaseComponent(owner)
 {
-	m_pOwner = owner;
+	
 	m_CollisionBox.w = m_pOwner->GetComponent<dae::TextureComponent>()->GetSize().x;
 	m_CollisionBox.h = m_pOwner->GetComponent<dae::TextureComponent>()->GetSize().y;
 

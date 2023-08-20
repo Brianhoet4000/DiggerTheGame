@@ -8,6 +8,12 @@ namespace dae
 	{
 	public:
 
+		ShootingDirComponent(GameObject* owner)
+			:BaseComponent(owner)
+		{
+		}
+		~ShootingDirComponent() = default;
+
 		enum FaceState
 		{
 			Up,
