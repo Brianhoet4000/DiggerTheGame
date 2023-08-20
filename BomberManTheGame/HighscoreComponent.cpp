@@ -107,7 +107,7 @@ void HighscoreComponent::EnterName(float deltaTime)
     const auto highscores = GetHighscoreNames("../Data/HighScores.txt");
     auto smallFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
 
-    for (int i{}; i < highscores.size(); ++i)
+    for (size_t i{}; i < highscores.size(); ++i)
     {
         if (i >= 10) return;
 
