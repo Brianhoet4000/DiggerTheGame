@@ -22,6 +22,8 @@ namespace dae
 		std::string GetActiveSceneName() const;
 		void IncrementActivescene() { ++m_ActiveScene; }
 
+		std::vector<std::shared_ptr<Scene>> GetAllScene() { return m_pScenes; }
+
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;

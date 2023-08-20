@@ -5,6 +5,8 @@
 #include "EnemySpawner.h"
 #include "GameCollisionMngr.h"
 #include "GameObject.h"
+#include "HealthComponent.h"
+#include "PlayerManager.h"
 #include "ScreenManager.h"
 #include "TextureComponent.h"
 
@@ -17,6 +19,17 @@ dae::GameWinLoseSingleCoopComponent::GameWinLoseSingleCoopComponent(dae::GameObj
 
 void dae::GameWinLoseSingleCoopComponent::Update(float)
 {
+	for (const auto& player : PlayerManager::GetInstance().GetPlayers())
+	{
+		if (player->GetComponent<HealthComponent>()->GetAmount() <= -1)
+		{
+			dae::ScreenManager::GetInstance().SkipToGameOverLevel();
+			return;
+		}
+	}
+	
+
+
 	if((GameCollisionMngr::GetInstance().GetAllEmerald().empty() &&
 		GameCollisionMngr::GetInstance().GetAllGold().empty()) ||
 		(m_pSpawner->GetComponent<dae::SpawnTimerComponent>()->RemainingNumberOfEnemies() == 0 

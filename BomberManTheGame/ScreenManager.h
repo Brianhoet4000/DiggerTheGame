@@ -1,4 +1,5 @@
 #pragma once
+#include "GameCollisionComponent.h"
 #include "PlayerOne.h"
 #include "Scene.h"
 #include "TextComponent.h"
@@ -40,8 +41,10 @@ namespace dae
 		void CreateLevelOne(dae::Scene& scene);
 		void CreateLevelTwo(dae::Scene& scene);
 		void CreateUI(dae::Scene& scene, std::vector<std::shared_ptr<GameObject>>& players, bool SecondPlayer);
-		void ResetLevel() const;
+		void PlayerKilledResetLevelAndStats(dae::GameCollisionComponent* ownerbox) const;
 		GameObject* GetGameObjectInScene(dae::Scene& scene, std::string tag);
+
+		void SkipToGameOverLevel();
 
 	private:
 		friend class Singleton<ScreenManager>;

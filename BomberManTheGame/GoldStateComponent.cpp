@@ -88,9 +88,7 @@ void dae::GoldStateComponent::Update(float deltaTime)
 			const auto& pPlayerCollision = dae::GameCollisionMngr::GetInstance().CheckOverlapWithPlayers(m_pOwner->GetComponent<dae::GameCollisionComponent>());
 			if (pPlayerCollision != nullptr)
 			{
-				pPlayerCollision->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
-				pPlayerCollision->GetOwner()->GetComponent<PointComponent>()->SetAmount(0);
-				dae::ScreenManager::GetInstance().ResetLevel();
+				dae::ScreenManager::GetInstance().PlayerKilledResetLevelAndStats(pPlayerCollision);
 				return;
 			}
 		}

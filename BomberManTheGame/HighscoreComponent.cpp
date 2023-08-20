@@ -100,7 +100,10 @@ void HighscoreComponent::EnterName(float deltaTime)
         score += p->GetComponent<PointComponent>()->GetAmount();
     }
 
-    WriteToFile("../Data/HighScores.txt", name + ", " + std::to_string(score));
+    if (score > 0)
+    {
+        WriteToFile("../Data/HighScores.txt", name + ", " + std::to_string(score));
+    }
 
     //Show names
     const auto highscores = GetHighscoreNames("../Data/HighScores.txt");
@@ -114,7 +117,7 @@ void HighscoreComponent::EnterName(float deltaTime)
 
         const std::string text = highscores[i].name + " - " + std::to_string(highscores[i].score);
         const auto pointsText = std::make_shared<dae::TextComponent>(text, smallFont, pointsObj.get());
-        pointsObj->SetRelativePosition({ 380, -100 + i * 30 });
+        pointsObj->SetRelativePosition({ 340, -100 + i * 30 });
         pointsObj->AddComponent(pointsText);
         m_pOwner->AddChild(pointsObj);
     }

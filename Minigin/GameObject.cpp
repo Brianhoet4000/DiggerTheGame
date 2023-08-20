@@ -16,13 +16,18 @@ namespace dae
 
 	void GameObject::Update(float deltaTime)
 	{
+
 		for (const auto& pComponent : m_pComponents)
 		{
+			if (pComponent == nullptr) return;
+
 			pComponent->Update(deltaTime);
 		}
 
 		for (const auto& child : m_pChildren)
 		{
+			if (child == nullptr) return;
+
 			child->Update(deltaTime);
 		}
 	}

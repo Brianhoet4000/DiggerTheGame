@@ -195,7 +195,7 @@ namespace dae
 
 		const auto highObj = std::make_shared<dae::GameObject>();
 		const auto highText = std::make_shared<dae::TextComponent>("HighScores: ", smallFont, highObj.get());
-		highObj->SetRelativePosition({ 350, 145 });
+		highObj->SetRelativePosition({ 300, 145 });
 		highObj->AddComponent(highText);
 		pMainObj->AddChild(highObj);
 
@@ -447,8 +447,24 @@ namespace dae
 		}
 	}
 
-	void ScreenManager::ResetLevel() const
+	void ScreenManager::PlayerKilledResetLevelAndStats(dae::GameCollisionComponent* ownerbox) const
 	{
+		ownerbox->GetOwner()->GetComponent<HealthComponent>()->DecreaseAmount(1);
+		ownerbox->GetOwner()->GetComponent<PointComponent>()->SetAmount(0);
+
+		const auto& scene = dae::SceneManager::GetInstance().GetActiveScene();
+
+		if (ownerbox->GetOwner()->GetTag() == "Player_01")
+		{
+			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerOnePoints");
+			points->GetComponent<TextComponent>()->SetText(std::to_string(ownerbox->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+		}
+		else
+		{
+			const auto& points = dae::ScreenManager::GetInstance().GetGameObjectInScene(*scene, "PlayerTwoPoints");
+			points->GetComponent<TextComponent>()->SetText(std::to_string(ownerbox->GetOwner()->GetComponent<PointComponent>()->GetAmount()));
+		}
+
 		dae::GameCollisionMngr::GetInstance().ClearAll();
 		dae::SceneManager::GetInstance().GetActiveScene()->RemoveAll();
 		GetInstance().CreateGameScreen(*dae::SceneManager::GetInstance().GetActiveScene());
@@ -464,6 +480,48 @@ namespace dae
 			}
 		}
 		return nullptr;
+	}
+
+	void ScreenManager::SkipToGameOverLevel()
+	{
+		
+
+		switch (m_CurrentLevel)
+		{
+		case 0:
+		{
+			SceneManager::GetInstance().NextScene();
+			dae::GameCollisionMngr::GetInstance().ClearAll();
+			IncrementCurrentLevel();
+
+			SceneManager::GetInstance().NextScene();
+			IncrementCurrentLevel();
+
+			SceneManager::GetInstance().NextScene();
+			IncrementCurrentLevel();
+
+			break;
+		}
+
+		case 1:
+		{
+			SceneManager::GetInstance().NextScene();
+			dae::GameCollisionMngr::GetInstance().ClearAll();
+			IncrementCurrentLevel();
+
+			SceneManager::GetInstance().NextScene();
+			dae::GameCollisionMngr::GetInstance().ClearAll();
+			IncrementCurrentLevel();
+			break;
+		}
+		case 2:
+		{
+			SceneManager::GetInstance().NextScene();
+			dae::GameCollisionMngr::GetInstance().ClearAll();
+			IncrementCurrentLevel();
+			break;
+		}
+		}
 	}
 
 }
